@@ -1,0 +1,53 @@
+type                roman hastati
+dictionary          roman_hastati
+category            infantry
+class               light
+voice_type          Light_1
+voice_indexes       0 1 2
+soldier             roman_hastati, 40, 0, 1
+attributes          power_charge , hide_anywhere , sea_faring , mercenary_unit
+formation           1, 2, 2, 3, 4, square
+stat_health         1, 0
+stat_pri            11, 2, pilum, 35, 2, thrown, blade, piercing, spear, 25, 1
+stat_pri_attr       prec, thrown ap
+stat_sec            7, 2, no, 0, 0, melee, simple, piercing, sword, 25, 1
+stat_sec_attr       no
+stat_pri_armour     5, 4, 5, metal
+stat_sec_armour     0, 1, flesh
+stat_heat           3
+stat_ground         2, 0, 0, 0
+stat_mental         6, normal, trained
+stat_charge_dist    30
+stat_fire_delay     0
+stat_food           60, 300
+stat_cost           1, 440, 170, 50, 70, 440
+ownership           thrace, romans_scipii, slave
+ethnicity           romans_brutii, Bruttium
+ethnicity           romans_julii, Etruria
+
+type                roman hastati
+dictionary          roman_hastati
+category            infantry
+class               light
+voice_type          Light_1
+voice_indexes       0 1 2
+soldier             roman_hastati, 40, 0, 1
+attributes          power_charge , hide_anywhere , sea_faring , mercenary_unit
+formation           1, 2, 2, 3, 4, square
+stat_health         1, 0
+stat_pri            11, 2, pilum, 35, 2, thrown, blade, piercing, spear, 25, 1
+stat_pri_attr       prec, thrown ap
+stat_sec            7, 2, no, 0, 0, melee, simple, piercing, sword, 25, 1
+stat_sec_attr       no
+stat_pri_armour     5, 4, 5, metal
+stat_sec_armour     0, 1, flesh
+stat_heat           3
+stat_ground         2, 0, 0, 0
+stat_mental         6, normal, trained
+stat_charge_dist    30
+stat_fire_delay     0
+stat_food           60, 300
+stat_cost           1, 440, 170, 50, 70, 440
+ownership           thrace, romans_scipii, slave
+ethnicity           romans_brutii, Bruttium
+ethnicity           romans_julii, Etruria
