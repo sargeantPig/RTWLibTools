@@ -1,5 +1,5 @@
 ﻿using RTWLibPlus.helpers;
-using RTWLibPlus.parsers.obj;
+using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
 using System.Text;

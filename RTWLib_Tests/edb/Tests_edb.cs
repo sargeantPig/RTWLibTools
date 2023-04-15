@@ -7,7 +7,7 @@ using System.Text;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
 using RTWLibPlus.edb;
-using RTWLibPlus.parsers.obj;
+using RTWLibPlus.parsers.objects;
 using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 
 namespace RTWLib_Tests.edb
