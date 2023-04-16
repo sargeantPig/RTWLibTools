@@ -63,7 +63,7 @@ namespace RTWLibPlus.parsers
 
         private static string[] GetLines(string text)
         {
-            return text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static KeyValuePair<string, string[]> Prepare(string line, char delim)

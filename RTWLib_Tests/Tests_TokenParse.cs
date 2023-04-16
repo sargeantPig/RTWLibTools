@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLibPlus.parsers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace RTWLib_Tests
@@ -22,7 +23,7 @@ namespace RTWLib_Tests
         [TestMethod]
         public void FileReadLineArray()
         {
-            string[] result = TokenParse.ReadFile("./resources/inputTest.txt");
+            string[] result = TokenParse.ReadFile(Path.Combine("resources", "inputTest.txt"));
             string[] expected = new string[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
             CollectionAssert.AreEqual(expected, result);

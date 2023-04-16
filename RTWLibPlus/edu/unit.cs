@@ -55,12 +55,12 @@ namespace RTWLibPlus.edu
 
         public string FormatKeyValueEthnicity(string key, string a, string b)
         {
-            return string.Format("{0}{1}{2}, {3}\r\n", key, Format.GetWhiteSpace(key, 20, ' '), a, b);
+            return string.Format("{0}{1}{2}, {3}{4}", key, Format.GetWhiteSpace(key, 20, ' '), a, b, Environment.NewLine);
         }
 
         public string FormatKeyValue(KeyValuePair<string, string[]> kv)
         {
-            return string.Format("{0}{1}{2}\r\n", kv.Key, Format.GetWhiteSpace(kv.Key, 20, ' '), kv.Value.ToString(',', ' '));
+            return string.Format("{0}{1}{2}{3}", kv.Key, Format.GetWhiteSpace(kv.Key, 20, ' '), kv.Value.ToString(',', ' '), Environment.NewLine);
         }
 
     }

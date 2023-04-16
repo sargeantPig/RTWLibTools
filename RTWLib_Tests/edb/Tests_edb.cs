@@ -9,6 +9,7 @@ using RTWLibPlus.parsers;
 using RTWLibPlus.edb;
 using RTWLibPlus.parsers.objects;
 using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
+using System.IO;
 
 namespace RTWLib_Tests.edb
 {
@@ -22,12 +23,12 @@ namespace RTWLib_Tests.edb
             baseObj.DoubleSpace = new string[2] { "construction", "cost" };
             baseObj.DoubleSpaceEnding = new string[1] { "levels" };
             baseObj.WhiteSpaceSwap = new string[2] { "requires", "temple" };
-            var edb = TokenParse.ReadFile("./resources/edbExample.txt");
+            var edb = TokenParse.ReadFile(Path.Combine("resources", "edbExample.txt"));
             var edbParse = DepthParse.Parse(edb);
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();
-            var expected = TokenParse.ReadFileAsString("./resources/edbExample.txt");
+            var expected = TokenParse.ReadFileAsString(Path.Combine("resources", "edbExample.txt"));
 
             RTWFileHelper.Write("./result.txt", result);
             RTWFileHelper.Write("./expected.txt", expected);

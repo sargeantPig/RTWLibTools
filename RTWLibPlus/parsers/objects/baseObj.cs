@@ -36,10 +36,10 @@ namespace RTWLibPlus.parsers.objects
             output = ChildOutput(output);
 
             if (Tag == "alias")
-                output += "\r\n\r\n";
+                output += Environment.NewLine + Environment.NewLine;
 
             if (Tag == "tags")
-                output += "\r\n";
+                output += Environment.NewLine;
 
             return output;
         }
@@ -80,32 +80,32 @@ namespace RTWLibPlus.parsers.objects
 
         private string CloseBrackets()
         {
-            return String.Format("{0}}}\r\n", Format.GetWhiteSpace("", 4 * depth, ' '));
+            return String.Format("{0}}}{1}", Format.GetWhiteSpace("", 4 * depth, ' '), Environment.NewLine);
         }
 
         private string OpenBrackets()
         {
-            return String.Format("{0}{{\r\n", Format.GetWhiteSpace("", 4 * depth, ' '));
+            return String.Format("{0}{{{1}", Format.GetWhiteSpace("", 4 * depth, ' '), Environment.NewLine);
         }
 
         private string NormalFormat(char whiteSpace, int end)
         {
-            return String.Format("{0}{1} {2}\r\n", Format.GetWhiteSpace("", end, whiteSpace), Tag, Value);
+            return String.Format("{0}{1} {2}{3}", Format.GetWhiteSpace("", end, whiteSpace), Tag, Value, Environment.NewLine);
         }
 
         private string IgnoreValue(char whiteSpace, int end)
         {
-            return String.Format("{0}{1}\r\n", Format.GetWhiteSpace("", end, whiteSpace), Tag);
+            return String.Format("{0}{1}{2}", Format.GetWhiteSpace("", end, whiteSpace), Tag, Environment.NewLine);
         }
 
         private string GetDoubleSpaceBetweenTagValue(int end)
         {
-            return String.Format("{0}{1}  {2}\r\n", Format.GetWhiteSpace("", end, ' '), Tag, Value);
+            return String.Format("{0}{1}  {2}{3}", Format.GetWhiteSpace("", end, ' '), Tag, Value, Environment.NewLine);
         }
 
         private string GetDoubleSpaceEnding(int end)
         {
-            return String.Format("{0}{1} {2}  \r\n", Format.GetWhiteSpace("", end, ' '), Tag, Value);
+            return String.Format("{0}{1} {2}  {3}", Format.GetWhiteSpace("", end, ' '), Tag, Value, Environment.NewLine);
         }
     }
 }

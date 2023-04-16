@@ -36,7 +36,7 @@
 # For a complete CI/CD sample to get started with GitHub Action workflows for Desktop Applications,
 # refer to https://github.com/microsoft/github-actions-for-desktop-apps
 
-name: .NET Core Desktop
+name: Windows
 
 on:
   push:
@@ -88,21 +88,3 @@ jobs:
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test ${{ env.Test_Project_Path }}
-      
-  build-linux:
-     runs-on: ubuntu-latest
-     env:
-      Solution_Name: '\RTWLIB_CLI\RTWLIB_CLI.sln'                      # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: './RTWLib_Tests/RTWLib_Tests.csproj'
-     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '5.0.x'
-      - name: Restore Dependencies
-      - name: Copy Resources
-        run: cp -r ./RTWLib_Tests/resources ./RTWLib_Tests/bin/Debug/netcoreapp3.1/resources
-      - name: Run Tests
-        run: dotnet test ${{ env.Test_Project_Path }}
