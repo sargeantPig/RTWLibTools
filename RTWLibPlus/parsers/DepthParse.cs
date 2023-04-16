@@ -17,24 +17,27 @@ namespace RTWLibPlus.parsers
             foreach (string line in lines)
             {
                 string lineTrim = line.Trim();
-                item = list.Count-1;
-                if (lineTrim == "{") { depth++; continue; }
-                else if (lineTrim == "}") { depth--; continue; }
+                item = list.Count - 1;
+                switch (lineTrim) { case "{": depth++; continue; case "}": depth--; continue; }
 
                 string tag = lineTrim.GetFirstWord(' ');
                 string value = lineTrim.RemoveFirstWord(' ');
-                if (depth == 0)
-                {
-                    if (tag != null)
-                    {
-                        list.Add(new baseObj(tag, value, depth));
-                    }
-                }
-                else AddWithDepth(list, new baseObj(tag, value, depth), item, depth, 0);
+                StoreDataInObject(depth, item, list, tag, value);
             }
             return list;
         }
 
+        private static void StoreDataInObject(int depth, int item, List<baseObj> list, string tag, string value)
+        {
+            if (depth == 0)
+            {
+                if (tag != null)
+                {
+                    list.Add(new baseObj(tag, value, depth));
+                }
+            }
+            else AddWithDepth(list, new baseObj(tag, value, depth), item, depth, 0);
+        }
 
         private static void AddWithDepth(List<baseObj> objs, baseObj obj, int item, int depth, int currentDepth) 
         {

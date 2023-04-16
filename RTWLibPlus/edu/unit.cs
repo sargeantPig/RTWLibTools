@@ -40,9 +40,7 @@ namespace RTWLibPlus.edu
             {
                 s = FormatEthnicityTag(s, kv);
             }
-
             else s += FormatKeyValue(kv);
-            
             return s;
         }
 
@@ -52,7 +50,6 @@ namespace RTWLibPlus.edu
             {
                 s += FormatKeyValueEthnicity(kv.Key, kv.Value[i - 1], kv.Value[i]);
             }
-
             return s;
         }
 
