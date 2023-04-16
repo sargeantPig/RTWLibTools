@@ -6,6 +6,8 @@
     <IsPackable>false</IsPackable>
 
     <AnalysisLevel>none</AnalysisLevel>
+
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
