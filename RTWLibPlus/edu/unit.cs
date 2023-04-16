@@ -38,14 +38,21 @@ namespace RTWLibPlus.edu
         {
             if (kv.Key == "ethnicity")
             {
-                for (int i = 1; i < kv.Value.Length; i += 2)
-                {
-                    s += FormatKeyValueEthnicity(kv.Key, kv.Value[i - 1], kv.Value[i]);
-                }
+                s = FormatEthnicityTag(s, kv);
             }
 
             else s += FormatKeyValue(kv);
             
+            return s;
+        }
+
+        private string FormatEthnicityTag(string s, KeyValuePair<string, string[]> kv)
+        {
+            for (int i = 1; i < kv.Value.Length; i += 2)
+            {
+                s += FormatKeyValueEthnicity(kv.Key, kv.Value[i - 1], kv.Value[i]);
+            }
+
             return s;
         }
 

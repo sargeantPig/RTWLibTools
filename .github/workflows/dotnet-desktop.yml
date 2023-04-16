@@ -41,9 +41,9 @@ name: .NET Core Desktop
 on:
   push:
     paths:
-      - './RTWLIB_CLI/**'
-      - './RTWLib_Tests/**'
-      - './RTWLibPlus/**'
+      - '../RTWLib_CLI/**'
+      - '../RTWLib_Tests/**'
+      - '../RTWLibPlus/**'
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
