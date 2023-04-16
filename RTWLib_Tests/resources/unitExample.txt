@@ -5,7 +5,7 @@ class               light
 voice_type          Light_1
 voice_indexes       0 1 2
 soldier             roman_hastati, 40, 0, 1
-attributes          power_charge , hide_anywhere , sea_faring , mercenary_unit
+attributes          power_charge, hide_anywhere, sea_faring, mercenary_unit
 formation           1, 2, 2, 3, 4, square
 stat_health         1, 0
 stat_pri            11, 2, pilum, 35, 2, thrown, blade, piercing, spear, 25, 1
@@ -32,7 +32,7 @@ class               light
 voice_type          Light_1
 voice_indexes       0 1 2
 soldier             roman_hastati, 40, 0, 1
-attributes          power_charge , hide_anywhere , sea_faring , mercenary_unit
+attributes          power_charge, hide_anywhere, sea_faring, mercenary_unit
 formation           1, 2, 2, 3, 4, square
 stat_health         1, 0
 stat_pri            11, 2, pilum, 35, 2, thrown, blade, piercing, spear, 25, 1

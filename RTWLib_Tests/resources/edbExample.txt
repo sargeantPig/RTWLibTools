@@ -1,0 +1,142 @@
+tags
+{
+	temple
+}
+
+alias no_other_temple
+{
+	requires no_building_tagged temple queued
+}
+
+
+building core_building
+{
+    levels governors_house governors_villa governors_palace proconsuls_palace imperial_palace  
+    {
+        governors_house requires factions { barbarian, carthaginian, eastern, parthia, egyptian, greek, roman, }
+        {
+            capability
+            {
+                recruit "carthaginian peasant"  0
+                recruit "barb peasant briton"  0
+                recruit "barb peasant dacian"  0
+                recruit "barb peasant gaul"  0
+                recruit "barb peasant german"  0
+                recruit "barb peasant scythian"  0
+                recruit "east peasant"  0
+                recruit "egyptian peasant"  0
+                recruit "greek peasant"  0
+                recruit "roman peasant"  0
+            }
+            construction  1
+            cost  400
+            settlement_min village
+            upgrades
+            {
+                governors_villa
+            }
+        }
+        governors_villa requires factions { barbarian, carthaginian, eastern, parthia, egyptian, greek, roman, }
+        {
+            capability
+            {
+                recruit "carthaginian peasant"  0
+                recruit "barb peasant briton"  0
+                recruit "barb peasant dacian"  0
+                recruit "barb peasant gaul"  0
+                recruit "barb peasant german"  0
+                recruit "barb peasant scythian"  0
+                recruit "east peasant"  0
+                recruit "egyptian peasant"  0
+                recruit "greek peasant"  0
+                recruit "roman peasant"  0
+                agent diplomat  0
+            }
+            construction  2
+            cost  800
+            settlement_min town
+            upgrades
+            {
+                governors_palace
+            }
+        }
+        governors_palace requires factions { barbarian, carthaginian, eastern, parthia, egyptian, greek, roman, }
+        {
+            capability
+            {
+                recruit "carthaginian peasant"  0
+                recruit "barb peasant briton"  0
+                recruit "barb peasant dacian"  0
+                recruit "barb peasant gaul"  0
+                recruit "barb peasant german"  0
+                recruit "barb peasant scythian"  0
+                recruit "east peasant"  0
+                recruit "egyptian peasant"  0
+                recruit "greek peasant"  0
+                recruit "roman peasant"  0
+                agent diplomat  0
+                happiness_bonus bonus 1 requires factions { barbarian, carthaginian, eastern, parthia, egyptian, greek, roman, } and is_toggled "settlement condition"
+            }
+            construction  3
+            cost  1600
+            settlement_min large_town
+            upgrades
+            {
+                proconsuls_palace
+            }
+        }
+        proconsuls_palace requires factions { carthaginian, eastern, parthia, egyptian, greek, roman, }
+        {
+            capability
+            {
+                recruit "carthaginian peasant"  0
+                recruit "barb peasant briton"  0
+                recruit "barb peasant dacian"  0
+                recruit "barb peasant gaul"  0
+                recruit "barb peasant german"  0
+                recruit "barb peasant scythian"  0
+                recruit "east peasant"  0
+                recruit "egyptian peasant"  0
+                recruit "greek peasant"  0
+                recruit "roman peasant"  0
+                agent diplomat  0
+                happiness_bonus bonus 1 requires factions { barbarian, carthaginian, eastern, parthia, egyptian, greek, roman, } and is_toggled "settlement condition"
+            }
+            construction  4
+            cost  3200
+            settlement_min city
+            upgrades
+            {
+                imperial_palace
+            }
+        }
+        imperial_palace requires factions { carthaginian, eastern, parthia, egyptian, greek, roman, }
+        {
+            capability
+            {
+                recruit "carthaginian peasant"  0
+                recruit "barb peasant briton"  0
+                recruit "barb peasant dacian"  0
+                recruit "barb peasant gaul"  0
+                recruit "barb peasant german"  0
+                recruit "barb peasant scythian"  0
+                recruit "east peasant"  0
+                recruit "egyptian peasant"  0
+                recruit "greek peasant"  0
+                recruit "roman peasant"  0
+                recruit "roman praetorian cohort i"  0
+                agent diplomat  0
+                happiness_bonus bonus 1 requires factions { barbarian, carthaginian, eastern, parthia, egyptian, greek, roman, } and is_toggled "settlement condition"
+            }
+            construction  6
+            cost  6400
+            settlement_min large_city
+            upgrades
+            {
+            }
+        }
+    }
+    plugins
+    {
+    }
+}
