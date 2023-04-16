@@ -74,7 +74,12 @@ jobs:
     # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
-
+      
+    - name: Copy Resources
+      run: cp -r ./RTWLib_Tests/resources ./RTWLib_Tests/bin/Debug/netcoreapp3.1/resources
+    - name: Log files
+      run: ls ./RTWLib_Tests/bin/Debug/netcoreapp3.1/
+      
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test ${{ env.Test_Project_Path }}
