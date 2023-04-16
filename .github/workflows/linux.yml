@@ -1,0 +1,46 @@
+name: Linux
+
+on:
+  push:
+    paths:
+      - 'RTWLib_CLI/**'
+      - 'RTWLib_Tests/**'
+      - 'RTWLibPlus/**'
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+ 
+jobs:
+
+    build-linux:
+  
+     runs-on: ubuntu-latest
+     
+     env:
+      Solution_Name: '${{github.workspace}}/RTWLib_CLI/RTWLib_Solution.sln'                      # Replace with your solution name, i.e. MyWpfApp.sln.
+      Test_Project_Path: '${{github.workspace}}/RTWLib_Tests/RTWLib_Tests.csproj'
+      
+     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        
+      - name: Install .NET Core Runtime
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1.408'
+          
+      - name: Create Output Directory
+        run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp3.1/resources'
+      - name: Copy Resources
+        run: cp -r ./RTWLib_Tests/resources/. ${{ github.workspace }}/RTWLib_Tests/bin/Debug/netcoreapp3.1/resources/
+      - name: List build output
+        run: ls -R '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp3.1'
+      - name: Log files
+        run: ls
+      - name: pwd
+        run: pwd
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.Solution_Name }}
+      - name: Run Tests
+        run: dotnet test ${{ env.Test_Project_Path }}

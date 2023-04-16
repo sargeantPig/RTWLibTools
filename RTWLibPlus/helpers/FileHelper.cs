@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RTWLibPlus.helpers
 {
-    public static class RTWFileHelper
+    public static class RFH
     {
         public static void Write(string path, string content)
         {
@@ -14,6 +14,17 @@ namespace RTWLibPlus.helpers
             sw.Flush();
             sw.Close();
         }
+
+        public static string CurrDirPath(params string[] path) {
+            string finpath = Directory.GetCurrentDirectory();
+            foreach (string s in path)
+            {
+                finpath = Path.Combine(finpath, s);
+            }
+            return finpath;
+        }
+
+       
 
     }
 }

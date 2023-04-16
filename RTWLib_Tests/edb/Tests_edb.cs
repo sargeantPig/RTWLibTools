@@ -28,10 +28,10 @@ namespace RTWLib_Tests.edb
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();
-            var expected = TokenParse.ReadFileAsString(Path.Combine("resources", "edbExample.txt"));
+            var expected = TokenParse.ReadFileAsString(RFH.CurrDirPath("resources", "edbExample.txt"));
 
-            RTWFileHelper.Write("./result.txt", result);
-            RTWFileHelper.Write("./expected.txt", expected);
+            RFH.Write("./result.txt", result);
+            RFH.Write("./expected.txt", expected);
 
             int rl = result.Length;
             int el = expected.Length;
@@ -47,15 +47,15 @@ namespace RTWLib_Tests.edb
             baseObj.DoubleSpace = new string[2] { "construction", "cost" };
             baseObj.DoubleSpaceEnding = new string[1] { "levels" };
             baseObj.WhiteSpaceSwap = new string[2] { "requires", "temple" };
-            var edb = TokenParse.ReadFile("./resources/export_descr_buildings.txt");
+            var edb = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
             var edbParse = DepthParse.Parse(edb);
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();
-            var expected = TokenParse.ReadFileAsString("./resources/export_descr_buildings.txt");
+            var expected = TokenParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
 
-            RTWFileHelper.Write("./result.txt", result);
-            RTWFileHelper.Write("./expected.txt", expected);
+            RFH.Write("./result.txt", result);
+            RFH.Write("./expected.txt", expected);
 
             int rl = result.Length;
             int el = expected.Length;

@@ -64,11 +64,19 @@ namespace RTWLibPlus.parsers.objects
             string output;
             if (WhiteSpaceSwap.Contains(Tag))
             {
-                if (Tag != Value)
-                    output = NormalFormat('\t', 1);
-                else output = IgnoreValue('\t', 1);
+                output = CheckKeyIsValue();
             }
-            else if (Tag == Value)
+            else
+            {
+                output = GetCorrectFormat(wDepth);
+            }
+            return output;
+        }
+
+        private string GetCorrectFormat(int wDepth)
+        {
+            string output;
+            if (Tag == Value)
                 output = IgnoreValue(' ', wDepth);
             else if (DoubleSpace.Contains(Tag))
                 output = GetDoubleSpaceBetweenTagValue(wDepth);
@@ -78,34 +86,59 @@ namespace RTWLibPlus.parsers.objects
             return output;
         }
 
+        private string CheckKeyIsValue()
+        {
+            string output;
+            if (Tag != Value)
+                output = NormalFormat('\t', 1);
+            else output = IgnoreValue('\t', 1);
+            return output;
+        }
+
         private string CloseBrackets()
         {
-            return String.Format("{0}}}{1}", Format.GetWhiteSpace("", 4 * depth, ' '), Environment.NewLine);
+            return String.Format("{0}}}{1}", 
+                Format.GetWhiteSpace("", 4 * depth, ' '), 
+                Environment.NewLine);
         }
 
         private string OpenBrackets()
         {
-            return String.Format("{0}{{{1}", Format.GetWhiteSpace("", 4 * depth, ' '), Environment.NewLine);
+            return String.Format("{0}{{{1}",
+                Format.GetWhiteSpace("", 4 * depth, ' '), 
+                Environment.NewLine);
         }
 
         private string NormalFormat(char whiteSpace, int end)
         {
-            return String.Format("{0}{1} {2}{3}", Format.GetWhiteSpace("", end, whiteSpace), Tag, Value, Environment.NewLine);
+            return String.Format("{0}{1} {2}{3}", 
+                Format.GetWhiteSpace("", end, whiteSpace), 
+                Tag, Value, 
+                Environment.NewLine);
         }
 
         private string IgnoreValue(char whiteSpace, int end)
         {
-            return String.Format("{0}{1}{2}", Format.GetWhiteSpace("", end, whiteSpace), Tag, Environment.NewLine);
+            return String.Format("{0}{1}{2}", 
+                Format.GetWhiteSpace("", end, whiteSpace), 
+                Tag, 
+                Environment.NewLine);
         }
 
         private string GetDoubleSpaceBetweenTagValue(int end)
         {
-            return String.Format("{0}{1}  {2}{3}", Format.GetWhiteSpace("", end, ' '), Tag, Value, Environment.NewLine);
+            return String.Format("{0}{1}  {2}{3}", 
+                Format.GetWhiteSpace("", end, ' '), 
+                Tag, Value, 
+                Environment.NewLine);
         }
 
         private string GetDoubleSpaceEnding(int end)
         {
-            return String.Format("{0}{1} {2}  {3}", Format.GetWhiteSpace("", end, ' '), Tag, Value, Environment.NewLine);
+            return String.Format("{0}{1} {2}  {3}", 
+                Format.GetWhiteSpace("", end, ' '), 
+                Tag, Value, 
+                Environment.NewLine);
         }
     }
 }

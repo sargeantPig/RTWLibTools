@@ -18,10 +18,10 @@ namespace RTWLib_Tests.edu
         public void UnitOutputFormatted()
         {
             var datas = new List<Dictionary<string, string[]>>();
-            TokenParse.ReadAndPrepare(datas, Path.Combine("resources", "unitExample.txt"), ',', "type");
+            TokenParse.ReadAndPrepare(datas, RFH.CurrDirPath("resources", "unitExample.txt"), ',', "type");
             var units = Unit.UnitArray(datas);
-            var orig = TokenParse.ReadFile(Path.Combine("resources", "unitExample.txt"));
-            string origStr = orig.ToString('\r', '\n');
+            var orig = TokenParse.ReadFile(RFH.CurrDirPath("resources", "unitExample.txt"));
+            string origStr = orig.ToString(Environment.NewLine.ToArray());
             string result = string.Empty;
             for (int i = 0; i < units.Count(); i++)
             {
@@ -34,7 +34,7 @@ namespace RTWLib_Tests.edu
         [TestMethod]
         public void UnitReadCorrectly() {
             var result = new List<Dictionary<string, string[]>>();
-            TokenParse.ReadAndPrepare( result,Path.Combine("resources","unitExample.txt"), ',', "type");
+            TokenParse.ReadAndPrepare( result,RFH.CurrDirPath("resources","unitExample.txt"), ',', "type");
             var expected = dummyUnit.GetDummy();
             TestHelper.LoopCollectionAssert(expected, result[0]);
             Assert.AreEqual(2, result.Count);
@@ -43,7 +43,7 @@ namespace RTWLib_Tests.edu
         [TestMethod]
         public void FileReadLineArray()
         {
-            string[] result = TokenParse.ReadFile(Path.Combine("resources", "inputTest.txt"));
+            string[] result = TokenParse.ReadFile(RFH.CurrDirPath("resources", "inputTest.txt"));
             string[] expected = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
 
             CollectionAssert.AreEqual(expected, result);
