@@ -19,8 +19,11 @@ namespace RTWLibPlus.parsers.objects
         private List<IbaseObj> items = new List<IbaseObj>();
         
         public string Tag { get; set; } = string.Empty;
+        public string Ident { get; set; } = string.Empty;
         public string Value { get; set; } = string.Empty;
         public int depth { get; set; }
+
+        public int newLinesAfter { get; set; } = 0;
 
         public baseObj() { }
 
@@ -29,6 +32,7 @@ namespace RTWLibPlus.parsers.objects
             this.Tag = tag;
             this.Value = value;
             this.depth = depth;
+            this.Ident = Tag.Split(whiteChar)[0];
         }
 
         public string Output()
@@ -136,6 +140,16 @@ namespace RTWLibPlus.parsers.objects
                 Format.GetWhiteSpace("", end, whiteChar),
                 Tag, Value,
                 Environment.NewLine);
+        }
+
+        public string GetNewLine(int end)
+        {
+            return Format.GetWhiteSpace("", end, Environment.NewLine);
+        }
+
+        public string GetTabbedLine(int end)
+        {
+            return Format.GetWhiteSpace("", end, whiteChar);
         }
     }   
 }

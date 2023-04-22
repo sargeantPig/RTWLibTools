@@ -4379,7 +4379,7 @@ core_attitudes	romans_brutii,	-10		romans_julii, romans_scipii, romans_senate
 core_attitudes	romans_brutii,	600		slave
 core_attitudes	romans_scipii,	-10		romans_julii, romans_brutii, romans_senate
 core_attitudes	romans_scipii,	600		slave
-core_attitudes	romans_senate, 	-10		romans_julii, romans_brutii, romans_scipii
+core_attitudes	romans_senate,	-10		romans_julii, romans_brutii, romans_scipii
 core_attitudes	romans_senate,	600		slave
 core_attitudes	macedon,		90		romans_brutii
 core_attitudes	macedon,		600		slave
@@ -4421,10 +4421,10 @@ core_attitudes	thrace,		600		slave
 core_attitudes	slave,		600		romans_julii, romans_brutii, romans_scipii, romans_senate, macedon, egypt, seleucid, carthage, parthia, pontus, gauls, germans, britons, armenia, dacia, greek_cities, numidia, scythia, spain, thrace
 
 faction_relationships	romans_julii,		100		romans_brutii
-faction_relationships	romans_julii, 		100		romans_scipii
+faction_relationships	romans_julii,		100		romans_scipii
 faction_relationships	romans_julii,		100		romans_senate
-faction_relationships	romans_julii, 		600		slave
-faction_relationships	romans_brutii, 		100		romans_julii
+faction_relationships	romans_julii,		600		slave
+faction_relationships	romans_brutii,		100		romans_julii
 faction_relationships	romans_brutii,		100		romans_scipii
 faction_relationships	romans_brutii,		100		romans_senate
 faction_relationships	romans_brutii,		600		slave

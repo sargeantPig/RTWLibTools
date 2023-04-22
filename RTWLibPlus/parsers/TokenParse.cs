@@ -17,6 +17,8 @@ namespace RTWLibPlus.parsers
             string[] lines = ReadFile(path);
             foreach (string line in lines)
             {
+                if(line == string.Empty || line == Environment.NewLine) continue;
+
                 KeyValuePair<string, string[]> kv = Prepare(line, delim);
                 dict = AddDicToListIfIdent(items, newIdent, dict, kv);
                 AddNewKvOrModify(dict, kv);
@@ -45,12 +47,15 @@ namespace RTWLibPlus.parsers
             return dict;
         }
 
-        public static string[] ReadFile(string path)
+        public static string[] ReadFile(string path, bool removeEmptyLines = true)
         {
             StreamReader streamReader = new StreamReader(path);
             string text = streamReader.ReadToEnd();
             streamReader.Close();
-            return GetLines(text);
+
+            if (removeEmptyLines)
+                return GetLinesRemoveEmpty(text);
+            else return GetLines(text);
         }
 
         public static string ReadFileAsString(string path)
@@ -61,9 +66,13 @@ namespace RTWLibPlus.parsers
             return text;
         }
 
-        private static string[] GetLines(string text)
+        private static string[] GetLinesRemoveEmpty(string text)
         {
             return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        }
+        private static string[] GetLines(string text)
+        {
+            return text.Split("\n");
         }
 
         public static KeyValuePair<string, string[]> Prepare(string line, char delim)

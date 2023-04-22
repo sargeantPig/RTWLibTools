@@ -24,7 +24,7 @@ namespace RTWLib_Tests.edb
             EDBObj.DoubleSpace = new string[2] { "construction", "cost" };
             EDBObj.DoubleSpaceEnding = new string[1] { "levels" };
             EDBObj.WhiteSpaceSwap = new string[2] { "requires", "temple" };
-            var edb = TokenParse.ReadFile(Path.Combine("resources", "edbExample.txt"));
+            var edb = TokenParse.ReadFile(Path.Combine("resources", "edbExample.txt"), false);
             var edbParse = DepthParse.Parse(edb, EDBObj.creator);
             var parsedEdb = new EDB(edbParse);
 

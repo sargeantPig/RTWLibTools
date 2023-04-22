@@ -20,8 +20,8 @@ namespace RTWLib_Tests.ds
         [TestMethod]
         public void dsWholeFile()
         {       
-            var edb = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"));
-            var edbParse = DepthParse.Parse(edb, baseObj.creator);
+            var edb = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var edbParse = DepthParse.Parse(edb, DSObj.creator);
             var parsedEdb = new DS(edbParse);
 
             string result = parsedEdb.Output();

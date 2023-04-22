@@ -27,6 +27,7 @@ namespace RTWLibPlus.edb
 
             base.whiteChar = whiteSpace;
             base.whiteDepthMultiplier = whiteSpaceMultiplier;
+            this.Ident = Tag.Split(whiteChar)[0];
         }
 
         public EDBObj() { }
@@ -81,15 +82,6 @@ namespace RTWLibPlus.edb
             output = IfWhiteSpaceSwap(output, wDepth);
 
             return output;
-        }
-
-        new public List<IbaseObj> GetItems()
-        {
-            return base.GetItems();
-        }
-        new public void SetItems(List<IbaseObj> baseObjs)
-        {
-            SetItems(baseObjs);
         }
 
         private string IfInDoubleSpaceEnding(string output, int wDepth)
