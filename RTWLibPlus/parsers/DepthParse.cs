@@ -1,50 +1,52 @@
 ﻿using RTWLibPlus.helpers;
+using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static RTWLibPlus.interfaces.IbaseObj;
 
 namespace RTWLibPlus.parsers
 {
     public static class DepthParse
     {
-        public static List<baseObj> Parse(string[] lines)
+     public delegate IbaseObj ObjectCreator(string value, string tag, int depth);
+
+    public static List<IbaseObj> Parse(string[] lines, ObjectCreator creator)
+    {
+        int depth = 0;
+        int item = 0;
+
+        List<IbaseObj> list = new List<IbaseObj>();
+        foreach (string line in lines)
         {
-            int depth = 0;
-            int item = 0;
+            if (line.StartsWith(";")) { continue; }
+            string lineTrim = line.TrimStart();
+            item = list.Count - 1;
 
-            List<baseObj> list = new List<baseObj>();
-            foreach (string line in lines)
-            {
-                string lineTrim = line.Trim();
-                item = list.Count - 1;
-                switch (lineTrim) { case "{": depth++; continue; case "}": depth--; continue; }
+            switch (lineTrim) { case "{": depth++; continue; case "}": depth--; continue; }
 
-                string tag = lineTrim.GetFirstWord(' ');
-                string value = lineTrim.RemoveFirstWord(' ');
-                StoreDataInObject(depth, item, list, tag, value);
-            }
-            return list;
+            string tag = lineTrim.GetFirstWord(' ');
+            string value = lineTrim.RemoveFirstWord(' ');
+            StoreDataInObject(creator, depth, item, list, tag, value);
         }
+        return list;
+    }
 
-        private static void StoreDataInObject(int depth, int item, List<baseObj> list, string tag, string value)
-        {
-            if (depth == 0)
-            {
-                if (tag != null)
-                {
-                    list.Add(new baseObj(tag, value, depth));
-                }
-            }
-            else AddWithDepth(list, new baseObj(tag, value, depth), item, depth, 0);
-        }
+    private static void StoreDataInObject(ObjectCreator creator, int depth, int item, List<IbaseObj> list, string tag, string value)
+    {
+        if (depth == 0 && tag != null)
+            list.Add(creator(value, tag, depth));
+        else if (depth > 0)
+            AddWithDepth(creator, list, item, depth, 0, tag, value);
+    }
 
-        private static void AddWithDepth(List<baseObj> objs, baseObj obj, int item, int depth, int currentDepth) 
+        private static void AddWithDepth(ObjectCreator creator, List<IbaseObj> objs, int item, int depth, int currentDepth, string tag, string value)
         {
-            item = objs.Count-1;
+            item = objs.Count - 1;
             if (depth != currentDepth)
-                AddWithDepth(objs[item].Items, obj, item, depth, ++currentDepth);
-            else objs.Add(obj);
+                AddWithDepth(creator, objs[item].GetItems(), item, depth, ++currentDepth, tag, value);
+            else objs.Add(creator(value, tag, depth));
         }
     }
 }

@@ -1,24 +1,28 @@
-﻿using RTWLibPlus.helpers;
+﻿using RTWLibPlus.edb;
+using RTWLibPlus.helpers;
+using RTWLibPlus.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static RTWLibPlus.parsers.DepthParse;
 
 namespace RTWLibPlus.parsers.objects
 {
-    public class baseObj
+    public class baseObj : IbaseObj
     {
-        public static string[] AlwaysArrays = new string[0];
-        public static string[] DoubleSpace = new string[0];
-        public static string[] DoubleSpaceEnding = new string[0];
-        public static string[] WhiteSpaceSwap = new string[0];
+        public static ObjectCreator creator = (value, tag, depth) => new baseObj(tag, value, depth);
 
-        private List<baseObj> items = new List<baseObj>();
+        public char whiteChar = '\t';
+        public int whiteDepthMultiplier = 1;
+        public static Func<string, int> specialPadding = null;
+        private List<IbaseObj> items = new List<IbaseObj>();
+        
+        public string Tag { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
+        public int depth { get; set; }
 
-        public List<baseObj> Items { get => items; set => items = value; }
-        string Tag { get; set; } = string.Empty;
-        string Value { get; set; } = string.Empty;
-        int depth { get; set; }
+        public baseObj() { }
 
         public baseObj(string tag, string value, int depth)
         {
@@ -31,25 +35,19 @@ namespace RTWLibPlus.parsers.objects
         {
             string output = string.Empty;
 
-            int wDepth = 4 * depth;
+            int wDepth = whiteDepthMultiplier * depth;
             output = GetTagValue(wDepth);
             output = ChildOutput(output);
-
-            if (Tag == "alias")
-                output += Environment.NewLine + Environment.NewLine;
-
-            if (Tag == "tags")
-                output += Environment.NewLine;
 
             return output;
         }
 
-        private string ChildOutput(string output)
+        public string ChildOutput(string output)
         {
-            if (Items.Count > 0 || AlwaysArrays.Contains(Tag))
+            if (GetItems().Count > 0)
             {
                 output += OpenBrackets();
-                foreach (baseObj item in Items)
+                foreach (baseObj item in GetItems())
                 {
                     output += item.Output();
                 }
@@ -59,86 +57,85 @@ namespace RTWLibPlus.parsers.objects
             return output;
         }
 
-        private string GetTagValue(int wDepth)
-        {
-            string output;
-            if (WhiteSpaceSwap.Contains(Tag))
-            {
-                output = CheckKeyIsValue();
-            }
-            else
-            {
-                output = GetCorrectFormat(wDepth);
-            }
-            return output;
-        }
-
         private string GetCorrectFormat(int wDepth)
         {
             string output;
-            if (Tag == Value)
-                output = IgnoreValue(' ', wDepth);
-            else if (DoubleSpace.Contains(Tag))
-                output = GetDoubleSpaceBetweenTagValue(wDepth);
-            else if (DoubleSpaceEnding.Contains(Tag))
-                output = GetDoubleSpaceEnding(wDepth);
-            else output = NormalFormat(' ', wDepth);
+
+            output = NormalFormat(whiteChar, wDepth);
+            output = IfTagIsValue(output, wDepth);
+
             return output;
         }
 
-        private string CheckKeyIsValue()
+        public List<IbaseObj> GetItems()
+        {
+            return items;
+        }
+        public void SetItems(List<IbaseObj> baseObjs)
+        {
+            items = baseObjs;
+        }
+
+        private string IfTagIsValue(string output, int wDepth)
+        {
+            if (Tag == Value)
+            {
+                output = IgnoreValue(whiteChar, wDepth);
+            }
+            return output;
+        }
+
+        private string GetTagValue(int wDepth)
         {
             string output;
-            if (Tag != Value)
-                output = NormalFormat('\t', 1);
-            else output = IgnoreValue('\t', 1);
+            output = GetCorrectFormat(wDepth);
             return output;
         }
 
-        private string CloseBrackets()
+        public string CloseBrackets()
         {
-            return String.Format("{0}}}{1}", 
-                Format.GetWhiteSpace("", 4 * depth, ' '), 
+            return String.Format("{0}}}{1}",
+                Format.GetWhiteSpace("", whiteDepthMultiplier * depth, whiteChar),
                 Environment.NewLine);
         }
 
-        private string OpenBrackets()
+        public string OpenBrackets()
         {
             return String.Format("{0}{{{1}",
-                Format.GetWhiteSpace("", 4 * depth, ' '), 
+                Format.GetWhiteSpace("", whiteDepthMultiplier * depth, whiteChar),
                 Environment.NewLine);
         }
 
-        private string NormalFormat(char whiteSpace, int end)
+        public string NormalFormat(char whiteSpace, int end)
         {
-            return String.Format("{0}{1} {2}{3}", 
-                Format.GetWhiteSpace("", end, whiteSpace), 
-                Tag, Value, 
+            return String.Format("{0}{1} {2}{3}",
+                Format.GetWhiteSpace("", end, whiteSpace),
+                Tag, Value,
                 Environment.NewLine);
         }
 
-        private string IgnoreValue(char whiteSpace, int end)
+        public string IgnoreValue(char whiteSpace, int end)
         {
-            return String.Format("{0}{1}{2}", 
-                Format.GetWhiteSpace("", end, whiteSpace), 
-                Tag, 
+            return String.Format("{0}{1}{2}",
+                Format.GetWhiteSpace("", end, whiteSpace),
+                Tag,
                 Environment.NewLine);
         }
 
-        private string GetDoubleSpaceBetweenTagValue(int end)
+        public string GetDoubleSpaceBetweenTagValue(int end)
         {
-            return String.Format("{0}{1}  {2}{3}", 
-                Format.GetWhiteSpace("", end, ' '), 
-                Tag, Value, 
+            return String.Format("{0}{1}  {2}{3}",
+                Format.GetWhiteSpace("", end, whiteChar),
+                Tag, Value,
                 Environment.NewLine);
         }
 
-        private string GetDoubleSpaceEnding(int end)
+        public string GetDoubleSpaceEnding(int end)
         {
-            return String.Format("{0}{1} {2}  {3}", 
-                Format.GetWhiteSpace("", end, ' '), 
-                Tag, Value, 
+            return String.Format("{0}{1} {2}  {3}",
+                Format.GetWhiteSpace("", end, whiteChar),
+                Tag, Value,
                 Environment.NewLine);
         }
-    }
+    }   
 }

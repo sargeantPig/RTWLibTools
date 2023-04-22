@@ -10,6 +10,7 @@ using RTWLibPlus.edb;
 using RTWLibPlus.parsers.objects;
 using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using System.IO;
+using RTWLibPlus.interfaces;
 
 namespace RTWLib_Tests.edb
 {
@@ -19,12 +20,12 @@ namespace RTWLib_Tests.edb
         [TestMethod]
         public void edbParse()
         {
-            baseObj.AlwaysArrays = new string[2] {"plugins","upgrades"};
-            baseObj.DoubleSpace = new string[2] { "construction", "cost" };
-            baseObj.DoubleSpaceEnding = new string[1] { "levels" };
-            baseObj.WhiteSpaceSwap = new string[2] { "requires", "temple" };
+            EDBObj.AlwaysArrays = new string[2] {"plugins","upgrades"};
+            EDBObj.DoubleSpace = new string[2] { "construction", "cost" };
+            EDBObj.DoubleSpaceEnding = new string[1] { "levels" };
+            EDBObj.WhiteSpaceSwap = new string[2] { "requires", "temple" };
             var edb = TokenParse.ReadFile(Path.Combine("resources", "edbExample.txt"));
-            var edbParse = DepthParse.Parse(edb);
+            var edbParse = DepthParse.Parse(edb, EDBObj.creator);
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();
@@ -43,12 +44,12 @@ namespace RTWLib_Tests.edb
         [TestMethod]
         public void edbWholeFile()
         {
-            baseObj.AlwaysArrays = new string[2] { "plugins", "upgrades" };
-            baseObj.DoubleSpace = new string[2] { "construction", "cost" };
-            baseObj.DoubleSpaceEnding = new string[1] { "levels" };
-            baseObj.WhiteSpaceSwap = new string[2] { "requires", "temple" };
+            EDBObj.AlwaysArrays = new string[2] { "plugins", "upgrades" };
+            EDBObj.DoubleSpace = new string[2] { "construction", "cost" };
+            EDBObj.DoubleSpaceEnding = new string[1] { "levels" };
+            EDBObj.WhiteSpaceSwap = new string[2] { "requires", "temple" };
             var edb = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
-            var edbParse = DepthParse.Parse(edb);
+            var edbParse = DepthParse.Parse(edb, EDBObj.creator);
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();

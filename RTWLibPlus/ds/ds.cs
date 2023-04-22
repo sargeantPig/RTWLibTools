@@ -4,27 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RTWLibPlus.edb
+namespace RTWLibPlus.ds
 {
-    public class EDB
+    public class DS
     {
         public List<IbaseObj> data = new List<IbaseObj>();
 
-        public EDB(List<IbaseObj> data) {
+        public DS(List<IbaseObj> data)
+        {
             this.data = data;
-        
-        
         }
-       
+
         public string Output()
         {
             string output = string.Empty;
-            foreach (EDBObj obj in data)
+            foreach (baseObj obj in data)
             {
                 output += obj.Output();
             }
             return output;
         }
-
     }
 }
