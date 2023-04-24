@@ -16,8 +16,24 @@ namespace RTWLibPlus.helpers
             if(endsAt == -1)
                 return str;
 
+            string newStr = str.Substring(endsAt).Trim(delim);
 
-            return str.Substring(endsAt).Trim();
+            return newStr;
+        }
+
+        public static string Trim(this string str, int start, int end)
+        {
+            string newString = string.Empty;
+            
+            for(int i = 0; i < str.Length; i++)
+            {
+                if(i >= start && i <= end)
+                {
+                    newString += str[i];
+                }
+            }
+
+            return newString;
         }
     }
 }

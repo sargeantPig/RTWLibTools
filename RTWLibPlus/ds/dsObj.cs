@@ -13,11 +13,9 @@ namespace RTWLibPlus.ds
     public class DSObj : baseObj, IbaseObj
     {
         new public static ObjectCreator creator = (value, tag, depth) => new DSObj(tag, value, depth);
-
         public static string[] applyDepthToNonArrayAt = new string[3] {"playable", "unlockable", "nonplayable" };
         public static string terminateNonArrayDepthAt = "end";
-        public static string[] whiteSpaceAfter = new string[] { "resource", "end_date", "pirate_spawn_value", "landmark", "settlement", "unit", "relative"};
-
+        
         public static char whiteSpace = '\t';
         public static int whiteSpaceMultiplier = 1;
 

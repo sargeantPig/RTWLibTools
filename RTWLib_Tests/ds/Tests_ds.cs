@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿
+
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLib_Tests.dummy;
 using RTWLibPlus;
 using System;
@@ -6,11 +9,13 @@ using System.Collections.Generic;
 using System.Text;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
-using RTWLibPlus.edb;
+using RTWLibPlus.ds;
 using RTWLibPlus.parsers.objects;
 using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
 using System.IO;
 using RTWLibPlus.ds;
+
+
 
 namespace RTWLib_Tests.ds
 {
@@ -20,11 +25,11 @@ namespace RTWLib_Tests.ds
         [TestMethod]
         public void dsWholeFile()
         {       
-            var edb = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var edbParse = DepthParse.Parse(edb, DSObj.creator);
-            var parsedEdb = new DS(edbParse);
+            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = DepthParse.Parse(ds, DSObj.creator);
+            var parsedds = new DS(dsParse);
 
-            string result = parsedEdb.Output();
+            string result = parsedds.Output();
             var expected = TokenParse.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
 
             RFH.Write("./dsresult.txt", result);
@@ -35,8 +40,22 @@ namespace RTWLib_Tests.ds
 
             Assert.AreEqual(el, rl);
             Assert.AreEqual(expected, result);
-
         }
+
+        /*[TestMethod]
+        public void dsWholeFile()
+        {
+            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = DepthParse.Parse(ds, DSObj.creator);
+            var parsedds = new DS(dsParse);
+
+            string result =
+            var expected;
+
+
+            Assert.AreEqual(el, rl);
+            Assert.AreEqual(expected, result);
+        }*/
 
     }
 }

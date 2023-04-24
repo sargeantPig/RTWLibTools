@@ -11,9 +11,7 @@ namespace RTWLibPlus.edb
 {
     public class EDBObj : baseObj, IbaseObj
     {
-        //baseObj baseData;
         new public static ObjectCreator creator = (value, tag, depth) => new EDBObj(tag, value, depth);
-
         public static string[] AlwaysArrays = new string[0];
         public static string[] DoubleSpace = new string[0];
         public static string[] DoubleSpaceEnding = new string[0];
@@ -28,6 +26,7 @@ namespace RTWLibPlus.edb
             base.whiteChar = whiteSpace;
             base.whiteDepthMultiplier = whiteSpaceMultiplier;
             this.Ident = Tag.Split(whiteChar)[0];
+            
         }
 
         public EDBObj() { }

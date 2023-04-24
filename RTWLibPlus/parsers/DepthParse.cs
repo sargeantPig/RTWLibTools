@@ -14,7 +14,7 @@ namespace RTWLibPlus.parsers
     {
         public delegate IbaseObj ObjectCreator(string value, string tag, int depth);
 
-        public static List<IbaseObj> Parse(string[] lines, ObjectCreator creator)
+        public static List<IbaseObj> Parse(string[] lines, ObjectCreator creator, char splitter = ' ')
         {
             int depth = 0;
             int item = 0;
@@ -31,7 +31,7 @@ namespace RTWLibPlus.parsers
                 }
                 else
                 {
-                    if(list.Count > 0)
+                    if (list.Count > 0)
                         SetNewLinesAfter(list, depth, item, whiteSpaceSeparator);
                     whiteSpaceSeparator = 0;
                 }
@@ -39,12 +39,19 @@ namespace RTWLibPlus.parsers
                 string lineTrim = line.Trim();
                 item = list.Count - 1;
 
-                switch (lineTrim) { case "{": depth++; continue; case "}": depth--; continue; }
+                switch (lineTrim.Trim(','))
+                {
+                    case "{": depth++; continue;
+                    case "}": depth--; continue;
+                }
 
-                string tag = lineTrim.GetFirstWord(' ');
-                string value = lineTrim.RemoveFirstWord(' ');
+
+
+                string tag = lineTrim.GetFirstWord(splitter);
+                string value = lineTrim.RemoveFirstWord(splitter);
                 StoreDataInObject(creator, depth, item, list, tag, value);
             }
+        
             return list;
         }
 
