@@ -1,18 +1,13 @@
-﻿using RTWLibPlus.edb;
-using RTWLibPlus.helpers;
+﻿using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using static RTWLibPlus.parsers.DepthParse;
 
 namespace RTWLibPlus.parsers.objects
 {
     public class baseObj : IbaseObj
     {
-        public static ObjectCreator creator = (value, tag, depth) => new baseObj(tag, value, depth);
-
         public char whiteChar = '\t';
         public int whiteDepthMultiplier = 1;
         public static Func<string, int> specialPadding = null;
@@ -70,6 +65,8 @@ namespace RTWLibPlus.parsers.objects
 
             return output;
         }
+
+
 
         public List<IbaseObj> GetItems()
         {

@@ -1,32 +1,19 @@
-﻿
-
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RTWLib_Tests.dummy;
-using RTWLibPlus;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
-using RTWLibPlus.ds;
 using RTWLibPlus.parsers.objects;
-using Microsoft.VisualStudio.TestPlatform.Utilities.Helpers;
-using System.IO;
-using RTWLibPlus.ds;
 
-
-
-namespace RTWLib_Tests.ds
+namespace RTWLib_Tests.wrappers
 {
     [TestClass]
     public class Tests_ds
     {
         [TestMethod]
         public void dsWholeFile()
-        {       
+        {
             var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, DSObj.creator);
+            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             string result = parsedds.Output();

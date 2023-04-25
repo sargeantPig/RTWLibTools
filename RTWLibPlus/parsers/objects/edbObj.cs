@@ -1,32 +1,30 @@
 ﻿using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
-using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using static RTWLibPlus.parsers.DepthParse;
 
-namespace RTWLibPlus.edb
+namespace RTWLibPlus.parsers.objects
 {
     public class EDBObj : baseObj, IbaseObj
     {
-        new public static ObjectCreator creator = (value, tag, depth) => new EDBObj(tag, value, depth);
-        public static string[] AlwaysArrays = new string[0];
-        public static string[] DoubleSpace = new string[0];
-        public static string[] DoubleSpaceEnding = new string[0];
-        public static string[] WhiteSpaceSwap = new string[0];
+        
+        public static string[] AlwaysArrays = new string[] { "plugins", "upgrades" };
+        public static string[] DoubleSpace = new string[] { "construction", "cost" };
+        public static string[] DoubleSpaceEnding = new string[] { "levels" };
+        public static string[] WhiteSpaceSwap = new string[] { "requires", "temple" };
 
         public static char whiteSpace = ' ';
         public static int whiteSpaceMultiplier = 4;
 
-        public EDBObj(string tag, string value, int depth) : 
-            base(tag, value, depth) {
-
-            base.whiteChar = whiteSpace;
-            base.whiteDepthMultiplier = whiteSpaceMultiplier;
-            this.Ident = Tag.Split(whiteChar)[0];
-            
+        public EDBObj(string tag, string value, int depth) :
+            base(tag, value, depth)
+        {
+            whiteChar = whiteSpace;
+            whiteDepthMultiplier = whiteSpaceMultiplier;
+            Ident = Tag.Split(whiteChar)[0];
         }
 
         public EDBObj() { }

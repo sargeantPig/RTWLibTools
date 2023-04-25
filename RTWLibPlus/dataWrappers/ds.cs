@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Text;
 
-namespace RTWLibPlus.ds
+namespace RTWLibPlus.dataWrappers
 {
     public class DS
     {

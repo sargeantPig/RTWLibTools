@@ -1,21 +1,17 @@
-﻿using RTWLibPlus.edb;
-using RTWLibPlus.helpers;
+﻿using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
-using RTWLibPlus.parsers.objects;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+
 using static RTWLibPlus.parsers.DepthParse;
 
-namespace RTWLibPlus.ds
+namespace RTWLibPlus.parsers.objects
 {
     public class DSObj : baseObj, IbaseObj
     {
-        new public static ObjectCreator creator = (value, tag, depth) => new DSObj(tag, value, depth);
-        public static string[] applyDepthToNonArrayAt = new string[3] {"playable", "unlockable", "nonplayable" };
+        public static string[] applyDepthToNonArrayAt = new string[3] { "playable", "unlockable", "nonplayable" };
         public static string terminateNonArrayDepthAt = "end";
-        
+
         public static char whiteSpace = '\t';
         public static int whiteSpaceMultiplier = 1;
 
@@ -24,9 +20,9 @@ namespace RTWLibPlus.ds
         public DSObj(string tag, string value, int depth) :
             base(tag, value, depth)
         {
-            base.whiteChar = whiteSpace;
-            base.whiteDepthMultiplier = whiteSpaceMultiplier;
-            this.Ident = Tag.Split(whiteChar)[0];
+            whiteChar = whiteSpace;
+            whiteDepthMultiplier = whiteSpaceMultiplier;
+            Ident = Tag.Split(whiteChar)[0];
         }
 
         new public string Output()
@@ -38,7 +34,7 @@ namespace RTWLibPlus.ds
             output = ChildOutput(output);
             CheckForNonArray();
 
-            
+
 
             output = IfResource(output);
             output = IfRelative(output);
@@ -73,7 +69,7 @@ namespace RTWLibPlus.ds
             {
                 string[] splitData = Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 splitData = splitData.TrimAll();
-                string resource = string.Format("{0}{1}{2},{3}{4},{5}{6}{7}", 
+                string resource = string.Format("{0}{1}{2},{3}{4},{5}{6}{7}",
                     Tag,
                     Format.GetWhiteSpace(Tag, 25, ' '),
                     splitData[0],
@@ -93,9 +89,9 @@ namespace RTWLibPlus.ds
             {
                 string[] splitData = Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 splitData = splitData.TrimAll();
-                int i =0;
+                int i = 0;
                 string formatted = string.Empty;
-                foreach(string str in splitData)
+                foreach (string str in splitData)
                 {
                     if (i == splitData.Count() - 1 && i == 2)
                         formatted += string.Format("{0}{1}{2}", Format.GetWhiteSpace("", 2, '\t'), str, Environment.NewLine);
@@ -103,8 +99,8 @@ namespace RTWLibPlus.ds
                         formatted += string.Format("{0} \t{1},", Tag, str);
                     else if (i == 1)
                         formatted += string.Format(" \t{0},", str);
-                    else if (i ==2 )
-                        formatted += string.Format("\t\t{0},",str);
+                    else if (i == 2)
+                        formatted += string.Format("\t\t{0},", str);
                     else if (i == splitData.Count() - 1)
                         formatted += string.Format("\t{0}{1}", str, Environment.NewLine);
                     else
@@ -133,7 +129,7 @@ namespace RTWLibPlus.ds
                         formatted += string.Format("{0} \t{1},", Tag, str);
                     else if (i == 0)
                         formatted += string.Format("{0} {1},", Tag, str);
-                    else if (i == 1 && splitData[i-1] != "female" && splitData[i-1] != "male")
+                    else if (i == 1 && splitData[i - 1] != "female" && splitData[i - 1] != "male")
                         formatted += string.Format(" \t{0},", str);
                     else if (i == splitData.Count() - 1)
                         formatted += string.Format(" {0}{1}", str, Environment.NewLine);
@@ -177,7 +173,7 @@ namespace RTWLibPlus.ds
             return output;
         }
 
-        private string IfApplyingNonArrayDepth(string output, int wDepth) 
+        private string IfApplyingNonArrayDepth(string output, int wDepth)
         {
             if (applyNonArrayDepth)
                 return GetTabbedLine(1) + output;

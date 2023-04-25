@@ -3,6 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using RTWLibPlus.interfaces;
+using RTWLibPlus.parsers.objects;
+using System.Reflection;
 
 namespace RTWLib_Tests
 {
@@ -25,6 +28,19 @@ namespace RTWLib_Tests
             }
 
             CollectionAssert.AreEqual(lstKeysExpected.ToArray(), lstKeysResult.ToArray());
+        }
+
+        public static void LoopListAssert(List<IbaseObj> expected, List<IbaseObj> result)
+        {
+            Type t = result[0].GetType();
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                foreach (PropertyInfo property in t.GetProperties())
+                {
+                    Assert.AreEqual(property.GetValue(expected[i]), property.GetValue(result[i]));
+                }
+            }
         }
     }
 }

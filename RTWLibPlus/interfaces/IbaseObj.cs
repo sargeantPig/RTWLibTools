@@ -1,11 +1,5 @@
-﻿using RTWLibPlus.edb;
-using RTWLibPlus.parsers.objects;
-using System;
-using System.Collections.Generic;
-using System.Net.WebSockets;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.Collections.Generic;
+
 
 namespace RTWLibPlus.interfaces
 {

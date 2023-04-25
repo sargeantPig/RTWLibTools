@@ -9,7 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace RTWLib_Tests.edu
+namespace RTWLib_Tests.wrappers
 {
     [TestClass]
     public class Tests_edu
@@ -32,9 +32,10 @@ namespace RTWLib_Tests.edu
             Assert.AreEqual(origStr, result);
         }
         [TestMethod]
-        public void UnitReadCorrectly() {
+        public void UnitReadCorrectly()
+        {
             var result = new List<Dictionary<string, string[]>>();
-            TokenParse.ReadAndPrepare( result,RFH.CurrDirPath("resources","unitExample.txt"), ',', "type");
+            TokenParse.ReadAndPrepare(result, RFH.CurrDirPath("resources", "unitExample.txt"), ',', "type");
             var expected = dummyUnit.GetDummy();
             TestHelper.LoopCollectionAssert(expected, result[0]);
             Assert.AreEqual(2, result.Count);
