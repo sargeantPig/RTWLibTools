@@ -7,10 +7,8 @@ using System.Text;
 
 namespace RTWLibPlus.dataWrappers
 {
-    public class DS
+    public class DS : BaseWrapper
     {
-        public List<IbaseObj> data = new List<IbaseObj>();
-
         public DS(List<IbaseObj> data)
         {
             this.data = data;
