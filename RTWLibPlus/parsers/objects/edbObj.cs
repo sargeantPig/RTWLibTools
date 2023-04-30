@@ -27,8 +27,6 @@ namespace RTWLibPlus.parsers.objects
             Ident = Tag.Split(whiteChar)[0];
         }
 
-        public EDBObj() { }
-
         new public string Output()
         {
             string output = string.Empty;

@@ -128,10 +128,58 @@ namespace RTWLibPlus.dataWrappers
             }
             return found;
         }
+        public List<IbaseObj> GetAllItemsButStopAt(Func<string, bool> stopAt, params string[] criteriaTags)
+        {
+            bool[] criteria = new bool[criteriaTags.Count()];
+            int currCrit = 0;
+            List<IbaseObj> found = new List<IbaseObj>();
+            foreach (var item in data)
+            {
+                baseObj bi = (baseObj)item;
+                if (bi.Ident == criteriaTags[currCrit] || bi.Tag == criteriaTags[currCrit])
+                {
+                    criteria[currCrit] = true;
+                    if (currCrit != criteriaTags.Count() - 1)
+                        currCrit++;
+                }
+
+                if (criteria.All((x) => x == true))
+                {
+                    found.Add(bi);
+                }
+                if (stopAt(bi.Ident) && criteria.All((x) => x == true) && bi.Ident != criteriaTags[currCrit])
+                    return found;
+            }
+            return found;
+        }
+
+        public List<IbaseObj> GetNumberOfItems(int stopAt, params string[] criteriaTags)
+        {
+            bool[] criteria = new bool[criteriaTags.Count()];
+            int currCrit = 0;
+            List<IbaseObj> found = new List<IbaseObj>();
+            foreach (var item in data)
+            {
+                baseObj bi = (baseObj)item;
+                if (bi.Ident == criteriaTags[currCrit] || bi.Tag == criteriaTags[currCrit])
+                {
+                    criteria[currCrit] = true;
+                    if (currCrit != criteriaTags.Count() - 1)
+                        currCrit++;
+                }
+
+                if (criteria.All((x) => x == true))
+                {
+                    found.Add(bi);
+                }
+                if (found.Count >= stopAt && criteria.All((x) => x == true) && bi.Ident != criteriaTags[currCrit])
+                    return found;
+            }
+            return found;
+        }
+
         public List<IbaseObj> GetItemList(List<IbaseObj> items, int locInd = 0, params string[] location)
         {
-            string tag = string.Empty;
-            string value = string.Empty;
             for (int i = 0; i < items.Count; i++)
             {
                 baseObj item = (baseObj)items[i];

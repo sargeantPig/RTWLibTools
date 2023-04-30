@@ -53,7 +53,6 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(expected, result);
 
         }
-
         [TestMethod]
         public void edbGetBuildingLevels()
         {
@@ -67,7 +66,6 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(expected, result);
 
         }
-
         [TestMethod]
         public void edbGetRequires()
         {
@@ -81,7 +79,6 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(expected, result);
 
         }
-
         [TestMethod]
         public void edbModifyRequires()
         {
@@ -96,8 +93,6 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(expected, result);
             Assert.AreEqual(true, change);
         }
-
-
         [TestMethod]
         public void edbGetCapabiltyArray()
         {
@@ -122,7 +117,6 @@ namespace RTWLib_Tests.wrappers
 
             TestHelper.LoopListAssert(expected, result);
         }
-
         [TestMethod]
         public void edbGetPopulationHealth()
         {
@@ -136,8 +130,6 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(expected, result);
 
         }
-
-
         [TestMethod]
         public void edbModifyPopulationHealth()
         {
@@ -152,5 +144,6 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(expected, result);
             Assert.AreEqual(true, rb);
         }
+
     }
 }
