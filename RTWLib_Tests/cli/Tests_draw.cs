@@ -1,8 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLib_CLI.draw;
+using RTWLib_CLI;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RTWLib_Tests.cli
 {
@@ -13,7 +12,10 @@ namespace RTWLib_Tests.cli
         public void BorderDrawnCorrectlyWidth1()
         {
             var result = "A Test".ApplyBorder('#', 1, 0);
-            var expected = "########" + Environment.NewLine + "#A Test#" + Environment.NewLine + "########" + Environment.NewLine;
+            var expected = 
+                "########" + Environment.NewLine +
+                "#A Test#" + Environment.NewLine +
+                "########" + Environment.NewLine;
             Assert.AreEqual(expected, result);
         }
         [TestMethod]
