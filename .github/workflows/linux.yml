@@ -40,7 +40,5 @@ jobs:
         run: ls
       - name: pwd
         run: pwd
-      - name: Restore dependencies
-        run: dotnet restore ${{ env.Solution_Name }}
       - name: Run Tests
         run: dotnet test ${{ env.Test_Project_Path }}
