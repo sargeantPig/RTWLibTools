@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RTWLibPlus\RTWLibPlus.csproj" />
-    <ProjectReference Include="..\RTWLIB_CLI\RTWLib_CLI.csproj" />
+    <ProjectReference Include="..\RTWLib_CLI\RTWLib_CLI.csproj" />
   </ItemGroup>
 
   <ItemGroup>
