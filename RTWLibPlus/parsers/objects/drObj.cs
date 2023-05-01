@@ -7,8 +7,8 @@ namespace RTWLibPlus.parsers.objects
 {
     public class DRObj : baseObj, IbaseObj
     {
-        public static char whiteSpace = '\t';
-        public static int whiteSpaceMultiplier = 1;
+        private static char whiteSpace = '\t';
+        private static int whiteSpaceMultiplier = 1;
 
         public DRObj(string tag, string value, int depth) :
             base(tag, value, depth)

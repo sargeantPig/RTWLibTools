@@ -10,14 +10,14 @@ namespace RTWLibPlus.parsers.objects
 {
     public class EDBObj : baseObj, IbaseObj
     {
-        
-        public static string[] AlwaysArrays = new string[] { "plugins", "upgrades" };
-        public static string[] DoubleSpace = new string[] { "construction", "cost" };
-        public static string[] DoubleSpaceEnding = new string[] { "levels" };
-        public static string[] WhiteSpaceSwap = new string[] { "requires", "temple" };
 
-        public static char whiteSpace = ' ';
-        public static int whiteSpaceMultiplier = 4;
+        private static string[] AlwaysArrays = new string[] { "plugins", "upgrades" };
+        private static string[] DoubleSpace = new string[] { "construction", "cost" };
+        private static string[] DoubleSpaceEnding = new string[] { "levels" };
+        private static string[] WhiteSpaceSwap = new string[] { "requires", "temple" };
+
+        private static char whiteSpace = ' ';
+        private static int whiteSpaceMultiplier = 4;
 
         public EDBObj(string tag, string value, int depth) :
             base(tag, value, depth)

@@ -8,6 +8,23 @@ namespace RTWLibPlus.helpers
     public static class exArray
     {
 
+        public static T[] GetItemsFrom<T>(this T[] values, int index)
+        {
+            int newLength = values.Length - index;
+
+            if (newLength < 0)
+                return new T[0];
+
+            T[] array = new T[newLength];
+            int b = 0;
+            for(int i = index; i < values.Length; i++)
+            {
+                array[b] = values[i];
+                b++;
+            }
+            return array;
+        }
+
         public static T[] Add<T>(this T[] values, T value)
         {
             T[] array = new T[values.Length+1];
@@ -33,6 +50,17 @@ namespace RTWLibPlus.helpers
                 array[i] = array[i].Trim();
             }
             return array;
+        }
+
+        public static int GetLongestLength(this string[] array)
+        {
+            int length = 0;
+            foreach(string s in array)
+            {
+                if(length < s.Length)
+                    length = s.Length;
+            }
+            return length;
         }
 
         public static string ToString(this string[] array, params char[] spacer)

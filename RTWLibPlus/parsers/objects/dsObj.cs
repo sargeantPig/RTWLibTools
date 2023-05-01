@@ -9,13 +9,12 @@ namespace RTWLibPlus.parsers.objects
 {
     public class DSObj : baseObj, IbaseObj
     {
-        public static string[] applyDepthToNonArrayAt = new string[3] { "playable", "unlockable", "nonplayable" };
-        public static string terminateNonArrayDepthAt = "end";
+        private static string[] applyDepthToNonArrayAt = new string[3] { "playable", "unlockable", "nonplayable" };
+        private static string terminateNonArrayDepthAt = "end";
 
         public static char whiteSpace = '\t';
-        public static int whiteSpaceMultiplier = 1;
-
-        static bool applyNonArrayDepth = false;
+        private static int whiteSpaceMultiplier = 1;
+        private static bool applyNonArrayDepth = false;
         public bool lastOfGroup = false;
         public DSObj(string tag, string value, int depth) :
             base(tag, value, depth)
@@ -33,8 +32,6 @@ namespace RTWLibPlus.parsers.objects
             output = GetTagValue(wDepth);
             output = ChildOutput(output);
             CheckForNonArray();
-
-
 
             output = IfResource(output);
             output = IfRelative(output);
