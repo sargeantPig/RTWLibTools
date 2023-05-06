@@ -22,14 +22,16 @@ namespace RTWLibPlus.dataWrappers
             {
                 baseObj item = (baseObj)items[i];
 
-                if (location[locInd] == item.Tag)
+                if (location[locInd] == item.Tag || location[locInd] == item.Ident || location[locInd] == item.Value)
                 {
                     if (locInd == location.Count() - 1)
                     {
                         item.Value = newValue;
                         done = true;
                     }
-                    else done = ModifyValue(item.GetItems(), newValue, ++locInd, done, location);
+                    else if(item.GetItems().Count > 0) done = ModifyValue(item.GetItems(), newValue, ++locInd, done, location);
+
+                    else locInd++;
                 }
             }
             return done;
@@ -199,11 +201,13 @@ namespace RTWLibPlus.dataWrappers
             {
                 baseObj item = (baseObj)items[i];
 
-                if (location[locInd] == item.Tag || location[locInd] == item.Ident)
+                if (location[locInd] == item.Tag || location[locInd] == item.Ident || location[locInd] == item.Value)
                 {
                     if (locInd == location.Count() - 1)
                         return new KeyValuePair<string, string>(item.Tag, item.Value);
-                    else return GetKeyValueAtLocation(item.GetItems(), ++locInd, location);
+                    else if(item.GetItems().Count > 0 ) return GetKeyValueAtLocation(item.GetItems(), ++locInd, location);
+
+                    else locInd += 1;
                 }
             }
             return new KeyValuePair<string, string>();

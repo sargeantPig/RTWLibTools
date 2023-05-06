@@ -16,12 +16,12 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbParse()
         {
-            var edb = TokenParse.ReadFile(Path.Combine("resources", "edbExample.txt"), false);
+            var edb = DepthParse.ReadFile(Path.Combine("resources", "edbExample.txt"), false);
             var edbParse = DepthParse.Parse(edb, Creator.EDBcreator);
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();
-            var expected = TokenParse.ReadFileAsString(RFH.CurrDirPath("resources", "edbExample.txt"));
+            var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "edbExample.txt"));
 
             RFH.Write("./result.txt", result);
             RFH.Write("./expected.txt", expected);
@@ -36,12 +36,12 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbWholeFile()
         {
-            var edb = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
+            var edb = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
             var edbParse = DepthParse.Parse(edb, Creator.EDBcreator);
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();
-            var expected = TokenParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
+            var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
 
             RFH.Write("./result.txt", result);
             RFH.Write("./expected.txt", expected);
@@ -56,7 +56,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbGetBuildingLevels()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
@@ -69,7 +69,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbGetRequires()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
@@ -82,7 +82,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbModifyRequires()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
@@ -96,7 +96,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbGetCapabiltyArray()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
@@ -120,7 +120,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbGetPopulationHealth()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
@@ -133,7 +133,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbModifyPopulationHealth()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
             bool rb = parsedsmf.ModifyValue(parsedsmf.data, "bonus 3",  0, false, "health", "levels", "sewers", "capability", "population_health_bonus");

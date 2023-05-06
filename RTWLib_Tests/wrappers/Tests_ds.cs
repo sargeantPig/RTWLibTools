@@ -12,12 +12,12 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsWholeFile()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             string result = parsedds.Output();
-            var expected = TokenParse.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
+            var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
 
             RFH.Write("./dsresult.txt", result);
             RFH.Write("./dsexpected.txt", expected);
@@ -31,7 +31,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentSettlements()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
@@ -43,7 +43,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentResource()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
@@ -55,7 +55,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentFaction()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
@@ -67,7 +67,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentCoreAttitudes()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
@@ -79,7 +79,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsDeleteByIdent()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
@@ -92,7 +92,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsAddSettlementToRomansBrutii()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
@@ -106,7 +106,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsAddSettlementToScythia()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
              
@@ -120,7 +120,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsAddUnitToFlavius()
         {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
             var units = parsedds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
@@ -130,34 +130,6 @@ namespace RTWLib_Tests.wrappers
             RFH.Write("./dsresult.txt", parsedds.Output());
             Assert.AreEqual(expected, result.Count); //check number of returned ca
         }
-
-        /*public void dsAddSettlement()
-        {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
-
-
-            var result = parsedds.GetItemsByIdent("settlement");
-            var expected = 96; //number of settlements
-
-            Assert.AreEqual(expected, result.Count); //check number of returned settlements
-        }*/
-
-        /*[TestMethod]
-        public void dsWholeFile()
-        {
-            var ds = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, DSObj.creator);
-            var parsedds = new DS(dsParse);
-
-            string result =
-            var expected;
-
-
-            Assert.AreEqual(el, rl);
-            Assert.AreEqual(expected, result);
-        }*/
 
     }
 }

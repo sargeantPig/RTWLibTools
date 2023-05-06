@@ -1,12 +1,16 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLib_Tests.dummy;
+using RTWLibPlus.dataWrappers;
+using RTWLibPlus.dataWrappers.edb;
 using RTWLibPlus.edu;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
+using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace RTWLib_Tests.wrappers
@@ -15,39 +19,50 @@ namespace RTWLib_Tests.wrappers
     public class Tests_edu
     {
         [TestMethod]
-        public void UnitOutputFormatted()
+        public void eduWithDepthParser()
         {
-            var datas = new List<Dictionary<string, string[]>>();
-            TokenParse.ReadAndPrepare(datas, RFH.CurrDirPath("resources", "unitExample.txt"), ',', "type");
-            var units = Unit.UnitArray(datas);
-            var orig = TokenParse.ReadFile(RFH.CurrDirPath("resources", "unitExample.txt"));
-            string origStr = orig.ToString(Environment.NewLine.ToArray());
-            string result = string.Empty;
-            for (int i = 0; i < units.Count(); i++)
-            {
-                result += units[i].Output();
-            }
-            result = result.TrimEnd();
-            Console.WriteLine(result.Length + " : " + origStr.Length);
-            Assert.AreEqual(origStr, result);
-        }
-        [TestMethod]
-        public void UnitReadCorrectly()
-        {
-            var result = new List<Dictionary<string, string[]>>();
-            TokenParse.ReadAndPrepare(result, RFH.CurrDirPath("resources", "unitExample.txt"), ',', "type");
-            var expected = dummyUnit.GetDummy();
-            TestHelper.LoopCollectionAssert(expected, result[0]);
-            Assert.AreEqual(2, result.Count);
+            var edu = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
+            var eduParse = DepthParse.Parse(edu, Creator.EDUcreator);
+            var parsedds = new EDU(eduParse);
 
-        }
-        [TestMethod]
-        public void FileReadLineArray()
-        {
-            string[] result = TokenParse.ReadFile(RFH.CurrDirPath("resources", "inputTest.txt"));
-            string[] expected = new string[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+            string result = parsedds.Output();
+            var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_unit.txt"));
 
-            CollectionAssert.AreEqual(expected, result);
+            RFH.Write("./eduResult.txt", result);
+            RFH.Write("./eduExpected.txt", expected);
+
+            int rl = result.Length;
+            int el = expected.Length;
+
+            Assert.AreEqual(el, rl);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void eduGetValueByCriteria()
+        {
+            var edu = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
+            var eduParse = DepthParse.Parse(edu, Creator.EDUcreator);
+            var parsedds = new EDU(eduParse);
+            var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "roman_hastati", "ownership");
+            var expected = new KeyValuePair<string, string>("ownership", "roman"); //number of ca
+  
+            Assert.AreEqual(expected, result); //check number of returned ca
+        }
+
+        [TestMethod]
+        public void edbModifyRequires()
+        {
+            var edu = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
+            var eduParse = DepthParse.Parse(edu, Creator.EDUcreator);
+            var parsedds = new EDU(eduParse);
+
+            var change = parsedds.ModifyValue(parsedds.data, "roman", 0, false, "carthaginian_generals_cavalry_early", "ownership");
+            var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "carthaginian_generals_cavalry_early", "ownership");
+            var expected = new KeyValuePair<string, string>("ownership", "roman");
+
+            Assert.AreEqual(expected, result);
+            Assert.AreEqual(true, change);
         }
     }
 }

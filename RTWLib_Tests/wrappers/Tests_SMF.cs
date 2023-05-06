@@ -13,7 +13,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void SMFCheckDataIsParsedDepth1()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.BaseCreator, ':');
             var parsedsmf = new SMF(smfParse);
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "romans_julii", "culture");
@@ -24,7 +24,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void SMFCheckDataIsParsedDepth2()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.BaseCreator, ':');
             var parsedsmf = new SMF(smfParse);
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "germans", "colours", "primary");
@@ -34,7 +34,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void SMFCheckDataIsParsedDepth3()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.BaseCreator, ':');
             var parsedsmf = new SMF(smfParse);
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "britons", "colours", "family tree", "selected line");
@@ -45,7 +45,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void SMFCheckDataIsParsedDepth4()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.BaseCreator, ':');
             var parsedsmf = new SMF(smfParse);
 

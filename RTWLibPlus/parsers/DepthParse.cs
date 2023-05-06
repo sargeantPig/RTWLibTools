@@ -3,6 +3,7 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -90,6 +91,34 @@ namespace RTWLibPlus.parsers
                 SetNLWithDepth(list[item].GetItems(), depth, item, value, ++currentDepth);
             else ((baseObj)list[item]).newLinesAfter = value;
 
+        }
+
+        public static string[] ReadFile(string path, bool removeEmptyLines = true)
+        {
+            StreamReader streamReader = new StreamReader(path);
+            string text = streamReader.ReadToEnd();
+            streamReader.Close();
+
+            if (removeEmptyLines)
+                return GetLinesRemoveEmpty(text);
+            else return GetLines(text);
+        }
+
+        public static string ReadFileAsString(string path)
+        {
+            StreamReader streamReader = new StreamReader(path);
+            string text = streamReader.ReadToEnd();
+            streamReader.Close();
+            return text;
+        }
+
+        private static string[] GetLinesRemoveEmpty(string text)
+        {
+            return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+        }
+        private static string[] GetLines(string text)
+        {
+            return text.Split("\n");
         }
     }
 }

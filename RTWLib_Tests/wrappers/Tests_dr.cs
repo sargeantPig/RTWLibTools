@@ -16,7 +16,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void DRGetRegionDataLocusGepidae()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.DRcreator, '\t');
             var parsedsmf = new DR(smfParse);
             var result = parsedsmf.GetNumberOfItems(8, "Locus_Gepidae");
@@ -28,7 +28,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void DRGetRegionDataHibernia()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.DRcreator, '\t');
             var parsedsmf = new DR(smfParse);
             var result = parsedsmf.GetNumberOfItems(8, "Hibernia");
@@ -39,7 +39,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void DRGetRegionDataThebais()
         {
-            var smf = TokenParse.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
+            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
             var smfParse = DepthParse.Parse(smf, Creator.DRcreator, '\t');
             var parsedsmf = new DR(smfParse);
             var result = parsedsmf.GetNumberOfItems(8, "Thebais");
