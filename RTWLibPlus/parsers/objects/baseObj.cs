@@ -11,7 +11,7 @@ namespace RTWLibPlus.parsers.objects
         public char whiteChar = '\t';
         public int whiteDepthMultiplier = 1;
         public static Func<string, int> specialPadding = null;
-        private List<IbaseObj> items = new List<IbaseObj>();
+        public List<IbaseObj> items = new List<IbaseObj>();
         
         public string Tag { get; set; } = string.Empty;
         public string Ident { get; set; } = string.Empty;
@@ -28,6 +28,20 @@ namespace RTWLibPlus.parsers.objects
             this.Value = value;
             this.depth = depth;
             this.Ident = Tag.Split(whiteChar)[0];
+        }
+
+        public IbaseObj Copy()
+        {
+            baseObj copy = new baseObj();
+            copy.whiteChar = whiteChar;
+            copy.depth = depth;
+            copy.items = items.DeepCopy();
+            copy.whiteDepthMultiplier = whiteDepthMultiplier;
+            copy.Tag = Tag;
+            copy.Value = Value;
+            copy.Ident = Ident;
+            copy.newLinesAfter = newLinesAfter;
+            return copy;
         }
 
         public string Output()
@@ -65,8 +79,6 @@ namespace RTWLibPlus.parsers.objects
 
             return output;
         }
-
-
 
         public List<IbaseObj> GetItems()
         {

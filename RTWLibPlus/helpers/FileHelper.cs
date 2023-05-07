@@ -1,7 +1,11 @@
-﻿using System;
+﻿using RTWLibPlus.interfaces;
+using RTWLibPlus.parsers.objects;
+using RTWLibPlus.parsers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using static RTWLibPlus.parsers.DepthParse;
 
 namespace RTWLibPlus.helpers
 {
@@ -24,7 +28,13 @@ namespace RTWLibPlus.helpers
             return finpath;
         }
 
-       
+        public static List<IbaseObj> ParseFile(ObjectCreator creator, char splitter = ' ',  bool removeEmptyLines = false, params string[] path)
+        {
+            var fileLines = DepthParse.ReadFile(RFH.CurrDirPath(path), removeEmptyLines);
+            var parsed = DepthParse.Parse(fileLines, creator, splitter);
+
+            return parsed;
+        }
 
     }
 }

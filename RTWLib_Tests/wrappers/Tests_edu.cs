@@ -51,11 +51,9 @@ namespace RTWLib_Tests.wrappers
         }
 
         [TestMethod]
-        public void edbModifyRequires()
+        public void eduModifyOwnership()
         {
-            var edu = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
-            var eduParse = DepthParse.Parse(edu, Creator.EDUcreator);
-            var parsedds = new EDU(eduParse);
+            var parsedds = new EDU(RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt") );
 
             var change = parsedds.ModifyValue(parsedds.data, "roman", 0, false, "carthaginian_generals_cavalry_early", "ownership");
             var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "carthaginian_generals_cavalry_early", "ownership");
@@ -63,6 +61,29 @@ namespace RTWLib_Tests.wrappers
 
             Assert.AreEqual(expected, result);
             Assert.AreEqual(true, change);
+        }
+
+        [TestMethod]
+        public void eduModifyBulkModifyOwnership()
+        {
+            var edu = new EDU(RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt"));
+            var ownerships = edu.GetItemsByIdent("ownership");
+
+            foreach (EDUObj o in ownerships)
+            {
+                o.Value = "roman";
+            }
+
+            var result1 = edu.GetKeyValueAtLocation(edu.data, 0, "carthaginian_generals_cavalry_early", "ownership");
+            var expected1 = new KeyValuePair<string, string>("ownership", "roman");
+
+            var result2 = edu.GetKeyValueAtLocation(edu.data, 0, "roman_arcani", "ownership");
+            var expected2 = new KeyValuePair<string, string>("ownership", "roman");
+
+            RFH.Write("./eduResult.txt", edu.Output());
+
+            Assert.AreEqual(expected1, result1);
+            Assert.AreEqual(expected2, result2);
         }
     }
 }

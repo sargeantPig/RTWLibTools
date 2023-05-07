@@ -21,6 +21,23 @@ namespace RTWLibPlus.parsers.objects
             Ident = Tag.Split(whiteChar)[0];
         }
 
+        public EDUObj() { }
+
+        new public IbaseObj Copy()
+        {
+            EDUObj copy = new EDUObj();
+            copy.whiteChar = whiteSpace;
+            copy.depth = depth;
+            copy.items = items.DeepCopy();
+            copy.whiteDepthMultiplier = whiteSpaceMultiplier;
+            copy.Tag = Tag;
+            copy.Value = Value;
+            copy.Ident = Ident;
+            copy.newLinesAfter = newLinesAfter;
+            copy.endOfUnit = endOfUnit;
+            return copy;
+        }
+
         new public string Output()
         {
             string output = string.Empty;

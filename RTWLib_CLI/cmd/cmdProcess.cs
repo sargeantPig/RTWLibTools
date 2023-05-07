@@ -33,7 +33,25 @@ namespace RTWLib_CLI.cmd
 
                 string[] args = cmdSplit.GetItemsFrom(invokeInd + 1);
 
-                return (string)t.Invoke(new object(), new object[] { args });              
+                var par = t.GetParameters();
+                object[] newArg = new object[par.Length];
+
+                for(int i =0; i < par.Length; i++)
+                {
+                    type = par[i].ParameterType;
+
+                    if (type == typeof(Int32))
+                        newArg[i] = Convert.ToInt32(args[i]);
+                    else if (type == typeof(string[]))
+                    {
+                        newArg[i] = args.GetItemsFrom(i);
+                    }
+                    else newArg[i] = args[i];
+
+                }
+
+
+                return (string)t.Invoke(new object(), newArg);              
             }
             return KW.error + ": Command not found, are the arguments correct?";
         }

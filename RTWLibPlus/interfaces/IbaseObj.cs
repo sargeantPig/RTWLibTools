@@ -8,5 +8,7 @@ namespace RTWLibPlus.interfaces
         public string Output();
         public List<IbaseObj> GetItems();
         public void SetItems(List<IbaseObj> values);
+
+        public IbaseObj Copy();
     }
 }

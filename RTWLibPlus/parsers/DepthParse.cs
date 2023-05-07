@@ -14,7 +14,6 @@ namespace RTWLibPlus.parsers
     public static class DepthParse
     {
         public delegate IbaseObj ObjectCreator(string value, string tag, int depth);
-
         public static List<IbaseObj> Parse(string[] lines, ObjectCreator creator, char splitter = ' ')
         {
             int depth = 0;
@@ -55,7 +54,6 @@ namespace RTWLibPlus.parsers
         
             return list;
         }
-
         private static void StoreDataInObject(ObjectCreator creator, int depth, int item, List<IbaseObj> list, string tag, string value)
         {
             if (depth == 0 && tag != null)
@@ -63,7 +61,6 @@ namespace RTWLibPlus.parsers
             else if (depth > 0)
                 AddWithDepth(creator, list, item, depth, 0, tag, value);
         }
-
         private static void AddWithDepth(ObjectCreator creator, List<IbaseObj> objs, int item, int depth, int currentDepth, string tag, string value)
         {
             item = objs.Count - 1;
@@ -71,7 +68,6 @@ namespace RTWLibPlus.parsers
                 AddWithDepth(creator, objs[item].GetItems(), item, depth, ++currentDepth, tag, value);
             else objs.Add(creator(value, tag, depth));
         }
-
         private static void SetNewLinesAfter(List<IbaseObj> list, int depth, int item, int value)
         {
             item = list.Count - 1;
@@ -80,7 +76,6 @@ namespace RTWLibPlus.parsers
             else if (depth > 0)
                 SetNLWithDepth(list, depth, item, value, 0);
         }
-
         private static void SetNLWithDepth(List<IbaseObj> list, int depth, int item, int value, int currentDepth)
         {
             item = list.Count - 1;
@@ -92,7 +87,6 @@ namespace RTWLibPlus.parsers
             else ((baseObj)list[item]).newLinesAfter = value;
 
         }
-
         public static string[] ReadFile(string path, bool removeEmptyLines = true)
         {
             StreamReader streamReader = new StreamReader(path);
@@ -103,7 +97,6 @@ namespace RTWLibPlus.parsers
                 return GetLinesRemoveEmpty(text);
             else return GetLines(text);
         }
-
         public static string ReadFileAsString(string path)
         {
             StreamReader streamReader = new StreamReader(path);
@@ -111,7 +104,6 @@ namespace RTWLibPlus.parsers
             streamReader.Close();
             return text;
         }
-
         private static string[] GetLinesRemoveEmpty(string text)
         {
             return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);

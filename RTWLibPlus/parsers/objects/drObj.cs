@@ -1,4 +1,5 @@
-﻿using RTWLibPlus.interfaces;
+﻿using RTWLibPlus.helpers;
+using RTWLibPlus.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,22 @@ namespace RTWLibPlus.parsers.objects
             whiteChar = whiteSpace;
             whiteDepthMultiplier = whiteSpaceMultiplier;
             Ident = Tag.Split(whiteChar)[0];
+        }
+
+        public DRObj(){}
+
+        new public IbaseObj Copy()
+        {
+            DRObj copy = new DRObj();
+            copy.whiteChar = whiteSpace;
+            copy.depth = depth;
+            copy.items = items.DeepCopy();
+            copy.whiteDepthMultiplier = whiteSpaceMultiplier;
+            copy.Tag = Tag;
+            copy.Value = Value;
+            copy.Ident = Ident;
+            copy.newLinesAfter = newLinesAfter;
+            return copy;
         }
 
     }

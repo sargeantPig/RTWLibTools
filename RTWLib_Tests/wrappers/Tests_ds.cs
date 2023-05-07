@@ -83,6 +83,7 @@ namespace RTWLib_Tests.wrappers
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
+            var settlements = parsedds.GetItemsByIdent("settlement");
             parsedds.DeleteValue(parsedds.data, "settlement");
             var result = parsedds.GetItemsByIdent("settlement");
             var expected = 0; //number of ca

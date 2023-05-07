@@ -1,5 +1,7 @@
-﻿using System;
+﻿using RTWLibPlus.interfaces;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 
@@ -8,16 +10,27 @@ namespace RTWLibPlus.helpers
     public static class exArray
     {
 
-        public static T[] GetItemsFrom<T>(this T[] values, int index)
+        public static List<IbaseObj> DeepCopy(this List<IbaseObj> list)
         {
-            int newLength = values.Length - index;
+            List<IbaseObj> objs = new List<IbaseObj>();
+
+            foreach (var i in list)
+            {
+                objs.Add(i.Copy());
+            }
+            return objs;
+        }
+
+        public static T[] GetItemsFrom<T>(this T[] values, int startIndex)
+        {
+            int newLength = values.Length - startIndex;
 
             if (newLength < 0)
                 return new T[0];
 
             T[] array = new T[newLength];
             int b = 0;
-            for(int i = index; i < values.Length; i++)
+            for(int i = startIndex; i < values.Length; i++)
             {
                 array[b] = values[i];
                 b++;
@@ -75,6 +88,18 @@ namespace RTWLibPlus.helpers
             return str;
         }
 
+        public static string ToString(this List<string> array, params char[] spacer)
+        {
+            string str = string.Empty;
+            string strSpacer = spacer.ConstructStringFromChars();
+            foreach (string item in array)
+            {
+                str += String.Format("{0}{1}", item, strSpacer);
+            }
+            str = str.Trim().TrimEnd(spacer);
+            return str;
+        }
+
         public static string ConstructStringFromChars(this char[] chars)
         {
             string str = string.Empty;
@@ -83,6 +108,30 @@ namespace RTWLibPlus.helpers
                 str += c;
             }
             return str;
+        }
+
+        public static void Shuffle<T>(this IList<T> list, Random rnd)
+        {
+            for (var i = 0; i < list.Count; i++)
+                list.Swap(i, rnd.Next(i, list.Count));
+        }
+
+        private static void Swap<T>(this IList<T> list, int i, int j)
+        {
+            var temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+
+        public static T GetRandom<T>(this T[] array, out int index, Random rnd)
+        {
+            index = rnd.Next(array.Count());  
+            return array[index];
+        }
+        public static T GetRandom<T>(this List<T> array, out int index, Random rnd)
+        {
+            index = rnd.Next(array.Count());
+            return array[index];
         }
     }
 }
