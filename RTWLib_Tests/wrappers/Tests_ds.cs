@@ -3,6 +3,7 @@ using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
 using RTWLibPlus.parsers.objects;
+using System.Numerics;
 
 namespace RTWLib_Tests.wrappers
 {
@@ -48,7 +49,7 @@ namespace RTWLib_Tests.wrappers
             var dsParse = DepthParse.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
             var characters = parsedds.GetItemsByIdent("character");
-            string result = DS.ChangeCharacterCoordinates(((baseObj)characters[0]).Value, new int[] { 1, 1 });
+            string result = DS.ChangeCharacterCoordinates(((baseObj)characters[0]).Value, new Vector2(1, 1 ));
             var expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
 
             Assert.AreEqual(expected, result); //check number of returned settlements

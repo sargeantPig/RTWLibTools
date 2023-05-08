@@ -10,6 +10,12 @@ namespace RTWLibPlus.helpers
     public static class exArray
     {
 
+        public static void init<T>(this List<T[]> list, int amount)
+        {
+            for(int i = 0; i < amount; i++)
+                list.Add(new T[0]);
+        }
+
         public static List<IbaseObj> DeepCopy(this List<IbaseObj> list)
         {
             List<IbaseObj> objs = new List<IbaseObj>();
@@ -41,7 +47,10 @@ namespace RTWLibPlus.helpers
         public static T[] Add<T>(this T[] values, T value)
         {
             T[] array = new T[values.Length+1];
-            values.CopyTo(array, 0);
+
+            if(values.Length > 0)
+                values.CopyTo(array, 0);
+
             array[array.Length-1] = value;
             return array;
         }

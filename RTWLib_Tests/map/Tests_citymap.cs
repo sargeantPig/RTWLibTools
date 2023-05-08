@@ -9,13 +9,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace RTWLib_Tests.wrappers
+namespace RTWLib_Tests.map
 {
     [TestClass]
     public class Tests_citymap
     {
         [TestMethod]
-        public void CityCoordinatesFetchedCorrectly() {
+        public void CityCoordinatesFetchedCorrectly()
+        {
             TGA image = new TGA();
             image.Read("tgafile", RFH.CurrDirPath("resources", "map_regions.tga"));
 

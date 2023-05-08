@@ -45,6 +45,25 @@ namespace RTWLib_CLI.cmd
         }
 
 
+        public static string CitiesVoronoi()
+        {
+            string dspath = RemasterRome.GetPath(false, "ds");
+            string drpath = RemasterRome.GetPath(false, "dr");
+            string mrpath = RemasterRome.GetPath(false, "mr");
+
+            if (ds == null)
+                ds = new DS(RFH.ParseFile(Creator.DScreator, ' ', false, dspath));
+            if (dr == null)
+                dr = new DR(RFH.ParseFile(Creator.DRcreator, '\t', false, drpath));
+            if (mr == null)
+                mr = new TGA("tgafile", mrpath);
+            if (cm == null)
+                cm = new CityMap(mr, dr);
+
+            return RandDS.RandCitiesVoronoi(ds, cm);
+        }
+
+
         public static string Output()
         {
             string path = string.Empty;

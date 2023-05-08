@@ -80,6 +80,9 @@ namespace RTWLibPlus.dataWrappers
             for (int i = 0; i < items.Count; i++)
             {
                 baseObj item = (baseObj)items[i];
+                if (item == null)
+                    continue;
+
                 if (item.Tag == criteriaTags[currCrit] || item.Ident == criteriaTags[currCrit])
                 {
                     criteria[currCrit] = true;
@@ -214,7 +217,7 @@ namespace RTWLibPlus.dataWrappers
             {
                 baseObj item = (baseObj)items[i];
                 
-                if (location[locInd] == item.Tag || location[locInd] == item.Ident)
+                if (location[locInd] == item.Tag || location[locInd] == item.Ident || location[locInd] == item.Value)
                 {
                     if (locInd == location.Count() - 1)
                         return item.GetItems();
@@ -258,6 +261,35 @@ namespace RTWLibPlus.dataWrappers
                 }
             }
             return new KeyValuePair<string, string>();
+        }
+
+        public IbaseObj GetItemByValue(List<IbaseObj> items, string lookFor)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                baseObj item = (baseObj)items[i];
+
+                if (item.GetItems().Count == 0)
+                    continue;
+                if (CheckForValue(item.GetItems(), lookFor))
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        private bool CheckForValue(List<IbaseObj> items, string lookFor)
+        {
+            foreach(var item in items)
+            {
+                if(((baseObj)item).Value == lookFor)
+                    return true;
+                if (item.GetItems().Count > 0)
+                    return CheckForValue(item.GetItems(), lookFor);
+
+            }
+            return false;
         }
     }
 }

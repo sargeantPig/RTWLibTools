@@ -24,5 +24,10 @@ namespace RTWLibPlus.randomiser
             return factionList;
         }
 
+        public static int Rint(int min, int max)
+        {
+            return rnd.Next(min, max);
+        }
+
     }
 }

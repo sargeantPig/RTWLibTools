@@ -8,19 +8,23 @@ namespace RTWLibPlus.map
 {
     public class CityMap
     {
-        public Dictionary<string, int[]> CityCoordinates = new Dictionary<string, int[]>();
+        public Dictionary<string, Vector2> CityCoordinates = new Dictionary<string, Vector2>();
+
+        public int height = 0;
+        public int width = 0;
 
         public CityMap(TGA image, DR dr) {
             GetCityCoords(image, dr);
-           
+            height = image.header.height;
+            width = image.header.width;
         }
 
         private void GetCityCoords(TGA image, DR dr)
         {
             for(int i =0; i < image.pixels.Length; i++) 
             {
-                int[] coord = ConvertIndexToCoordinates(i, image.header.width);
-                int[] upCoord = new int[] { coord[0], coord[1]+1};
+                Vector2 coord = ConvertIndexToCoordinates(i, image.header.width);
+                Vector2 upCoord = new Vector2 ( coord.X, coord.Y+1);
                 int upInd = ConvertCoordinatesToIndex(upCoord, image.header.width, image.header.height);
 
                 TGA.PIXEL pixel = image.pixels[i];
@@ -39,17 +43,17 @@ namespace RTWLibPlus.map
             }
         }
 
-        private int[] ConvertIndexToCoordinates(int i, int width)
+        private Vector2 ConvertIndexToCoordinates(int i, int width)
         {
-            return new int[] {i%width, i/width};
+            return new Vector2 (i%width, i/width);
         }
 
-        private int ConvertCoordinatesToIndex(int[] coord, int width, int height)
+        private int ConvertCoordinatesToIndex(Vector2 coord, int width, int height)
         {
-            if (coord[0] < 0 || coord[1] < 0 || coord[1] >= height || coord[0] >= width)
+            if (coord.X < 0 || coord.Y < 0 || coord.Y >= height || coord.X >= width)
                 return 0;
 
-            return coord[0] + (width*coord[1]);
+            return (int)((int)coord.X + (width*(int)coord.Y));
         }
 
     }

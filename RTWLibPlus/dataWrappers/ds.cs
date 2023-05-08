@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace RTWLibPlus.dataWrappers
@@ -41,11 +42,11 @@ namespace RTWLibPlus.dataWrappers
             }
         }
 
-        public static string ChangeCharacterCoordinates(string character, int[] coords)
+        public static string ChangeCharacterCoordinates(string character, Vector2 coords)
         {
             string[] split = character.Split(',').TrimAll();
-            string x = string.Format("x {0}", coords[0]);
-            string y = string.Format("y {0}", coords[1]);
+            string x = string.Format("x {0}", (int)coords.X);
+            string y = string.Format("y {0}", (int)coords.Y);
             split[split.Length - 1] = y;
             split[split.Length - 2] = x;
             return split.ToString(',', ' ');
