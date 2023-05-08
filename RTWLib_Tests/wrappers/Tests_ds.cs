@@ -40,6 +40,20 @@ namespace RTWLib_Tests.wrappers
 
             Assert.AreEqual(expected, result.Count); //check number of returned settlements
         }
+
+        [TestMethod]
+        public void dsGetCharacterChangeCoords()
+        {
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var parsedds = new DS(dsParse);
+            var characters = parsedds.GetItemsByIdent("character");
+            string result = DS.ChangeCharacterCoordinates(((baseObj)characters[0]).Value, new int[] { 1, 1 });
+            var expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
+
+            Assert.AreEqual(expected, result); //check number of returned settlements
+        }
+
         [TestMethod]
         public void dsGetItemsByIdentResource()
         {
@@ -130,6 +144,20 @@ namespace RTWLib_Tests.wrappers
             var expected = 6; //number of ca
             RFH.Write("./dsresult.txt", parsedds.Output());
             Assert.AreEqual(expected, result.Count); //check number of returned ca
+        }
+
+        [TestMethod]
+        public void GetRegions()
+        {
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var parsedds = new DS(dsParse);
+            var regions = parsedds.GetItemsByCriteriaDepth(parsedds.data, "core_attitudes", "region", "settlement");
+
+            var result = regions.Count;
+            var expected = 96; //number of ca
+
+            Assert.AreEqual(expected, result); //check number of returned ca
         }
 
     }

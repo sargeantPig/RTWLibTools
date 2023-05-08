@@ -28,5 +28,15 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(10, tga.header.datatypecode);
 
         }
+
+        [TestMethod]
+        public void ReadMapTga()
+        {
+            TGA tga = new TGA();
+            tga.Read("tgafile", RFH.CurrDirPath("resources/map_regions.tga"));
+            tga.Write("map_regionsTest.tga");
+            Assert.AreEqual(2, tga.header.datatypecode);
+
+        }
     }
 }

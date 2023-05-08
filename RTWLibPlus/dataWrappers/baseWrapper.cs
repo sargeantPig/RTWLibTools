@@ -130,6 +130,34 @@ namespace RTWLibPlus.dataWrappers
             }
             return found;
         }
+
+        public List<IbaseObj> GetItemsByCriteriaDepth(List<IbaseObj> list, string stopAt, string lookFor, params string[] criteriaTags)
+        {
+            bool[] criteria = new bool[criteriaTags.Count()];
+            int currCrit = 0;
+            List<IbaseObj> found = new List<IbaseObj>();
+            foreach (var item in list)
+            {
+                baseObj bi = (baseObj)item;
+                if (bi.Ident == criteriaTags[currCrit] || bi.Tag == criteriaTags[currCrit])
+                {
+                    criteria[currCrit] = true;
+                    if (currCrit != criteriaTags.Count() - 1)
+                        currCrit++;
+                }
+
+                if (criteria.All((x) => x == true))
+                {
+                    found.Add(GetItemAtLocation(item.GetItems(), 0, lookFor));
+                    currCrit = 0;
+                    criteria = new bool[criteriaTags.Count()];
+                }
+                if (stopAt == bi.Ident && criteria.All((x) => x == true))
+                    return found;
+            }
+            return found;
+        }
+
         public List<IbaseObj> GetAllItemsButStopAt(Func<string, bool> stopAt, params string[] criteriaTags)
         {
             bool[] criteria = new bool[criteriaTags.Count()];
@@ -195,6 +223,25 @@ namespace RTWLibPlus.dataWrappers
             }
             return null;
         }
+
+        public IbaseObj GetItemAtLocation(List<IbaseObj> items, int locInd = 0, params string[] location)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                baseObj item = (baseObj)items[i];
+
+                if (location[locInd] == item.Tag || location[locInd] == item.Ident || location[locInd] == item.Value)
+                {
+                    if (locInd == location.Count() - 1)
+                        return item;
+                    else if (item.GetItems().Count > 0) return GetItemAtLocation(item.GetItems(), ++locInd, location);
+
+                    else locInd += 1;
+                }
+            }
+            return null;
+        }
+
         public KeyValuePair<string, string> GetKeyValueAtLocation(List<IbaseObj> items, int locInd = 0, params string[] location)
         {
             for (int i = 0; i < items.Count; i++)

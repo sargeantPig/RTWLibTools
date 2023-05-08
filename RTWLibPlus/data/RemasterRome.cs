@@ -61,7 +61,9 @@ namespace RTWLibPlus.data
         public static Dictionary<string, string> paths = new Dictionary<string, string>()
         {
             { "edu", @"export_descr_unit.txt"},
-            { "ds", @"world\maps\campaign\imperial_campaign\descr_strat.txt"}
+            { "ds", @"world\maps\campaign\imperial_campaign\descr_strat.txt"},
+            { "dr", @"world\maps\base\descr_regions.txt" },
+            { "mr", @"world\maps\base\map_regions.tga"}
 
         };
 

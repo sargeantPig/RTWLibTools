@@ -82,7 +82,9 @@ namespace RTWLibPlus.helpers
             string strSpacer = spacer.ConstructStringFromChars();
             foreach (string item in array)
             {
-                str += String.Format("{0}{1}", item, strSpacer);
+               
+                    str += String.Format("{0}{1}", item, strSpacer);
+                //str += String.Format("{0}{1}", item, spacer[0]);
             }
             str = str.Trim().TrimEnd(spacer);
             return str;

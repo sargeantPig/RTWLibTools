@@ -1,6 +1,7 @@
 ﻿using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
+using RTWLibPlus.map;
 using RTWLibPlus.parsers.objects;
 using RTWLibPlus.randomiser;
 using System;
@@ -13,6 +14,9 @@ namespace RTWLib_CLI.cmd
     {
         static EDU edu;
         static DS ds;
+        static DR dr;
+        static CityMap cm;
+        static TGA mr;
 
         public static string Ownership(int factionList = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
         {
@@ -24,10 +28,20 @@ namespace RTWLib_CLI.cmd
 
         public static string CitiesBasic()
         {
-            string path = RemasterRome.GetPath(false, "ds");
+            string dspath = RemasterRome.GetPath(false, "ds");
+            string drpath = RemasterRome.GetPath(false, "dr");
+            string mrpath = RemasterRome.GetPath(false, "mr");
+            
             if (ds == null)
-                ds = new DS(RFH.ParseFile(Creator.DScreator, ' ', false, path));
-            return RandDS.RandCitiesBasic(ds);
+                ds = new DS(RFH.ParseFile(Creator.DScreator, ' ', false, dspath));
+            if(dr == null)
+                dr = new DR(RFH.ParseFile(Creator.DRcreator, '\t', false, drpath));
+            if (mr == null)
+                mr = new TGA("tgafile", mrpath);
+            if (cm == null)
+                cm = new CityMap(mr, dr);
+
+            return RandDS.RandCitiesBasic(ds, cm);
         }
 
 

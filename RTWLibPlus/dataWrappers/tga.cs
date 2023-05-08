@@ -30,7 +30,14 @@ namespace RTWLibPlus.dataWrappers
         }
 
         public HEADER header = new HEADER();
-        public PIXEL[] pixels; 
+        public PIXEL[] pixels;
+
+        public TGA() { }
+        public TGA(params string[] args) {
+            Read(args);
+        
+        }
+
 
         public void Read(params string[] args)
         {
