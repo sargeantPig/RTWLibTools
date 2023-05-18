@@ -1,4 +1,6 @@
-﻿using RTWLibPlus.interfaces;
+﻿using RTWLibPlus.data;
+using RTWLibPlus.helpers;
+using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
@@ -6,11 +8,24 @@ using System.Text;
 
 namespace RTWLibPlus.dataWrappers
 {
-    public class EDU : BaseWrapper
+    public class EDU : BaseWrapper, IWrapper
     {
+
+        public EDU() {
+            LoadPath = RemasterRome.GetPath(false, "edu");
+            OutputPath = RemasterRome.GetPath(true, "edu");
+        }
         public EDU(List<IbaseObj> data)
         {
             this.data = data;
+            SetEndOfUnits();
+            LoadPath = RemasterRome.GetPath(false, "edu");
+            OutputPath = RemasterRome.GetPath(true, "edu");
+        }
+
+        public void Parse(string path = "")
+        {
+            this.data = RFH.ParseFile(Creator.EDUcreator, ' ', false, LoadPath);
             SetEndOfUnits();
         }
 
@@ -21,6 +36,7 @@ namespace RTWLibPlus.dataWrappers
             {
                 output += obj.Output();
             }
+            RFH.Write(OutputPath, output + Environment.NewLine);
             return output + Environment.NewLine;
         }
 

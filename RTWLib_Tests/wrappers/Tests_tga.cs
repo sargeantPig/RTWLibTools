@@ -13,18 +13,16 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void ReadTga()
         {
-            TGA tga = new TGA();
-            tga.Read("tgafile", RFH.CurrDirPath("resources/test.tga"));
-            tga.Write("testtga.tga");
+            TGA tga = new TGA("tgafile", RFH.CurrDirPath("resources/test.tga"), "testtga.tga");
+            tga.Output();
             Assert.AreEqual(2, tga.header.datatypecode);
 
         }
         [TestMethod]
         public void ReadCompressedTga()
         {
-            TGA tga = new TGA();
-            tga.Read("tgafile", RFH.CurrDirPath("resources/testcompressed.tga"));
-            tga.Write("uncompressed.tga");
+            TGA tga = new TGA("tgafile", RFH.CurrDirPath("resources/testcompressed.tga"), "uncompressed.tga");
+            tga.Output();
             Assert.AreEqual(10, tga.header.datatypecode);
 
         }
@@ -32,9 +30,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void ReadMapTga()
         {
-            TGA tga = new TGA();
-            tga.Read("tgafile", RFH.CurrDirPath("resources/map_regions.tga"));
-            tga.Write("map_regionsTest.tga");
+            TGA tga = new TGA("tgafile", RFH.CurrDirPath("resources/map_regions.tga"), "map_regionsTest.tga");
+            tga.Output();
             Assert.AreEqual(2, tga.header.datatypecode);
 
         }

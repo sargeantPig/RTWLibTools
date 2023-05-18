@@ -58,12 +58,16 @@ namespace RTWLibPlus.data
         public static string baseFolder = @"Mods\My Mods\randomiser";
         public static string load = "vanilla";
         public static string save = "data";
+
         public static Dictionary<string, string> paths = new Dictionary<string, string>()
         {
             { "edu", @"export_descr_unit.txt"},
             { "ds", @"world\maps\campaign\imperial_campaign\descr_strat.txt"},
             { "dr", @"world\maps\base\descr_regions.txt" },
-            { "mr", @"world\maps\base\map_regions.tga"}
+            { "mr", @"world\maps\base\map_regions.tga"},
+            { "edb", @"export_descr_buildings.txt" },
+            { "smf", @"descr_sm_factions.txt"},
+            { "bm", @"world\maps\campaign\imperial_campaign\radar_map1.tga" }
 
         };
 
@@ -81,7 +85,7 @@ namespace RTWLibPlus.data
                 case 0: return factions;
                 case 1: return factionsRomanCombined;
                 case 2: return factionCultures;
-                    default: return factions;
+                default: return factions;
             }
         }
     }

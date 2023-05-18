@@ -3,7 +3,7 @@ using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
 using RTWLibPlus.parsers.objects;
 using System.IO;
-using RTWLibPlus.dataWrappers.edb;
+using RTWLibPlus.dataWrappers;
 using RTWLibPlus.dataWrappers;
 using System.Collections.Generic;
 using RTWLibPlus.interfaces;

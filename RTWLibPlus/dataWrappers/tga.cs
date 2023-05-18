@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RTWLibPlus.data;
+using RTWLibPlus.interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Text;
 namespace RTWLibPlus.dataWrappers
 {
     /*Converted from C code  - http://www.paulbourke.net/dataformats/tga/tgatest.c*/
-    public class TGA
+    public class TGA: IWrapper
     {
         public struct HEADER
         {
@@ -31,11 +33,34 @@ namespace RTWLibPlus.dataWrappers
 
         public HEADER header = new HEADER();
         public PIXEL[] pixels;
+        public string outputPath;
+        public string loadPath;
 
         public TGA() { }
+        public TGA(string loadPath, string outputpath) {
+            this.outputPath = outputpath;
+            this.loadPath = loadPath;
+        }
         public TGA(params string[] args) {
             Read(args);
-        
+            loadPath = args[1];
+            if(args.Length > 2 ) { outputPath = args[2]; }
+
+        }
+
+        public void Parse(string path = "")
+        {
+            if (path != "")
+            {
+                loadPath = path;
+                Read("tgafile", path);
+                return;
+            }
+
+            if(loadPath == null)
+                loadPath = RemasterRome.GetPath(false, "mr");
+
+            Read("tgafile", loadPath);
         }
 
 
@@ -61,29 +86,29 @@ namespace RTWLibPlus.dataWrappers
 
             // Display the header fields
             header.idlength = (char)fptr.ReadByte();
-            Console.Error.WriteLine("ID length:         {0}", header.idlength);
+            //Console.Error.WriteLine("ID length:         {0}", header.idlength);
             header.colourmaptype = (char)fptr.ReadByte();
-            Console.Error.WriteLine("Colourmap type:    {0}", header.colourmaptype);
+            //Console.Error.WriteLine("Colourmap type:    {0}", header.colourmaptype);
             header.datatypecode = (char)fptr.ReadByte();
-            Console.Error.WriteLine("Image type:        {0}", header.datatypecode);
+            //Console.Error.WriteLine("Image type:        {0}", header.datatypecode);
             header.colourmaporigin = ReadShort(fptr);
-            Console.Error.WriteLine("Colour map offset: {0}", header.colourmaporigin);
+           // Console.Error.WriteLine("Colour map offset: {0}", header.colourmaporigin);
             header.colourmaplength = ReadShort(fptr);
-            Console.Error.WriteLine("Colour map length: {0}", header.colourmaplength);
+            //Console.Error.WriteLine("Colour map length: {0}", header.colourmaplength);
             header.colourmapdepth = (char)fptr.ReadByte();
-            Console.Error.WriteLine("Colour map depth:  {0}", header.colourmapdepth);
+            //Console.Error.WriteLine("Colour map depth:  {0}", header.colourmapdepth);
             header.x_origin = ReadShort(fptr);
-            Console.Error.WriteLine("X origin:          {0}", header.x_origin);
+            //Console.Error.WriteLine("X origin:          {0}", header.x_origin);
             header.y_origin = ReadShort(fptr);
-            Console.Error.WriteLine("Y origin:          {0}", header.y_origin);
+           // Console.Error.WriteLine("Y origin:          {0}", header.y_origin);
             header.width = ReadShort(fptr);
-            Console.Error.WriteLine("Width:             {0}", header.width);
+            //Console.Error.WriteLine("Width:             {0}", header.width);
             header.height = ReadShort(fptr);
-            Console.Error.WriteLine("Height:            {0}", header.height);
+            //Console.Error.WriteLine("Height:            {0}", header.height);
             header.bitsperpixel = (char)fptr.ReadByte();
-            Console.Error.WriteLine("Bits per pixel:    {0}", header.bitsperpixel);
+            //Console.Error.WriteLine("Bits per pixel:    {0}", header.bitsperpixel);
             header.imagedescriptor = (char)fptr.ReadByte();
-            Console.Error.WriteLine("Descriptor:        {0}", header.imagedescriptor);
+            //Console.Error.WriteLine("Descriptor:        {0}", header.imagedescriptor);
 
             // Allocate space for the image
             pixels = new PIXEL[header.width * header.height];
@@ -111,7 +136,7 @@ namespace RTWLibPlus.dataWrappers
             // Skip over unnecessary stuff
             skipover += header.idlength;
             skipover += header.colourmaptype * header.colourmaplength;
-            Console.Error.WriteLine("Skip over {0} bytes", skipover);
+            //Console.Error.WriteLine("Skip over {0} bytes", skipover);
             fptr.Seek(skipover, SeekOrigin.Current);
 
             // Read the image
@@ -172,11 +197,11 @@ namespace RTWLibPlus.dataWrappers
             }
         }
 
-        public void Write(string filename)
+        public string Output()
         {
             FileStream fptr;
             // Write the result as a uncompressed TGA
-            if ((fptr = File.OpenWrite(filename)) == null)
+            if ((fptr = File.OpenWrite(outputPath)) == null)
             {
                 Console.Error.WriteLine("Failed to open outputfile");
                 Environment.Exit(-1);
@@ -205,6 +230,8 @@ namespace RTWLibPlus.dataWrappers
             }
             fptr.Flush();
             fptr.Close();
+
+            return "TGA Written to " + outputPath;
         }
 
         public void MergeBytes(ref PIXEL pixel, byte[] p, int bytes)
@@ -238,7 +265,16 @@ namespace RTWLibPlus.dataWrappers
             fptr.Read(buffer, 0, 2);
             return BitConverter.ToInt16(buffer, 0);
         }
-
+        public string OutputPath
+        {
+            get { return outputPath; }
+            set { outputPath = value; }
+        }
+        public string LoadPath
+        {
+            get { return loadPath; }
+            set { loadPath = value; }
+        }
     }
 
 }

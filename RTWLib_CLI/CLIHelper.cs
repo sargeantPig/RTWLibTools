@@ -10,6 +10,7 @@ namespace RTWLib_CLI
         { 
             Console.Clear();
             Console.WriteLine(title);
+            Console.WriteLine();
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using static RTWLibPlus.parsers.DepthParse;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace RTWLibPlus.helpers
 {
@@ -28,6 +29,16 @@ namespace RTWLibPlus.helpers
             return finpath;
         }
 
+        public static string ConstructPath(params string[] path)
+        {
+            string finpath = string.Empty;
+            foreach (string s in path)
+            {
+                finpath = Path.Combine(finpath, s);
+            }
+            return finpath;
+        }
+
         public static List<IbaseObj> ParseFile(ObjectCreator creator, char splitter = ' ',  bool removeEmptyLines = false, params string[] path)
         {
             var fileLines = DepthParse.ReadFile(RFH.CurrDirPath(path), removeEmptyLines);
@@ -36,5 +47,19 @@ namespace RTWLibPlus.helpers
             return parsed;
         }
 
+        public static string GetPartOfPath(string path, string from)
+        {
+            if (path == null)
+                return "";
+
+            string[] split = path.Split('\\');
+
+            var arr = split.GetItemsFromFirstOf(from.GetHashCode());
+
+            var str = RFH.ConstructPath(arr);
+            return string.Format("..\\{0}", str);
+
+
+        }
     }
 }

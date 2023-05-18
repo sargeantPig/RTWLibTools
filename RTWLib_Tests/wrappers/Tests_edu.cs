@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLib_Tests.dummy;
 using RTWLibPlus.dataWrappers;
-using RTWLibPlus.dataWrappers.edb;
 using RTWLibPlus.edu;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;

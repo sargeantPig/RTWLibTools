@@ -44,6 +44,24 @@ namespace RTWLibPlus.helpers
             return array;
         }
 
+        public static T[] GetItemsFromFirstOf<T>(this T[] values, int occurHash)
+        {
+            T[] array = new T[0];
+            bool copy = false;
+            for (int i = 0; i < values.Length; i++)
+            {
+                var valHash = values[i].GetHashCode();
+                if (valHash == occurHash)
+                    copy = true;
+                if (copy)
+                {
+                    array = array.Add(values[i]);
+                }
+               
+            }
+            return array;
+        }
+
         public static T[] Add<T>(this T[] values, T value)
         {
             T[] array = new T[values.Length+1];

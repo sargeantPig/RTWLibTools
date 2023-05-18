@@ -13,6 +13,8 @@ namespace RTWLibPlus.map
         public int height = 0;
         public int width = 0;
 
+        public CityMap() { }
+
         public CityMap(TGA image, DR dr) {
             GetCityCoords(image, dr);
             height = image.header.height;

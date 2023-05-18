@@ -1,22 +1,39 @@
-﻿using RTWLibPlus.helpers;
+﻿using RTWLibPlus.data;
+using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 
 namespace RTWLibPlus.dataWrappers
 {
-    public class DS : BaseWrapper
+    public class DS : BaseWrapper, IWrapper
     {
+        
+
+        public DS() {
+            LoadPath = RemasterRome.GetPath(false, "ds");
+            OutputPath = RemasterRome.GetPath(true, "ds");
+        }
+
         public DS(List<IbaseObj> data)
         {
             this.data = data;
             SetLastOfGroup();
+            LoadPath = RemasterRome.GetPath(false, "ds");
+            OutputPath = RemasterRome.GetPath(true, "ds");
         }
+
+        public void Parse(string path = "") {
+            this.data = RFH.ParseFile(Creator.DScreator, ' ', false, LoadPath);
+            SetLastOfGroup();
+        }
+
 
         public string Output()
         {
@@ -25,6 +42,7 @@ namespace RTWLibPlus.dataWrappers
             {
                 output += obj.Output();
             }
+            RFH.Write(OutputPath, output);
             return output;
         }
 

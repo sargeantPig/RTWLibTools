@@ -1,18 +1,31 @@
-﻿using RTWLibPlus.interfaces;
+﻿using RTWLibPlus.data;
+using RTWLibPlus.helpers;
+using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace RTWLibPlus.dataWrappers
 {
-    public class SMF : BaseWrapper
+    public class SMF : BaseWrapper, IWrapper
     {
+
+        public SMF() {
+            LoadPath = RemasterRome.GetPath(false, "smf");
+            OutputPath = RemasterRome.GetPath(true, "smf");
+        }    
         public SMF(List<IbaseObj> data)
         {
             this.data = data;
             Sanitise(data);
+            LoadPath = RemasterRome.GetPath(false, "smf");
+            OutputPath = RemasterRome.GetPath(true, "smf");
         }
-
+        public void Parse(string path = "")
+        {
+            this.data = RFH.ParseFile(Creator.DScreator, ' ', false, LoadPath);
+            Sanitise(data);
+        }
         public string Output()
         {
             string output = string.Empty;
@@ -20,6 +33,7 @@ namespace RTWLibPlus.dataWrappers
             {
                 output += obj.Output();
             }
+            RFH.Write(OutputPath, output);
             return output;
         }
 

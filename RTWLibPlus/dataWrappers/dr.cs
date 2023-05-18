@@ -1,20 +1,37 @@
-﻿using RTWLibPlus.interfaces;
+﻿using RTWLibPlus.data;
+using RTWLibPlus.helpers;
+using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace RTWLibPlus.dataWrappers
 {
-    public class DR : BaseWrapper
+    public class DR : BaseWrapper, IWrapper
     {
         public Dictionary<string, string> RegionsByColour = new Dictionary<string, string>();
+
+        public DR() {
+            OutputPath = RemasterRome.GetPath(true, "dr");
+            LoadPath = RemasterRome.GetPath(false, "dr");
+        }
 
         public DR(List<IbaseObj> data)
         {
             this.data = data;
             GetRegionsByColour();
+            OutputPath = RemasterRome.GetPath(true, "dr");
+            LoadPath = RemasterRome.GetPath(false, "dr");
         }
+
+
+        public void Parse(string path = "") {
+
+            this.data = RFH.ParseFile(Creator.DRcreator, '\t', false, LoadPath);
+            GetRegionsByColour();
+        } 
 
         public string Output()
         {
@@ -23,6 +40,8 @@ namespace RTWLibPlus.dataWrappers
             {
                 output += obj.Output();
             }
+            RFH.Write(OutputPath, output);
+
             return output;
         }
 
@@ -39,5 +58,6 @@ namespace RTWLibPlus.dataWrappers
                 pos++;
             }
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using RTWLibPlus.interfaces;
+﻿using RTWLibPlus.data;
+using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,22 @@ namespace RTWLibPlus.dataWrappers
 {
     public class BaseWrapper
     {
+        string outputPath;
+        string loadPath;
+
+
+        public string OutputPath
+        {
+            get { return outputPath; }
+            set { outputPath = value; }
+        }
+        public string LoadPath
+        {
+            get { return loadPath; }
+            set { loadPath = value; }
+        }
+
+
         public List<IbaseObj> data = new List<IbaseObj>();
         /// <summary>
         /// Location is a collection of strings that represent the tags. Once the final string is found it will return the corresponding kv

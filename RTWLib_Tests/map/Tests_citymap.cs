@@ -17,8 +17,7 @@ namespace RTWLib_Tests.map
         [TestMethod]
         public void CityCoordinatesFetchedCorrectly()
         {
-            TGA image = new TGA();
-            image.Read("tgafile", RFH.CurrDirPath("resources", "map_regions.tga"));
+            TGA image = new TGA("tgafile", RFH.CurrDirPath("resources", "map_regions.tga"), "");
 
             var drread = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
             var drparse = DepthParse.Parse(drread, Creator.DRcreator, '\t');
