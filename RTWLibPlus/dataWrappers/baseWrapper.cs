@@ -22,7 +22,7 @@ namespace RTWLibPlus.dataWrappers
         {
             get 
             {
-                if(File.Exists(outputPath)) { return outputPath; }
+                if(Directory.Exists(Path.GetDirectoryName(outputPath))) { return outputPath; }
                 else return outputPath.Split('\\').Last();
             }
 
