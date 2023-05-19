@@ -6,6 +6,17 @@ namespace RTWLibPlus.helpers
 {
     public static class exString
     {
+        public static string CrossPlatPath(string path) //converts path to use / 
+        {
+            char[] chars = path.ToCharArray();
+            for(int i = 0; i < chars.Length; i++)
+            {
+                var c = chars[i];
+                if (c == '\\')
+                    chars[i] = '/';
+            }
+            return chars.ToString();    
+        }
         public static string GetFirstWord(this string str, char delim)
         {
             return str.Split(delim)[0];

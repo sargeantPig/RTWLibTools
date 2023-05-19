@@ -22,15 +22,11 @@ namespace RTWLibPlus.dataWrappers
         {
             get 
             {
-                var dir = Path.GetDirectoryName(outputPath);
-                if (Directory.Exists(dir)) { return outputPath; }
+                var path = exString.CrossPlatPath(outputPath);
+                var dir = Path.GetDirectoryName(path);
+                if (Directory.Exists(dir)) { return path; }
 
-                if (outputPath.Contains('\\'))
-                    return outputPath.Split('\\').Last();
-                else if (outputPath.Contains('/'))//linux
-                    return outputPath.Split('/').Last();
-
-                else return "error.txt";
+                return path.Split('/').Last();
             }
 
             set { outputPath = value; }
