@@ -23,9 +23,6 @@ namespace RTWLib_Tests.wrappers
             string result = parsedEdb.Output();
             var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "edbExample.txt"));
 
-            RFH.Write("./result.txt", result);
-            RFH.Write("./expected.txt", expected);
-
             int rl = result.Length;
             int el = expected.Length;
 
@@ -42,9 +39,6 @@ namespace RTWLib_Tests.wrappers
 
             string result = parsedEdb.Output();
             var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
-
-            RFH.Write("./result.txt", result);
-            RFH.Write("./expected.txt", expected);
 
             int rl = result.Length;
             int el = expected.Length;

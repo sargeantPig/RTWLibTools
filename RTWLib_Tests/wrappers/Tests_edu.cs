@@ -27,9 +27,6 @@ namespace RTWLib_Tests.wrappers
             string result = parsedds.Output();
             var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_unit.txt"));
 
-            RFH.Write("./eduResult.txt", result);
-            RFH.Write("./eduExpected.txt", expected);
-
             int rl = result.Length;
             int el = expected.Length;
 
@@ -78,8 +75,6 @@ namespace RTWLib_Tests.wrappers
 
             var result2 = edu.GetKeyValueAtLocation(edu.data, 0, "roman_arcani", "ownership");
             var expected2 = new KeyValuePair<string, string>("ownership", "roman");
-
-            RFH.Write("./eduResult.txt", edu.Output());
 
             Assert.AreEqual(expected1, result1);
             Assert.AreEqual(expected2, result2);

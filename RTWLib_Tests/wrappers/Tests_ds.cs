@@ -20,9 +20,6 @@ namespace RTWLib_Tests.wrappers
             string result = parsedds.Output();
             var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
 
-            RFH.Write("./dsresult.txt", result);
-            RFH.Write("./dsexpected.txt", expected);
-
             int rl = result.Length;
             int el = expected.Length;
 
@@ -116,7 +113,7 @@ namespace RTWLib_Tests.wrappers
             var add = parsedds.InsertNewObjectByCriteria(parsedds.data, settlements[30], "faction\tromans_brutii,", "denari");
             var result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tromans_brutii,");
             var expected = 3; //number of ca
-            RFH.Write("./dsresult.txt", parsedds.Output());
+     
             Assert.AreEqual(expected, result.Count); //check number of returned ca
         }
         [TestMethod]
@@ -130,7 +127,6 @@ namespace RTWLib_Tests.wrappers
             var add = parsedds.InsertNewObjectByCriteria(parsedds.data, settlements[30], "faction\tscythia,", "denari");
             var result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tscythia,");
             var expected = 5; //number of ca
-            RFH.Write("./dsresult.txt", parsedds.Output());
             Assert.AreEqual(expected, result.Count); //check number of returned ca
         }
         [TestMethod]
@@ -143,7 +139,6 @@ namespace RTWLib_Tests.wrappers
             var add = parsedds.InsertNewObjectByCriteria(parsedds.data, units[1] , "faction\tromans_julii,", "character\tFlavius", "unit");
             var result = parsedds.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
             var expected = 6; //number of ca
-            RFH.Write("./dsresult.txt", parsedds.Output());
             Assert.AreEqual(expected, result.Count); //check number of returned ca
         }
 
