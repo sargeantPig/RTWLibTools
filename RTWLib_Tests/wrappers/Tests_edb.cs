@@ -4,7 +4,6 @@ using RTWLibPlus.parsers;
 using RTWLibPlus.parsers.objects;
 using System.IO;
 using RTWLibPlus.dataWrappers;
-using RTWLibPlus.dataWrappers;
 using System.Collections.Generic;
 using RTWLibPlus.interfaces;
 
