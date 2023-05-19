@@ -1,8 +1,10 @@
 ﻿using RTWLibPlus.data;
+using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Cryptography.X509Certificates;
@@ -18,7 +20,12 @@ namespace RTWLibPlus.dataWrappers
 
         public string OutputPath
         {
-            get { return outputPath; }
+            get 
+            {
+                if(File.Exists(outputPath)) { return outputPath; }
+                else return outputPath.Split('\\').Last();
+            }
+
             set { outputPath = value; }
         }
         public string LoadPath

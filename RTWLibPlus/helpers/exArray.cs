@@ -57,7 +57,6 @@ namespace RTWLibPlus.helpers
                 {
                     array = array.Add(values[i]);
                 }
-               
             }
             return array;
         }
