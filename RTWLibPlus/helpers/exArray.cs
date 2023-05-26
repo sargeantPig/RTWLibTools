@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Metadata;
 using System.Text;
 
@@ -9,6 +10,15 @@ namespace RTWLibPlus.helpers
 {
     public static class exArray
     {
+        public static Dictionary<K, T> InitDictFromList<K, T>(this K[] arr, T def)
+        {
+            Dictionary<K, T> keyValuePairs = new Dictionary<K, T>();
+            foreach(var o in arr)
+            {
+                keyValuePairs.Add(o, def);
+            }
+            return keyValuePairs;
+        }
 
         public static void init<T>(this List<T[]> list, int amount)
         {
@@ -128,6 +138,19 @@ namespace RTWLibPlus.helpers
             return str;
         }
 
+        public static string ToString(this ParameterInfo[] array, params char[] spacer)
+        {
+            string str = string.Empty;
+            string strSpacer = spacer.ConstructStringFromChars();
+            foreach (var item in array)
+            {
+                str += String.Format("{0} {1}{2} ", item.ParameterType, item.Name, strSpacer);
+            }
+            str = str.Trim().TrimEnd(spacer);
+            return str;
+        }
+
+
         public static string ConstructStringFromChars(this char[] chars)
         {
             string str = string.Empty;
@@ -143,6 +166,19 @@ namespace RTWLibPlus.helpers
             for (var i = 0; i < list.Count; i++)
                 list.Swap(i, rnd.Next(i, list.Count));
         }
+
+        public static void ShuffleMany<T>(this IList<T>[] list, Random rnd)
+        {
+            for (var i = 0; i < list[0].Count; i++)
+            {
+                int s = rnd.Next(i, list[0].Count);
+                for (var l = 0; l < list.Count(); l++)
+                {
+                    list[l].Swap(i, s);
+                }
+            }
+        }
+
 
         private static void Swap<T>(this IList<T> list, int i, int j)
         {

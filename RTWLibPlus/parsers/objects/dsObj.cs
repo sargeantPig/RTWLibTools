@@ -21,7 +21,8 @@ namespace RTWLibPlus.parsers.objects
         {
             whiteChar = whiteSpace;
             whiteDepthMultiplier = whiteSpaceMultiplier;
-            Ident = Tag.Split(whiteChar)[0];
+            var tagS = tag.Split(whiteChar);
+            Ident = tagS[0];
         }
 
         public DSObj() { }

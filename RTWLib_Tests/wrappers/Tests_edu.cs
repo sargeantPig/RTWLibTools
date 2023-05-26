@@ -79,5 +79,17 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(expected1, result1);
             Assert.AreEqual(expected2, result2);
         }
+
+        [TestMethod]
+        public void eduRemoveAttributeGeneral()
+        {
+            var parsedds = new EDU(RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt"));
+
+            parsedds.RemoveAttributesAll("general_unit", "general_unit_upgrade \"marian_reforms\"");
+            var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "barb_chieftain_cavalry_german", "attributes");
+            var expected = new KeyValuePair<string, string>("attributes", "sea_faring, hide_forest, hardy");
+
+            Assert.AreEqual(expected, result);
+        }
     }
 }

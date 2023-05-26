@@ -24,7 +24,7 @@ namespace RTWLib_CLI.cmd
         static CityMap cm = new CityMap();
         static SMF smf = new SMF();
 
-        static TGA mr = new TGA();
+        static TGA mr = new TGA(RemasterRome.GetPath(false, "mr"), "");
         static TGA bm = new TGA(RemasterRome.GetPath(false, "bm"), "");
 
         public static string Ownership(int factionList = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
@@ -49,18 +49,30 @@ namespace RTWLib_CLI.cmd
             return RandDS.RandCitiesVoronoi(ds, cm);
         }
 
+        public static string PaintFactionMap()
+        {
+            FactionMap factionMap = new FactionMap();
+            factionMap.PaintRegionMap(mr, bm, ds, dr, smf);
+            return "Maps Painted";
+        }
+
         public static string InitialSetup() {
 
-            List<IWrapper> list = new List<IWrapper>() {edu, edb, ds, dr, smf, mr};
+            List<IWrapper> list = new List<IWrapper>() {edu, edb, ds, dr, smf, mr, bm};
             Progress p = new Progress(1f/(list.Count+1), "Setting up");
             for (int i = 0; i < list.Count; i++)
             {
+                
+                list[i].Clear();
+                p.Message("Loading: " + RFH.GetPartOfPath(list[i].LoadPath, "randomiser"));
                 list[i].Parse();
-                p.Update("Loaded: " + RFH.GetPartOfPath(list[i].LoadPath, "randomiser"));
+                p.Update("Complete");
             }
             
             cm = new CityMap(mr, dr);
-            p.Update("Forming: " + "city map");
+            p.Message("Forming: City Map");
+            p.Update("Complete");
+            
             return "Files Loaded";
         }
 
@@ -69,12 +81,11 @@ namespace RTWLib_CLI.cmd
             string path = string.Empty;
 
             List<IWrapper> list = new List<IWrapper>() { edu, ds};
-            Progress p = new Progress(0.50f, "Loading Files");
+            Progress p = new Progress(0.50f, "Writing Files");
             for (int i = 0; i < list.Count; i++)
             {
                 list[i].Output();
                 p.Update();
-                Thread.Sleep(500);
             }
 
 

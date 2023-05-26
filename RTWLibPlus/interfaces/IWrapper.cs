@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace RTWLibPlus.interfaces
@@ -13,5 +14,7 @@ namespace RTWLibPlus.interfaces
         public string Output();
 
         public void Parse(string path = "");
+
+        public void Clear();
     }
 }

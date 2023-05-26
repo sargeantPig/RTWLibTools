@@ -23,7 +23,7 @@ namespace RTWLibPlus.dataWrappers
         }
         public void Parse(string path = "")
         {
-            this.data = RFH.ParseFile(Creator.DScreator, ' ', false, LoadPath);
+            this.data = RFH.ParseFile(Creator.BaseCreator, ':', false, LoadPath);
             Sanitise(data);
         }
         public string Output()
@@ -35,6 +35,11 @@ namespace RTWLibPlus.dataWrappers
             }
             RFH.Write(OutputPath, output);
             return output;
+        }
+
+        public void Clear()
+        {
+            data.Clear();
         }
 
         private void Sanitise(List<IbaseObj> toSanitise)

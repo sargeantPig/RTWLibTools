@@ -28,7 +28,8 @@ namespace RTWLibPlus.data
             "romans_julii",
             "romans_brutii",
             "romans_scipii",
-            "romans_senate"
+            "romans_senate",
+            "slave"
         };
 
         public static string[] factionsRomanCombined = {
@@ -67,7 +68,8 @@ namespace RTWLibPlus.data
             { "mr", @"world\maps\base\map_regions.tga"},
             { "edb", @"export_descr_buildings.txt" },
             { "smf", @"descr_sm_factions.txt"},
-            { "bm", @"world\maps\campaign\imperial_campaign\radar_map1.tga" }
+            { "bm", @"world\maps\campaign\imperial_campaign\radar_map1.tga" },
+            { "dir_campaign", @"world\maps\campaign\imperial_campaign" }
 
         };
 

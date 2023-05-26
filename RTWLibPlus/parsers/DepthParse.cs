@@ -45,8 +45,6 @@ namespace RTWLibPlus.parsers
                     case "}": depth--; continue;
                 }
 
-
-
                 string tag = lineTrim.GetFirstWord(splitter);
                 string value = lineTrim.RemoveFirstWord(splitter);
                 StoreDataInObject(creator, depth, item, list, tag, value);

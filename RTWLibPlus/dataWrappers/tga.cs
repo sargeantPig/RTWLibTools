@@ -3,6 +3,7 @@ using RTWLibPlus.interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 using System.Text;
 
 namespace RTWLibPlus.dataWrappers
@@ -48,6 +49,16 @@ namespace RTWLibPlus.dataWrappers
 
         }
 
+        public TGA Copy(string load, string output)
+        {
+            TGA copy = new TGA();
+            copy.header = this.header;
+            copy.pixels = (PIXEL[])this.pixels.Clone();
+            copy.outputPath = output;
+            copy.loadPath = load;
+            return copy;
+        }
+
         public void Parse(string path = "")
         {
             if (path != "")
@@ -62,7 +73,11 @@ namespace RTWLibPlus.dataWrappers
 
             Read("tgafile", loadPath);
         }
-
+        public void Clear()
+        {
+            header = new HEADER();
+            pixels = new PIXEL[0];
+        }
 
         public void Read(params string[] args)
         {
@@ -154,6 +169,7 @@ namespace RTWLibPlus.dataWrappers
                     n = CompressedBlock(n, out i, out j, bytes2read, p, fptr);
                 }
             }
+            fptr.Flush();
             fptr.Close();
         }
 
@@ -265,6 +281,27 @@ namespace RTWLibPlus.dataWrappers
             fptr.Read(buffer, 0, 2);
             return BitConverter.ToInt16(buffer, 0);
         }
+
+        public Vector2 ConvertIndexToCoordinates(int i)
+        {
+            return new Vector2(i % header.width, i / header.width);
+        }
+
+        public int ConvertCoordinatesToIndex(Vector2 coord)
+        {
+            if (coord.X < 0 )
+                coord.X = 0;
+            if (coord.Y < 0)
+                coord.Y = 0;
+            if (coord.Y >= header.height)
+                coord.Y = header.height -1;
+            if(coord.X >= header.width)
+                coord.X = header.width -1;
+
+            return (int)((int)coord.X + (header.width * (int)coord.Y));
+        }
+
+
         public string OutputPath
         {
             get { return outputPath; }

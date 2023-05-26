@@ -2,6 +2,7 @@
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
+using RTWLibPlus.randomiser;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -14,9 +15,8 @@ namespace RTWLibPlus.dataWrappers
 {
     public class DS : BaseWrapper, IWrapper
     {
-        
-
-        public DS() {
+        public DS()
+        {
             LoadPath = RemasterRome.GetPath(false, "ds");
             OutputPath = RemasterRome.GetPath(true, "ds");
         }
@@ -29,7 +29,8 @@ namespace RTWLibPlus.dataWrappers
             OutputPath = RemasterRome.GetPath(true, "ds");
         }
 
-        public void Parse(string path = "") {
+        public void Parse(string path = "")
+        {
             this.data = RFH.ParseFile(Creator.DScreator, ' ', false, LoadPath);
             SetLastOfGroup();
         }
@@ -44,6 +45,11 @@ namespace RTWLibPlus.dataWrappers
             }
             RFH.Write(OutputPath, output);
             return output;
+        }
+
+        public void Clear()
+        {
+            data.Clear();
         }
 
         private void SetLastOfGroup()
@@ -68,6 +74,28 @@ namespace RTWLibPlus.dataWrappers
             split[split.Length - 1] = y;
             split[split.Length - 2] = x;
             return split.ToString(',', ' ');
+        }
+
+        public Dictionary<string, List<IbaseObj>> GetSettlementsByFaction()
+        {
+            Dictionary<string, List<IbaseObj>> settlementsByFaction = new Dictionary<string, List<IbaseObj>>();
+            foreach (var f in TWRand.GetFactionListAndShuffle(0))
+            {
+                var settlements = GetItemsByCriteria("character", "settlement", string.Format("faction\t{0},", f));
+                settlementsByFaction.Add(f, settlements);
+            }
+
+            return settlementsByFaction;
+        }
+
+        public string GetFactionByRegion(string region)
+        {
+            var s = GetTagByContentsValue(data, "faction", region);
+
+            if (s == null)
+                return "slave";
+
+            return s.Split('\t')[1].Trim(',');
         }
     }
 }

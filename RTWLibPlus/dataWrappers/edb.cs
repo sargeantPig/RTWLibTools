@@ -27,6 +27,12 @@ namespace RTWLibPlus.dataWrappers
             this.data = RFH.ParseFile(Creator.EDBcreator, ' ', false, LoadPath);
             Sanitise(data);
         }
+
+        public void Clear()
+        {
+            data.Clear();
+        }
+
         private void Sanitise(List<IbaseObj> toSanitise)
         {
             foreach (baseObj obj in toSanitise)

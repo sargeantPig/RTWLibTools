@@ -17,7 +17,6 @@ namespace RTWLibPlus.dataWrappers
         string outputPath;
         string loadPath;
 
-
         public string OutputPath
         {
             get 
@@ -36,7 +35,6 @@ namespace RTWLibPlus.dataWrappers
             get { return loadPath; }
             set { loadPath = value; }
         }
-
 
         public List<IbaseObj> data = new List<IbaseObj>();
         /// <summary>
@@ -301,6 +299,27 @@ namespace RTWLibPlus.dataWrappers
                 if (CheckForValue(item.GetItems(), lookFor))
                 {
                     return item;
+                }
+            }
+            return null;
+        }
+
+        public string GetTagByContentsValue(List<IbaseObj> items, string lookFor, string contentsValue)
+        {
+            string atLook = string.Empty;
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                baseObj item = (baseObj)items[i];
+
+                if(item.Ident ==  lookFor)
+                    atLook = item.Tag;
+                if (item.GetItems().Count == 0)
+                    continue;
+
+                if (CheckForValue(item.GetItems(), contentsValue))
+                {
+                    return atLook;
                 }
             }
             return null;

@@ -5,7 +5,9 @@ using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
+using static RTWLibPlus.dataWrappers.TGA;
 
 namespace RTWLibPlus.dataWrappers
 {
@@ -26,12 +28,24 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = RemasterRome.GetPath(false, "dr");
         }
 
+        public void Clear()
+        {
+            data.Clear();
+            RegionsByColour.Clear();
+        }
 
         public void Parse(string path = "") {
 
             this.data = RFH.ParseFile(Creator.DRcreator, '\t', false, LoadPath);
             GetRegionsByColour();
+        
         } 
+
+        public string GetRegionByColour(int r, int g, int b) {
+            string key = string.Format("{0} {1} {2}", r, g, b);
+            string region = RegionsByColour[key];
+            return region;
+        }
 
         public string Output()
         {
@@ -59,5 +73,6 @@ namespace RTWLibPlus.dataWrappers
             }
         }
 
+        
     }
 }

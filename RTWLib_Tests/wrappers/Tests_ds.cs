@@ -155,6 +155,19 @@ namespace RTWLib_Tests.wrappers
 
             Assert.AreEqual(expected, result); //check number of returned ca
         }
+        [TestMethod]
+        public void GetFactionByRegion()
+        {
+            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var parsedds = new DS(dsParse);
+            string region = "Paionia";
+            var faction = parsedds.GetFactionByRegion(region);
+            
+            var result = faction;
+            var expected = "macedon"; //number of ca
 
+            Assert.AreEqual(expected, result); //check number of returned ca
+        }
     }
 }

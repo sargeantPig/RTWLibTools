@@ -36,8 +36,7 @@ namespace RTWLibPlus.map
                     image.pixels[i].g == 0 &&
                     image.pixels[i].b == 0)// check for cities - should be a black pixel
                 {
-                    string key = string.Format("{0} {1} {2}", upPixel.r, upPixel.g, upPixel.b);
-                    string region = dr.RegionsByColour[key];
+                    string region = dr.GetRegionByColour(upPixel.r, upPixel.g, upPixel.b);
 
                     CityCoordinates.Add(region, coord);
                 }

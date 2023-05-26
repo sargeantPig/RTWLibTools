@@ -15,6 +15,8 @@ namespace RTWLIB_CLI
 
         static void Main(string[] args)
         {
+            CMDProcess.LoadTemplates();
+
             CLIHelper.ScreenChange(title);
             //Rand.InitialSetup();
             while (true)

@@ -4,6 +4,9 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
 using System.Text;
 
 namespace RTWLibPlus.dataWrappers
@@ -40,6 +43,11 @@ namespace RTWLibPlus.dataWrappers
             return output + Environment.NewLine;
         }
 
+        public void Clear()
+        {
+            data.Clear();
+        }
+
         private void SetEndOfUnits()
         {
             for(int i = 0; i < data.Count; i++)
@@ -53,6 +61,26 @@ namespace RTWLibPlus.dataWrappers
 
                     obj.endOfUnit = true;
                 }
+            }
+        }
+
+        public void RemoveAttributesAll(params string[] attriToRemove)
+        {
+            var attri = GetItemsByIdent("attributes");
+
+            foreach(EDUObj a in attri)
+            {
+                string[] values = a.Value.Split(',').TrimAll();
+                string[] newVals = new string[0];
+                foreach(var val in values)
+                {
+                    if(!attriToRemove.Contains(val))
+                    {
+                        newVals = newVals.Add(val);
+                    }
+                }
+
+                a.Value = newVals.ToString(',', ' ');
             }
         }
     }
