@@ -1,35 +1,33 @@
 ﻿using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
+using RTWLibPlus.parsers.configs.whiteSpace;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace RTWLibPlus.parsers.objects
 {
-    public class EDUObj : baseObj, IbaseObj
+    public class EDUObj : BaseObj, IbaseObj
     {
-        private static char whiteSpace = ' ';
-        private static int whiteSpaceMultiplier = 1;
-
         public bool endOfUnit = false;
 
         public EDUObj(string tag, string value, int depth) :
             base(tag, value, depth)
         {
-            whiteChar = whiteSpace;
-            whiteDepthMultiplier = whiteSpaceMultiplier;
-            Ident = Tag.Split(whiteChar)[0];
+            WSConfigFactory factory = new WSConfigFactory();
+            wsConfig = factory.CreateEDUWhiteSpace();
+            Ident = Tag.Split(wsConfig.WhiteChar)[0];
         }
 
         public EDUObj() { }
 
-        new public IbaseObj Copy()
+        public override IbaseObj Copy()
         {
             EDUObj copy = new EDUObj();
-            copy.whiteChar = whiteSpace;
+            copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
             copy.depth = depth;
             copy.items = items.DeepCopy();
-            copy.whiteDepthMultiplier = whiteSpaceMultiplier;
+            copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
             copy.Tag = Tag;
             copy.Value = Value;
             copy.Ident = Ident;
@@ -38,7 +36,7 @@ namespace RTWLibPlus.parsers.objects
             return copy;
         }
 
-        new public string Output()
+        public override string Output()
         {
             string output = string.Empty;
 

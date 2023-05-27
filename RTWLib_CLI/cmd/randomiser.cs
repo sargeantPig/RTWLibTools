@@ -17,15 +17,14 @@ namespace RTWLib_CLI.cmd
 {
     public static class Rand
     {
-        static EDB edb = new EDB();
-        static EDU edu = new EDU();
-        static DS ds = new DS();
-        static DR dr = new DR();
+        static EDB edb = new EDB(RemasterRome.GetPath(Operation.Save, "edb"), RemasterRome.GetPath(Operation.Load, "edb"));
+        static EDU edu = new EDU(RemasterRome.GetPath(Operation.Save, "edu"), RemasterRome.GetPath(Operation.Load, "edu"));
+        static DS ds = new DS(RemasterRome.GetPath(Operation.Save, "ds"), RemasterRome.GetPath(Operation.Load, "ds"));
+        static DR dr = new DR(RemasterRome.GetPath(Operation.Save, "dr"), RemasterRome.GetPath(Operation.Load, "dr"));
+        static SMF smf = new SMF(RemasterRome.GetPath(Operation.Save, "smf"), RemasterRome.GetPath(Operation.Load, "smf"));
+        static TGA mr = new TGA(RemasterRome.GetPath(Operation.Load, "mr"), "");
+        static TGA bm = new TGA(RemasterRome.GetPath(Operation.Load, "bm"), "");
         static CityMap cm = new CityMap();
-        static SMF smf = new SMF();
-
-        static TGA mr = new TGA(RemasterRome.GetPath(false, "mr"), "");
-        static TGA bm = new TGA(RemasterRome.GetPath(false, "bm"), "");
 
         public static string Ownership(int factionList = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
         {
@@ -55,6 +54,13 @@ namespace RTWLib_CLI.cmd
             factionMap.PaintRegionMap(mr, bm, ds, dr, smf);
             return "Maps Painted";
         }
+
+        public static string SetSeed(string seed)
+        {
+            TWRand.RefreshRndSeed(seed);
+            return "Seed set to: " + seed;
+        }
+
 
         public static string InitialSetup() {
 
@@ -91,12 +97,12 @@ namespace RTWLib_CLI.cmd
 
             if (edu != null)
             {
-                path = RemasterRome.GetPath(true, "edu");
+                path = RemasterRome.GetPath(Operation.Save, "edu");
                 RFH.Write(path, edu.Output());
             }
             if (ds != null)
             {
-                path = RemasterRome.GetPath(true, "ds");
+                path = RemasterRome.GetPath(Operation.Save, "ds");
                 RFH.Write(path, ds.Output());
             }
             return "output complete";

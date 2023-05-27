@@ -13,20 +13,27 @@ namespace RTWLibPlus.dataWrappers
 {
     public class EDU : BaseWrapper, IWrapper
     {
+        private readonly string name = "edu";
 
-        public EDU() {
-            LoadPath = RemasterRome.GetPath(false, "edu");
-            OutputPath = RemasterRome.GetPath(true, "edu");
+        public string GetName()
+        {
+            return name;
         }
+        public EDU(string outputPath, string loadPath)
+        {
+            OutputPath = outputPath;
+            LoadPath = loadPath;
+        }
+
         public EDU(List<IbaseObj> data)
         {
             this.data = data;
             SetEndOfUnits();
-            LoadPath = RemasterRome.GetPath(false, "edu");
-            OutputPath = RemasterRome.GetPath(true, "edu");
+            LoadPath = RemasterRome.GetPath(Operation.Load, "edu");
+            OutputPath = RemasterRome.GetPath(Operation.Save, "edu");
         }
 
-        public void Parse(string path = "")
+        public void Parse()
         {
             this.data = RFH.ParseFile(Creator.EDUcreator, ' ', false, LoadPath);
             SetEndOfUnits();

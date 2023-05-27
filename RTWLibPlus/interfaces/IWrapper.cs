@@ -13,8 +13,10 @@ namespace RTWLibPlus.interfaces
 
         public string Output();
 
-        public void Parse(string path = "");
+        public void Parse();
 
         public void Clear();
+
+        public string GetName();
     }
 }

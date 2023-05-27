@@ -1,16 +1,16 @@
-﻿using RTWLibPlus.helpers;
+﻿using RTWLibPlus.dataWrappers;
+using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
+using RTWLibPlus.parsers.configs.whiteSpace;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using RTWLibPlus.parsers.configs;
-using RTWLibPlus.parsers.configs.whiteSpace;
 
 namespace RTWLibPlus.parsers.objects
 {
-    public class DRObj : BaseObj, IbaseObj
+    public class SMFObj: BaseObj, IbaseObj
     {
-        public DRObj(string tag, string value, int depth) :
+        public SMFObj(string tag, string value, int depth) :
             base(tag, value, depth)
         {
             WSConfigFactory factory = new WSConfigFactory();
@@ -18,11 +18,11 @@ namespace RTWLibPlus.parsers.objects
             Ident = Tag.Split(wsConfig.WhiteChar)[0];
         }
 
-        public DRObj(){}
+        public SMFObj() { }
 
         public override IbaseObj Copy()
         {
-            DRObj copy = new DRObj();
+            SMFObj copy = new SMFObj();
             copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
             copy.depth = depth;
             copy.items = items.DeepCopy();
@@ -35,6 +35,5 @@ namespace RTWLibPlus.parsers.objects
         }
 
         public override string Output() { return "Not Implemented"; }
-
     }
 }

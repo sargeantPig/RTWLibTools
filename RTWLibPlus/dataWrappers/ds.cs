@@ -15,21 +15,28 @@ namespace RTWLibPlus.dataWrappers
 {
     public class DS : BaseWrapper, IWrapper
     {
-        public DS()
+        private readonly string name = "ds";
+
+        public string GetName()
         {
-            LoadPath = RemasterRome.GetPath(false, "ds");
-            OutputPath = RemasterRome.GetPath(true, "ds");
+            return name;
+        }
+
+        public DS(string outputPath, string loadPath)
+        {
+            OutputPath = outputPath;
+            LoadPath = loadPath;
         }
 
         public DS(List<IbaseObj> data)
         {
             this.data = data;
             SetLastOfGroup();
-            LoadPath = RemasterRome.GetPath(false, "ds");
-            OutputPath = RemasterRome.GetPath(true, "ds");
+            LoadPath = RemasterRome.GetPath(Operation.Load, "ds");
+            OutputPath = RemasterRome.GetPath(Operation.Save, "ds");
         }
 
-        public void Parse(string path = "")
+        public void Parse()
         {
             this.data = RFH.ParseFile(Creator.DScreator, ' ', false, LoadPath);
             SetLastOfGroup();
@@ -57,7 +64,7 @@ namespace RTWLibPlus.dataWrappers
             string previous = string.Empty;
             foreach (DSObj obj in data)
             {
-                string ident = obj.Tag.Split(DSObj.whiteSpace)[0];
+                string ident = obj.Tag.Split('\t')[0];
 
                 if (ident != previous)
                     obj.lastOfGroup = true;

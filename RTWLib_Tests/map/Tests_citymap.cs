@@ -14,13 +14,15 @@ namespace RTWLib_Tests.map
     [TestClass]
     public class Tests_citymap
     {
+        DepthParse dp = new DepthParse();
+
         [TestMethod]
         public void CityCoordinatesFetchedCorrectly()
         {
             TGA image = new TGA("tgafile", RFH.CurrDirPath("resources", "map_regions.tga"), "");
 
-            var drread = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
-            var drparse = DepthParse.Parse(drread, Creator.DRcreator, '\t');
+            var drread = dp.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
+            var drparse = dp.Parse(drread, Creator.DRcreator, '\t');
             DR dr = new DR(drparse);
 
             CityMap cm = new CityMap(image, dr);

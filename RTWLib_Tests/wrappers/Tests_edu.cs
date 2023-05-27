@@ -17,15 +17,16 @@ namespace RTWLib_Tests.wrappers
     [TestClass]
     public class Tests_edu
     {
+        DepthParse dp = new DepthParse();
         [TestMethod]
         public void eduWithDepthParser()
         {
-            var edu = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
-            var eduParse = DepthParse.Parse(edu, Creator.EDUcreator);
+            var edu = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
+            var eduParse = dp.Parse(edu, Creator.EDUcreator);
             var parsedds = new EDU(eduParse);
 
             string result = parsedds.Output();
-            var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_unit.txt"));
+            var expected = dp.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_unit.txt"));
 
             int rl = result.Length;
             int el = expected.Length;
@@ -37,8 +38,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void eduGetValueByCriteria()
         {
-            var edu = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
-            var eduParse = DepthParse.Parse(edu, Creator.EDUcreator);
+            var edu = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
+            var eduParse = dp.Parse(edu, Creator.EDUcreator);
             var parsedds = new EDU(eduParse);
             var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "roman_hastati", "ownership");
             var expected = new KeyValuePair<string, string>("ownership", "roman"); //number of ca

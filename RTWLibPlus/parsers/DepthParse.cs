@@ -11,15 +11,18 @@ using static RTWLibPlus.interfaces.IbaseObj;
 
 namespace RTWLibPlus.parsers
 {
-    public static class DepthParse
+    public class DepthParse
     {
+        List<IbaseObj> list = new List<IbaseObj>();
+
         public delegate IbaseObj ObjectCreator(string value, string tag, int depth);
-        public static List<IbaseObj> Parse(string[] lines, ObjectCreator creator, char splitter = ' ')
+        public List<IbaseObj> Parse(string[] lines, ObjectCreator creator, char splitter = ' ')
         {
+            list.Clear();
             int depth = 0;
             int item = 0;
             int whiteSpaceSeparator = 0;
-            List<IbaseObj> list = new List<IbaseObj>();
+            
             foreach (string line in lines)
             {
                 string lineTrimEnd = line.TrimEnd();
@@ -32,7 +35,7 @@ namespace RTWLibPlus.parsers
                 else
                 {
                     if (list.Count > 0)
-                        SetNewLinesAfter(list, depth, item, whiteSpaceSeparator);
+                        SetNewLinesAfter(depth, whiteSpaceSeparator);
                     whiteSpaceSeparator = 0;
                 }
                 if (line.StartsWith(";")) { continue; }
@@ -47,45 +50,12 @@ namespace RTWLibPlus.parsers
 
                 string tag = lineTrim.GetFirstWord(splitter);
                 string value = lineTrim.RemoveFirstWord(splitter);
-                StoreDataInObject(creator, depth, item, list, tag, value);
+                StoreDataInObject(creator, depth, tag, value);
             }
         
             return list;
         }
-        private static void StoreDataInObject(ObjectCreator creator, int depth, int item, List<IbaseObj> list, string tag, string value)
-        {
-            if (depth == 0 && tag != null)
-                list.Add(creator(value, tag, depth));
-            else if (depth > 0)
-                AddWithDepth(creator, list, item, depth, 0, tag, value);
-        }
-        private static void AddWithDepth(ObjectCreator creator, List<IbaseObj> objs, int item, int depth, int currentDepth, string tag, string value)
-        {
-            item = objs.Count - 1;
-            if (depth != currentDepth)
-                AddWithDepth(creator, objs[item].GetItems(), item, depth, ++currentDepth, tag, value);
-            else objs.Add(creator(value, tag, depth));
-        }
-        private static void SetNewLinesAfter(List<IbaseObj> list, int depth, int item, int value)
-        {
-            item = list.Count - 1;
-            if (depth == 0)
-                ((baseObj)list[item]).newLinesAfter = value;
-            else if (depth > 0)
-                SetNLWithDepth(list, depth, item, value, 0);
-        }
-        private static void SetNLWithDepth(List<IbaseObj> list, int depth, int item, int value, int currentDepth)
-        {
-            item = list.Count - 1;
-            var itesm = list[item].GetItems();
-            if (itesm.Count == 0)
-                ((baseObj)list[item]).newLinesAfter = value;
-            else if (depth != currentDepth)
-                SetNLWithDepth(list[item].GetItems(), depth, item, value, ++currentDepth);
-            else ((baseObj)list[item]).newLinesAfter = value;
-
-        }
-        public static string[] ReadFile(string path, bool removeEmptyLines = true)
+        public string[] ReadFile(string path, bool removeEmptyLines = true)
         {
             StreamReader streamReader = new StreamReader(path);
             string text = streamReader.ReadToEnd();
@@ -95,18 +65,52 @@ namespace RTWLibPlus.parsers
                 return GetLinesRemoveEmpty(text);
             else return GetLines(text);
         }
-        public static string ReadFileAsString(string path)
+        public string ReadFileAsString(string path)
         {
             StreamReader streamReader = new StreamReader(path);
             string text = streamReader.ReadToEnd();
             streamReader.Close();
             return text;
         }
-        private static string[] GetLinesRemoveEmpty(string text)
+
+        private void StoreDataInObject(ObjectCreator creator, int depth, string tag, string value)
+        {
+            if (depth == 0 && tag != null)
+                list.Add(creator(value, tag, depth));
+            else if (depth > 0)
+                AddWithDepth(creator, list, depth, 0, tag, value);
+        }
+        private void AddWithDepth(ObjectCreator creator, List<IbaseObj> objs, int depth, int currentDepth, string tag, string value)
+        {
+            int item = objs.Count - 1;
+            if (depth != currentDepth)
+                AddWithDepth(creator, objs[item].GetItems(), depth, ++currentDepth, tag, value);
+            else objs.Add(creator(value, tag, depth));
+        }
+        private void SetNewLinesAfter(int depth, int value)
+        {
+            int item = list.Count - 1;
+            if (depth == 0)
+                ((BaseObj)list[item]).newLinesAfter = value;
+            else if (depth > 0)
+                SetNLWithDepth(list, depth, value, 0);
+        }
+        private void SetNLWithDepth(List<IbaseObj> objs, int depth, int value, int currentDepth)
+        {
+            int item = objs.Count - 1;
+            var itesm = objs[item].GetItems();
+            if (itesm.Count == 0)
+                ((BaseObj)objs[item]).newLinesAfter = value;
+            else if (depth != currentDepth)
+                SetNLWithDepth(objs[item].GetItems(), depth, value, ++currentDepth);
+            else ((BaseObj)objs[item]).newLinesAfter = value;
+
+        }
+        private string[] GetLinesRemoveEmpty(string text)
         {
             return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         }
-        private static string[] GetLines(string text)
+        private string[] GetLines(string text)
         {
             return text.Split("\n");
         }

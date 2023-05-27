@@ -41,8 +41,9 @@ namespace RTWLibPlus.helpers
 
         public static List<IbaseObj> ParseFile(ObjectCreator creator, char splitter = ' ',  bool removeEmptyLines = false, params string[] path)
         {
-            var fileLines = DepthParse.ReadFile(RFH.CurrDirPath(path), removeEmptyLines);
-            var parsed = DepthParse.Parse(fileLines, creator, splitter);
+            DepthParse dp = new DepthParse();
+            var fileLines = dp.ReadFile(RFH.CurrDirPath(path), removeEmptyLines);
+            var parsed = dp.Parse(fileLines, creator, splitter);
 
             return parsed;
         }

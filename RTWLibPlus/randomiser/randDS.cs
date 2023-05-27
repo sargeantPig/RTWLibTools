@@ -95,12 +95,12 @@ namespace RTWLibPlus.randomiser
         private static void ChangeCharacterCoords(List<IbaseObj> regions, List<IbaseObj> characters, CityMap cm)
         {
             int ri = 0;
-            foreach(baseObj c in characters)
+            foreach(BaseObj c in characters)
             {
                 if (ri >= regions.Count)
                     ri = 0;
 
-                Vector2 coord = cm.CityCoordinates[((baseObj)regions[ri]).Value];
+                Vector2 coord = cm.CityCoordinates[regions[ri].Value];
                 c.Value = DS.ChangeCharacterCoordinates(c.Value, coord);
                 ri++;
             }

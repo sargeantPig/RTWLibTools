@@ -12,15 +12,17 @@ namespace RTWLib_Tests.wrappers
     [TestClass]
     public class Tests_edb
     {
+        DepthParse dp = new DepthParse();
+
         [TestMethod]
         public void edbParse()
         {
-            var edb = DepthParse.ReadFile(Path.Combine("resources", "edbExample.txt"), false);
-            var edbParse = DepthParse.Parse(edb, Creator.EDBcreator);
+            var edb = dp.ReadFile(Path.Combine("resources", "edbExample.txt"), false);
+            var edbParse = dp.Parse(edb, Creator.EDBcreator);
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();
-            var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "edbExample.txt"));
+            var expected = dp.ReadFileAsString(RFH.CurrDirPath("resources", "edbExample.txt"));
 
             int rl = result.Length;
             int el = expected.Length;
@@ -32,12 +34,12 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbWholeFile()
         {
-            var edb = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
-            var edbParse = DepthParse.Parse(edb, Creator.EDBcreator);
+            var edb = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
+            var edbParse = dp.Parse(edb, Creator.EDBcreator);
             var parsedEdb = new EDB(edbParse);
 
             string result = parsedEdb.Output();
-            var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
+            var expected = dp.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
 
             int rl = result.Length;
             int el = expected.Length;
@@ -49,8 +51,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbGetBuildingLevels()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "core_building", "levels");
@@ -62,8 +64,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbGetRequires()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "core_building", "levels", "governors_house");
@@ -75,8 +77,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbModifyRequires()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
             var change = parsedsmf.ModifyValue(parsedsmf.data, "requires factions { barbarian, }", 0, false, "core_building", "levels", "governors_house");
@@ -89,23 +91,23 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbGetCapabiltyArray()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
             var result = parsedsmf.GetItemList(parsedsmf.data, 0, "core_building", "levels", "governors_house", "capability");
             var expected = new List<IbaseObj>() {
 
-                 new baseObj("recruit", "\"carthaginian peasant\"  0", 4),
-                 new baseObj("recruit", "\"barb peasant briton\"  0", 4),
-                 new baseObj("recruit", "\"barb peasant dacian\"  0", 4),
-                 new baseObj("recruit", "\"barb peasant gaul\"  0", 4),
-                 new baseObj("recruit", "\"barb peasant german\"  0", 4),
-                 new baseObj("recruit", "\"barb peasant scythian\"  0", 4),
-                 new baseObj("recruit", "\"east peasant\"  0", 4),
-                 new baseObj("recruit", "\"egyptian peasant\"  0", 4),
-                 new baseObj("recruit", "\"greek peasant\"  0", 4),
-                 new baseObj("recruit", "\"roman peasant\"  0", 4),
+                 new SMFObj("recruit", "\"carthaginian peasant\"  0", 4),
+                 new SMFObj("recruit", "\"barb peasant briton\"  0", 4),
+                 new SMFObj("recruit", "\"barb peasant dacian\"  0", 4),
+                 new SMFObj("recruit", "\"barb peasant gaul\"  0", 4),
+                 new SMFObj("recruit", "\"barb peasant german\"  0", 4),
+                 new SMFObj("recruit", "\"barb peasant scythian\"  0", 4),
+                 new SMFObj("recruit", "\"east peasant\"  0", 4),
+                 new SMFObj("recruit", "\"egyptian peasant\"  0", 4),
+                 new SMFObj("recruit", "\"greek peasant\"  0", 4),
+                 new SMFObj("recruit", "\"roman peasant\"  0", 4),
             };
 
             TestHelper.LoopListAssert(expected, result);
@@ -113,8 +115,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbGetPopulationHealth()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
 
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "health", "levels", "sewers", "capability", "population_health_bonus");
@@ -126,8 +128,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbModifyPopulationHealth()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.EDBcreator);
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.EDBcreator);
             var parsedsmf = new EDB(smfParse);
             bool rb = parsedsmf.ModifyValue(parsedsmf.data, "bonus 3",  0, false, "health", "levels", "sewers", "capability", "population_health_bonus");
 

@@ -11,18 +11,27 @@ namespace RTWLibPlus.dataWrappers
 {
     public class EDB : BaseWrapper, IWrapper
     {
-        public EDB() {
-            LoadPath = RemasterRome.GetPath(false, "edb");
-            OutputPath = RemasterRome.GetPath(true, "edb");
+        private readonly string name = "edb";
+
+        public string GetName()
+        {
+            return name;
         }
+
+        public EDB(string outputPath, string loadPath)
+        {
+            OutputPath = outputPath;
+            LoadPath = loadPath;
+        }
+
         public EDB(List<IbaseObj> data)
         {
             this.data = data;
             Sanitise(data);
-            LoadPath = RemasterRome.GetPath(false, "edb");
-            OutputPath = RemasterRome.GetPath(true, "edb");
+            LoadPath = RemasterRome.GetPath(Operation.Load, "edb");
+            OutputPath = RemasterRome.GetPath(Operation.Save, "edb");
         }
-        public void Parse(string path = "")
+        public void Parse()
         {
             this.data = RFH.ParseFile(Creator.EDBcreator, ' ', false, LoadPath);
             Sanitise(data);
@@ -35,7 +44,7 @@ namespace RTWLibPlus.dataWrappers
 
         private void Sanitise(List<IbaseObj> toSanitise)
         {
-            foreach (baseObj obj in toSanitise)
+            foreach (BaseObj obj in toSanitise)
             {
                 if(obj.Tag == "building" || obj.Value == "building" )
                 {
@@ -44,7 +53,7 @@ namespace RTWLibPlus.dataWrappers
             }
         }
 
-        private void Swap(baseObj obj)
+        private void Swap(BaseObj obj)
         {
             string temp = obj.Tag;
             obj.Tag = obj.Value;

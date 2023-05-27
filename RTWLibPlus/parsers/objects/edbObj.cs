@@ -1,5 +1,6 @@
 ﻿using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
+using RTWLibPlus.parsers.configs.whiteSpace;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using static RTWLibPlus.parsers.DepthParse;
 
 namespace RTWLibPlus.parsers.objects
 {
-    public class EDBObj : baseObj, IbaseObj
+    public class EDBObj : ArrayObj, IbaseObj
     {
 
         private static string[] AlwaysArrays = new string[] { "plugins", "upgrades" };
@@ -16,25 +17,22 @@ namespace RTWLibPlus.parsers.objects
         private static string[] DoubleSpaceEnding = new string[] { "levels" };
         private static string[] WhiteSpaceSwap = new string[] { "requires", "temple" };
 
-        private static char whiteSpace = ' ';
-        private static int whiteSpaceMultiplier = 4;
-
         public EDBObj(string tag, string value, int depth) :
             base(tag, value, depth)
         {
-            whiteChar = whiteSpace;
-            whiteDepthMultiplier = whiteSpaceMultiplier;
-            Ident = Tag.Split(whiteChar)[0];
+            WSConfigFactory factory = new WSConfigFactory();
+            wsConfig = factory.CreateEDBWhiteSpace();
+            Ident = Tag.Split(wsConfig.WhiteChar)[0];
         }
 
         public EDBObj() { }
-        new public IbaseObj Copy()
+        public override IbaseObj Copy()
         {
             EDBObj copy = new EDBObj();
-            copy.whiteChar = whiteSpace;
+            copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
             copy.depth = depth;
             copy.items = items.DeepCopy();
-            copy.whiteDepthMultiplier = whiteSpaceMultiplier;
+            copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
             copy.Tag = Tag;
             copy.Value = Value;
             copy.Ident = Ident;
@@ -43,7 +41,7 @@ namespace RTWLibPlus.parsers.objects
         }
 
 
-        new public string Output()
+        public override string Output()
         {
             string output = string.Empty;
 
@@ -140,6 +138,21 @@ namespace RTWLibPlus.parsers.objects
                 output = NormalFormat('\t', 1);
             else output = IgnoreValue('\t', 1);
             return output;
+        }
+        private string GetDoubleSpaceBetweenTagValue(int end)
+        {
+            return String.Format("{0}{1}  {2}{3}",
+                Format.GetWhiteSpace("", end, wsConfig.WhiteChar),
+                Tag, Value,
+                Environment.NewLine);
+        }
+
+        private string GetDoubleSpaceEnding(int end)
+        {
+            return String.Format("{0}{1} {2}  {3}",
+                Format.GetWhiteSpace("", end, wsConfig.WhiteChar),
+                Tag, Value,
+                Environment.NewLine);
         }
 
     }

@@ -12,7 +12,7 @@ using System.Text;
 
 namespace RTWLibPlus.dataWrappers
 {
-    public class BaseWrapper
+    public abstract class BaseWrapper
     {
         string outputPath;
         string loadPath;
@@ -43,10 +43,8 @@ namespace RTWLibPlus.dataWrappers
         /// <param name="location"></param>
         public bool ModifyValue(List<IbaseObj> items, string newValue, int locInd = 0, bool done = false, params string[] location)
         {
-            for (int i = 0; i < items.Count; i++)
+            foreach (BaseObj item in items)
             {
-                baseObj item = (baseObj)items[i];
-
                 if (location[locInd] == item.Tag || location[locInd] == item.Ident || location[locInd] == item.Value)
                 {
                     if (locInd == location.Count() - 1)
@@ -65,7 +63,7 @@ namespace RTWLibPlus.dataWrappers
         {
             for (int i = 0; i < items.Count; i++)
             {
-                baseObj item = (baseObj)items[i];
+                var item = items[i];
 
                 if(ident == item.Ident)
                 {
@@ -82,10 +80,8 @@ namespace RTWLibPlus.dataWrappers
         }
         public bool AddObjToList(List<IbaseObj> items, IbaseObj obj, int locInd = 0, bool done = false, params string[] location)
         {
-            for (int i = 0; i < items.Count; i++)
+            foreach (BaseObj item in items)
             {
-                baseObj item = (baseObj)items[i];
-
                 if (location[locInd] == item.Tag)
                 {
                     if (locInd == location.Count() - 1)
@@ -104,7 +100,7 @@ namespace RTWLibPlus.dataWrappers
             int currCrit = 0;
             for (int i = 0; i < items.Count; i++)
             {
-                baseObj item = (baseObj)items[i];
+                BaseObj item = (BaseObj)items[i];
                 if (item == null)
                     continue;
 
@@ -124,12 +120,11 @@ namespace RTWLibPlus.dataWrappers
         }
         public List<IbaseObj> GetItemsByIdent(string ident) {
             List<IbaseObj> found = new List<IbaseObj>();
-            foreach(var item in data)
+            foreach(BaseObj item in data)
             {
-                baseObj bi = (baseObj)item;
-                if(bi.Ident == ident)
+                if(item.Ident == ident)
                 {
-                    found.Add(bi);
+                    found.Add(item);
                 }
             }
             return found;
@@ -139,21 +134,20 @@ namespace RTWLibPlus.dataWrappers
             bool[] criteria = new bool[criteriaTags.Count()];
             int currCrit = 0;
             List<IbaseObj> found = new List<IbaseObj>();
-            foreach (var item in data)
+            foreach (BaseObj item in data)
             {
-                baseObj bi = (baseObj)item;
-                if (bi.Ident == criteriaTags[currCrit] || bi.Tag == criteriaTags[currCrit])
+                if (item.Ident == criteriaTags[currCrit] || item.Tag == criteriaTags[currCrit])
                 {
                     criteria[currCrit] = true;
                     if(currCrit != criteriaTags.Count() -1)
                         currCrit++;
                 }
 
-                if (criteria.All((x) => x == true) && bi.Ident == lookFor)
+                if (criteria.All((x) => x == true) && item.Ident == lookFor)
                 {
-                    found.Add(bi) ;
+                    found.Add(item) ;
                 }
-                if (stopAt == bi.Ident && criteria.All((x) => x == true))
+                if (stopAt == item.Ident && criteria.All((x) => x == true))
                     return found;
             }
             return found;
@@ -164,10 +158,9 @@ namespace RTWLibPlus.dataWrappers
             bool[] criteria = new bool[criteriaTags.Count()];
             int currCrit = 0;
             List<IbaseObj> found = new List<IbaseObj>();
-            foreach (var item in list)
+            foreach (BaseObj item in list)
             {
-                baseObj bi = (baseObj)item;
-                if (bi.Ident == criteriaTags[currCrit] || bi.Tag == criteriaTags[currCrit])
+                if (item.Ident == criteriaTags[currCrit] || item.Tag == criteriaTags[currCrit])
                 {
                     criteria[currCrit] = true;
                     if (currCrit != criteriaTags.Count() - 1)
@@ -180,7 +173,7 @@ namespace RTWLibPlus.dataWrappers
                     currCrit = 0;
                     criteria = new bool[criteriaTags.Count()];
                 }
-                if (stopAt == bi.Ident && criteria.All((x) => x == true))
+                if (stopAt == item.Ident && criteria.All((x) => x == true))
                     return found;
             }
             return found;
@@ -191,10 +184,9 @@ namespace RTWLibPlus.dataWrappers
             bool[] criteria = new bool[criteriaTags.Count()];
             int currCrit = 0;
             List<IbaseObj> found = new List<IbaseObj>();
-            foreach (var item in data)
+            foreach (BaseObj item in data)
             {
-                baseObj bi = (baseObj)item;
-                if (bi.Ident == criteriaTags[currCrit] || bi.Tag == criteriaTags[currCrit])
+                if (item.Ident == criteriaTags[currCrit] || item.Tag == criteriaTags[currCrit])
                 {
                     criteria[currCrit] = true;
                     if (currCrit != criteriaTags.Count() - 1)
@@ -203,9 +195,9 @@ namespace RTWLibPlus.dataWrappers
 
                 if (criteria.All((x) => x == true))
                 {
-                    found.Add(bi);
+                    found.Add(item);
                 }
-                if (stopAt(bi.Ident) && criteria.All((x) => x == true) && bi.Ident != criteriaTags[currCrit])
+                if (stopAt(item.Ident) && criteria.All((x) => x == true) && item.Ident != criteriaTags[currCrit])
                     return found;
             }
             return found;
@@ -216,10 +208,9 @@ namespace RTWLibPlus.dataWrappers
             bool[] criteria = new bool[criteriaTags.Count()];
             int currCrit = 0;
             List<IbaseObj> found = new List<IbaseObj>();
-            foreach (var item in data)
+            foreach (BaseObj item in data)
             {
-                baseObj bi = (baseObj)item;
-                if (bi.Ident == criteriaTags[currCrit] || bi.Tag == criteriaTags[currCrit])
+                if (item.Ident == criteriaTags[currCrit] || item.Tag == criteriaTags[currCrit])
                 {
                     criteria[currCrit] = true;
                     if (currCrit != criteriaTags.Count() - 1)
@@ -228,9 +219,9 @@ namespace RTWLibPlus.dataWrappers
 
                 if (criteria.All((x) => x == true))
                 {
-                    found.Add(bi);
+                    found.Add(item);
                 }
-                if (found.Count >= stopAt && criteria.All((x) => x == true) && bi.Ident != criteriaTags[currCrit])
+                if (found.Count >= stopAt && criteria.All((x) => x == true) && item.Ident != criteriaTags[currCrit])
                     return found;
             }
             return found;
@@ -238,9 +229,8 @@ namespace RTWLibPlus.dataWrappers
 
         public List<IbaseObj> GetItemList(List<IbaseObj> items, int locInd = 0, params string[] location)
         {
-            for (int i = 0; i < items.Count; i++)
+            foreach (BaseObj item in items)
             {
-                baseObj item = (baseObj)items[i];
                 
                 if (location[locInd] == item.Tag || location[locInd] == item.Ident || location[locInd] == item.Value)
                 {
@@ -254,10 +244,8 @@ namespace RTWLibPlus.dataWrappers
 
         public IbaseObj GetItemAtLocation(List<IbaseObj> items, int locInd = 0, params string[] location)
         {
-            for (int i = 0; i < items.Count; i++)
+            foreach (BaseObj item in items)
             {
-                baseObj item = (baseObj)items[i];
-
                 if (location[locInd] == item.Tag || location[locInd] == item.Ident || location[locInd] == item.Value)
                 {
                     if (locInd == location.Count() - 1)
@@ -272,10 +260,8 @@ namespace RTWLibPlus.dataWrappers
 
         public KeyValuePair<string, string> GetKeyValueAtLocation(List<IbaseObj> items, int locInd = 0, params string[] location)
         {
-            for (int i = 0; i < items.Count; i++)
+            foreach (BaseObj item in items)
             {
-                baseObj item = (baseObj)items[i];
-
                 if (location[locInd] == item.Tag || location[locInd] == item.Ident || location[locInd] == item.Value)
                 {
                     if (locInd == location.Count() - 1)
@@ -290,10 +276,8 @@ namespace RTWLibPlus.dataWrappers
 
         public IbaseObj GetItemByValue(List<IbaseObj> items, string lookFor)
         {
-            for (int i = 0; i < items.Count; i++)
+            foreach (BaseObj item in items)
             {
-                baseObj item = (baseObj)items[i];
-
                 if (item.GetItems().Count == 0)
                     continue;
                 if (CheckForValue(item.GetItems(), lookFor))
@@ -308,10 +292,8 @@ namespace RTWLibPlus.dataWrappers
         {
             string atLook = string.Empty;
 
-            for (int i = 0; i < items.Count; i++)
+            foreach (BaseObj item in items)
             {
-                baseObj item = (baseObj)items[i];
-
                 if(item.Ident ==  lookFor)
                     atLook = item.Tag;
                 if (item.GetItems().Count == 0)
@@ -327,9 +309,9 @@ namespace RTWLibPlus.dataWrappers
 
         private bool CheckForValue(List<IbaseObj> items, string lookFor)
         {
-            foreach(var item in items)
+            foreach(BaseObj item in items)
             {
-                if(((baseObj)item).Value == lookFor)
+                if(item.Value == lookFor)
                     return true;
                 if (item.GetItems().Count > 0)
                     return CheckForValue(item.GetItems(), lookFor);

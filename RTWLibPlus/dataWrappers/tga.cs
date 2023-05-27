@@ -37,7 +37,6 @@ namespace RTWLibPlus.dataWrappers
         public string outputPath;
         public string loadPath;
 
-        public TGA() { }
         public TGA(string loadPath, string outputpath) {
             this.outputPath = outputpath;
             this.loadPath = loadPath;
@@ -48,6 +47,7 @@ namespace RTWLibPlus.dataWrappers
             if(args.Length > 2 ) { outputPath = args[2]; }
 
         }
+        public TGA() { }
 
         public TGA Copy(string load, string output)
         {
@@ -59,18 +59,8 @@ namespace RTWLibPlus.dataWrappers
             return copy;
         }
 
-        public void Parse(string path = "")
+        public void Parse()
         {
-            if (path != "")
-            {
-                loadPath = path;
-                Read("tgafile", path);
-                return;
-            }
-
-            if(loadPath == null)
-                loadPath = RemasterRome.GetPath(false, "mr");
-
             Read("tgafile", loadPath);
         }
         public void Clear()
@@ -301,6 +291,10 @@ namespace RTWLibPlus.dataWrappers
             return (int)((int)coord.X + (header.width * (int)coord.Y));
         }
 
+        public string GetName()
+        {
+            return Path.GetFileName(loadPath);
+        }
 
         public string OutputPath
         {

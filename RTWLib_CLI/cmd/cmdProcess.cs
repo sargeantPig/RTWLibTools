@@ -83,11 +83,13 @@ namespace RTWLib_CLI.cmd
         public static string LoadTemplates()
         {
             var files = Directory.GetFiles("randomiser_templates");
-            
+
+            DepthParse dp = new DepthParse();
+
             foreach(var file in files)
             {
                 string name = Path.GetFileName(file);
-                var parse = DepthParse.ReadFile(file);
+                var parse = dp.ReadFile(file);
                 templates.Add(name, parse);
             }
             return "Templates Loaded";

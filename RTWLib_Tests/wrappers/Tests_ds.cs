@@ -10,15 +10,18 @@ namespace RTWLib_Tests.wrappers
     [TestClass]
     public class Tests_ds
     {
+        DepthParse dp = new DepthParse();
+
         [TestMethod]
         public void dsWholeFile()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             string result = parsedds.Output();
-            var expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
+            var expected = dp.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
 
             int rl = result.Length;
             int el = expected.Length;
@@ -29,8 +32,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentSettlements()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             var result = parsedds.GetItemsByIdent("settlement");
@@ -42,11 +45,11 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetCharacterChangeCoords()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
             var characters = parsedds.GetItemsByIdent("character");
-            string result = DS.ChangeCharacterCoordinates(((baseObj)characters[0]).Value, new Vector2(1, 1 ));
+            string result = DS.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1 ));
             var expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
 
             Assert.AreEqual(expected, result); //check number of returned settlements
@@ -55,8 +58,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentResource()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             var result = parsedds.GetItemsByIdent("resource");
@@ -67,8 +70,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentFaction()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             var result = parsedds.GetItemsByIdent("faction");
@@ -79,8 +82,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentCoreAttitudes()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             var result = parsedds.GetItemsByIdent("core_attitudes");
@@ -91,8 +94,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsDeleteByIdent()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             var settlements = parsedds.GetItemsByIdent("settlement");
@@ -105,8 +108,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsAddSettlementToRomansBrutii()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
 
             var settlements = parsedds.GetItemsByIdent("settlement");
@@ -119,8 +122,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsAddSettlementToScythia()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
              
             var settlements = parsedds.GetItemsByIdent("settlement");
@@ -132,8 +135,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsAddUnitToFlavius()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
             var units = parsedds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
             var add = parsedds.InsertNewObjectByCriteria(parsedds.data, units[1] , "faction\tromans_julii,", "character\tFlavius", "unit");
@@ -145,8 +148,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void GetRegions()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
             var regions = parsedds.GetItemsByCriteriaDepth(parsedds.data, "core_attitudes", "region", "settlement");
 
@@ -158,8 +161,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void GetFactionByRegion()
         {
-            var ds = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = DepthParse.Parse(ds, Creator.DScreator);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse);
             string region = "Paionia";
             var faction = parsedds.GetFactionByRegion(region);

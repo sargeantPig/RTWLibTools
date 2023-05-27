@@ -6,6 +6,12 @@ using System.Text;
 
 namespace RTWLibPlus.data
 {
+    public enum Operation
+    {
+        Save,
+        Load
+    }
+
     public static class RemasterRome
     {
         public static string[] factions = {
@@ -73,9 +79,9 @@ namespace RTWLibPlus.data
 
         };
 
-        public static string GetPath(bool state, string file)
+        public static string GetPath(Operation state, string file)
         {
-            if (state)
+            if (state == Operation.Save)
                 return RFH.CurrDirPath(baseFolder, save, paths[file]);
             else return RFH.CurrDirPath(baseFolder, load, paths[file]);
         }

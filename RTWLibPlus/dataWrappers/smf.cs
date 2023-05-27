@@ -9,29 +9,37 @@ namespace RTWLibPlus.dataWrappers
 {
     public class SMF : BaseWrapper, IWrapper
     {
+        private readonly string name = "smf";
 
-        public SMF() {
-            LoadPath = RemasterRome.GetPath(false, "smf");
-            OutputPath = RemasterRome.GetPath(true, "smf");
-        }    
+        public string GetName()
+        {
+            return name;
+        }
+        public SMF(string outputPath, string loadPath)
+        {
+            OutputPath = outputPath;
+            LoadPath = loadPath;
+        }
+
+
         public SMF(List<IbaseObj> data)
         {
             this.data = data;
             Sanitise(data);
-            LoadPath = RemasterRome.GetPath(false, "smf");
-            OutputPath = RemasterRome.GetPath(true, "smf");
+            LoadPath = RemasterRome.GetPath(Operation.Load, "smf");
+            OutputPath = RemasterRome.GetPath(Operation.Save, "smf");
         }
-        public void Parse(string path = "")
+        public void Parse()
         {
-            this.data = RFH.ParseFile(Creator.BaseCreator, ':', false, LoadPath);
+            this.data = RFH.ParseFile(Creator.SMFcreator, ':', false, LoadPath);
             Sanitise(data);
         }
         public string Output()
         {
             string output = string.Empty;
-            foreach (baseObj obj in data)
+            foreach (BaseObj obj in data)
             {
-                output += obj.Output();
+                //output += obj.Output();
             }
             RFH.Write(OutputPath, output);
             return output;
@@ -44,7 +52,7 @@ namespace RTWLibPlus.dataWrappers
 
         private void Sanitise(List<IbaseObj> toSanitise)
         {
-            foreach (baseObj obj in toSanitise)
+            foreach (BaseObj obj in toSanitise)
             {
                 obj.Value = obj.Value.Trim();
                 obj.Tag = obj.Tag.Trim();

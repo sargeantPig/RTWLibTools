@@ -10,11 +10,11 @@ namespace RTWLibPlus.randomiser
 {
     public static class TWRand
     {
-        public static int seed = 0;
+        public static string seed = "0";
         public static Random rnd = new Random();
-        public static void RefreshRndSeed()
+        public static void RefreshRndSeed(string seed = "0")
         {
-            TWRand.rnd = new Random(seed);
+            TWRand.rnd = new Random(seed.GetHashCode());
         }
 
         public static string[] GetFactionListAndShuffle(int listToFetch)

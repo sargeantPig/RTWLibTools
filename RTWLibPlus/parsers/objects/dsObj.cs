@@ -1,5 +1,6 @@
 ﻿using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
+using RTWLibPlus.parsers.configs.whiteSpace;
 using System;
 using System.Linq;
 
@@ -7,33 +8,31 @@ using static RTWLibPlus.parsers.DepthParse;
 
 namespace RTWLibPlus.parsers.objects
 {
-    public class DSObj : baseObj, IbaseObj
+    public class DSObj : ArrayObj, IbaseObj
     {
         private static string[] applyDepthToNonArrayAt = new string[3] { "playable", "unlockable", "nonplayable" };
         private static string terminateNonArrayDepthAt = "end";
 
-        public static char whiteSpace = '\t';
-        private static int whiteSpaceMultiplier = 1;
         private static bool applyNonArrayDepth = false;
         public bool lastOfGroup = false;
         public DSObj(string tag, string value, int depth) :
             base(tag, value, depth)
         {
-            whiteChar = whiteSpace;
-            whiteDepthMultiplier = whiteSpaceMultiplier;
-            var tagS = tag.Split(whiteChar);
+            WSConfigFactory factory = new WSConfigFactory();
+            wsConfig = factory.Create_DR_DS_SMF_WhiteSpace();
+            var tagS = tag.Split(wsConfig.WhiteChar);
             Ident = tagS[0];
         }
 
         public DSObj() { }
 
-        new public IbaseObj Copy()
+        public override IbaseObj Copy()
         {
             DSObj copy = new DSObj();
-            copy.whiteChar = whiteSpace;
+            copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
             copy.depth = depth;
             copy.items = items.DeepCopy();
-            copy.whiteDepthMultiplier = whiteSpaceMultiplier;
+            copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
             copy.Tag = Tag;
             copy.Value = Value;
             copy.Ident = Ident;
@@ -41,7 +40,7 @@ namespace RTWLibPlus.parsers.objects
             copy.lastOfGroup = lastOfGroup;
             return copy;
         }
-        new public string Output()
+        public override string Output()
         {
             string output = string.Empty;
             int wDepth = depth;
@@ -181,7 +180,7 @@ namespace RTWLibPlus.parsers.objects
         {
             string output;
 
-            output = NormalFormat(whiteSpace, wDepth);
+            output = NormalFormat(wsConfig.WhiteChar, wDepth);
             output = IfTagIsValue(output, wDepth);
             output = IfApplyingNonArrayDepth(output, wDepth);
             return output;
@@ -198,21 +197,20 @@ namespace RTWLibPlus.parsers.objects
         {
             if (Tag == Value)
             {
-                output = IgnoreValue(whiteSpace, wDepth);
+                output = IgnoreValue(wsConfig.WhiteChar, wDepth);
             }
             return output;
         }
 
-        private string WhiteSpaceCheckKeyIsValue()
+        private string GetTabbedLine(int end)
         {
-            string output;
-            if (Tag != Value)
-                output = NormalFormat('\t', 1);
-            else output = IgnoreValue('\t', 1);
-            return output;
+            return Format.GetWhiteSpace("", end, wsConfig.WhiteChar);
         }
 
-
+        private string GetNewLine(int end)
+        {
+            return Format.GetWhiteSpace("", end, Environment.NewLine);
+        }
 
     }
 }

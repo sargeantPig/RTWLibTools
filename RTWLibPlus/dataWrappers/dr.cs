@@ -13,19 +13,27 @@ namespace RTWLibPlus.dataWrappers
 {
     public class DR : BaseWrapper, IWrapper
     {
+        private readonly string name = "dr";
+
+        public string GetName()
+        {
+            return name;
+        }
+
         public Dictionary<string, string> RegionsByColour = new Dictionary<string, string>();
 
-        public DR() {
-            OutputPath = RemasterRome.GetPath(true, "dr");
-            LoadPath = RemasterRome.GetPath(false, "dr");
+        public DR(string outputPath, string loadPath)
+        {
+            OutputPath = outputPath;
+            LoadPath = loadPath;
         }
 
         public DR(List<IbaseObj> data)
         {
             this.data = data;
             GetRegionsByColour();
-            OutputPath = RemasterRome.GetPath(true, "dr");
-            LoadPath = RemasterRome.GetPath(false, "dr");
+            OutputPath = RemasterRome.GetPath(Operation.Save, "dr");
+            LoadPath = RemasterRome.GetPath(Operation.Load, "dr");
         }
 
         public void Clear()
@@ -34,11 +42,10 @@ namespace RTWLibPlus.dataWrappers
             RegionsByColour.Clear();
         }
 
-        public void Parse(string path = "") {
+        public void Parse() {
 
             this.data = RFH.ParseFile(Creator.DRcreator, '\t', false, LoadPath);
             GetRegionsByColour();
-        
         } 
 
         public string GetRegionByColour(int r, int g, int b) {
@@ -52,7 +59,7 @@ namespace RTWLibPlus.dataWrappers
             string output = string.Empty;
             foreach (DRObj obj in data)
             {
-                output += obj.Output();
+                //output += obj.Output();
             }
             RFH.Write(OutputPath, output);
 
@@ -66,7 +73,7 @@ namespace RTWLibPlus.dataWrappers
             {
                 if (pos == 8)
                 {
-                    RegionsByColour.Add(((baseObj)data[i-4]).Value, ((baseObj)data[i-pos]).Value);
+                    RegionsByColour.Add(data[i-4].Value, data[i-pos].Value);
                     pos = 0;
                 }
                 pos++;

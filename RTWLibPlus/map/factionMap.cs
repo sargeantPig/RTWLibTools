@@ -74,7 +74,7 @@ namespace RTWLibPlus.map
 
             foreach (var f in factionList)
             {
-                factionMaps.Add(f, baseMap.Copy("", RFH.CurrDirPath(RemasterRome.GetPath(true, "dir_campaign"),
+                factionMaps.Add(f, baseMap.Copy("", RFH.CurrDirPath(RemasterRome.GetPath(Operation.Save, "dir_campaign"),
                     string.Format("map_{0}.tga", f))));
             }
 

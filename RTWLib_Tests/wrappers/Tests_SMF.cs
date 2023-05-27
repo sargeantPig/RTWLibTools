@@ -10,11 +10,13 @@ namespace RTWLib_Tests.wrappers
     [TestClass]
     public class Tests_smf
     {
+        DepthParse dp = new DepthParse();
+
         [TestMethod]
         public void SMFCheckDataIsParsedDepth1()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.BaseCreator, ':');
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.SMFcreator, ':');
             var parsedsmf = new SMF(smfParse);
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "romans_julii", "culture");
             var expected = new KeyValuePair<string, string>("culture", "roman");
@@ -24,8 +26,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void SMFCheckDataIsParsedDepth2()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.BaseCreator, ':');
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.SMFcreator, ':');
             var parsedsmf = new SMF(smfParse);
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "germans", "colours", "primary");
             var expected = new KeyValuePair<string, string>("primary", "[88, 21, 38, ]");
@@ -34,8 +36,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void SMFCheckDataIsParsedDepth3()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.BaseCreator, ':');
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.SMFcreator, ':');
             var parsedsmf = new SMF(smfParse);
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "britons", "colours", "family tree", "selected line");
             var expected = new KeyValuePair<string, string>("selected line", "[255, 255, 255, ]");
@@ -45,8 +47,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void SMFCheckDataIsParsedDepth4()
         {
-            var smf = DepthParse.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
-            var smfParse = DepthParse.Parse(smf, Creator.BaseCreator, ':');
+            var smf = dp.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+            var smfParse = dp.Parse(smf, Creator.SMFcreator, ':');
             var parsedsmf = new SMF(smfParse);
 
             var result = parsedsmf.GetKeyValueAtLocation(parsedsmf.data, 0, "thrace", "prefer naval invasions");
