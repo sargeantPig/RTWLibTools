@@ -12,6 +12,7 @@ namespace RTWLibPlus.parsers.objects
     public abstract class BaseObj : IbaseObj
     {
         public WhiteSpaceConfig wsConfig;
+
         public List<IbaseObj> items = new List<IbaseObj>();
 
         private ObjRecord Record;

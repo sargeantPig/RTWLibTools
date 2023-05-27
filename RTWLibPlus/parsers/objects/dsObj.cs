@@ -128,7 +128,7 @@ namespace RTWLibPlus.parsers.objects
 
         private string IfCharacterRecord(string output)
         {
-            if (Ident == "character_Record")
+            if (Ident == "character_record")
             {
                 string[] splitData = Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 splitData = splitData.TrimAll();

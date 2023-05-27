@@ -461,15 +461,15 @@ unit		roman hastati				exp 1 armour 0 weapon_lvl 0
 unit		roman velite				exp 1 armour 0 weapon_lvl 0
 
 
-character_Record		Amulius Julius, 	male, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
-character_Record		Manius Julius, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Decius Julius, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Marcus Julius, 	male, command 0, influence 0, management 0, subterfuge 0, age 3, alive, never_a_leader
-character_Record		Faustina, 	female, command 0, influence 0, management 0, subterfuge 0, age 48, alive, never_a_leader
-character_Record		Poppaea, 	female, command 0, influence 0, management 0, subterfuge 0, age 29, alive, never_a_leader
-character_Record		Alypia, 	female, command 0, influence 0, management 0, subterfuge 0, age 29, alive, never_a_leader
-character_Record		Claudia, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
-character_Record		Fadia, 	female, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
+character_record		Amulius Julius, 	male, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
+character_record		Manius Julius, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Decius Julius, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Marcus Julius, 	male, command 0, influence 0, management 0, subterfuge 0, age 3, alive, never_a_leader
+character_record		Faustina, 	female, command 0, influence 0, management 0, subterfuge 0, age 48, alive, never_a_leader
+character_record		Poppaea, 	female, command 0, influence 0, management 0, subterfuge 0, age 29, alive, never_a_leader
+character_record		Alypia, 	female, command 0, influence 0, management 0, subterfuge 0, age 29, alive, never_a_leader
+character_record		Claudia, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
+character_record		Fadia, 	female, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
 
 relative 	Flavius Julius, 	Faustina,		Lucius Julius,	Quintus Julius,	Vibius Julius,	end
 relative 	Lucius Julius, 	Poppaea,		Fadia,	Decius Julius,	Marcus Julius,	end
@@ -597,14 +597,14 @@ unit		roman hastati				exp 0 armour 0 weapon_lvl 0
 unit		roman velite				exp 0 armour 0 weapon_lvl 0
 
 
-character_Record		Cassius Brutus, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Titus Brutus, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Cornelius Brutus, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Oppius Brutus, 	male, command 0, influence 0, management 0, subterfuge 0, age 3, alive, never_a_leader
-character_Record		Galla, 	female, command 0, influence 0, management 0, subterfuge 0, age 50, alive, never_a_leader
-character_Record		Hostia, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Lucilla, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
-character_Record		Paulina, 	female, command 0, influence 0, management 0, subterfuge 0, age 12, alive, never_a_leader
+character_record		Cassius Brutus, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Titus Brutus, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Cornelius Brutus, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Oppius Brutus, 	male, command 0, influence 0, management 0, subterfuge 0, age 3, alive, never_a_leader
+character_record		Galla, 	female, command 0, influence 0, management 0, subterfuge 0, age 50, alive, never_a_leader
+character_record		Hostia, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Lucilla, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
+character_record		Paulina, 	female, command 0, influence 0, management 0, subterfuge 0, age 12, alive, never_a_leader
 
 relative 	Tiberius Brutus, 	Galla,		Aulus Brutus,	Amulius Brutus,	Vibius Brutus,	end
 relative 	Aulus Brutus, 	Hostia,		Paulina,	Titus Brutus,	Oppius Brutus,	end
@@ -716,14 +716,14 @@ unit		roman generals guard cavalry early				exp 1 armour 0 weapon_lvl 0
 unit		roman hastati				exp 1 armour 0 weapon_lvl 0
 
 
-character_Record		Aulus Scipio, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Flavius Scipio, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
-character_Record		Lucius Scipio, 	male, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
-character_Record		Publius Scipio, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
-character_Record		Metella, 	female, command 0, influence 0, management 0, subterfuge 0, age 52, alive, never_a_leader
-character_Record		Antistia, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Crispina, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Placidia, 	female, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
+character_record		Aulus Scipio, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Flavius Scipio, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
+character_record		Lucius Scipio, 	male, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
+character_record		Publius Scipio, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Metella, 	female, command 0, influence 0, management 0, subterfuge 0, age 52, alive, never_a_leader
+character_record		Antistia, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Crispina, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Placidia, 	female, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
 
 relative 	Cornelius Scipio, 	Metella,		Julianus Scipio,	Quintus Scipio,	Gaius Scipio,	Aulus Scipio,	end
 relative 	Julianus Scipio, 	Antistia,		Flavius Scipio,	Lucius Scipio,	end
@@ -819,14 +819,14 @@ unit		roman princeps				exp 3 armour 1 weapon_lvl 0
 unit		roman triarii				exp 3 armour 0 weapon_lvl 0
 
 
-character_Record		Gaius Maxentius, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
-character_Record		Lentulus Maxentius, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Publius Maxentius, 	male, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
-character_Record		Honoria, 	female, command 0, influence 0, management 0, subterfuge 0, age 50, alive, never_a_leader
-character_Record		Licinia, 	female, command 0, influence 0, management 0, subterfuge 0, age 29, alive, never_a_leader
-character_Record		Marciana, 	female, command 0, influence 0, management 0, subterfuge 0, age 34, alive, never_a_leader
-character_Record		Papiria, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
-character_Record		Prisca, 	female, command 0, influence 0, management 0, subterfuge 0, age 19, alive, never_a_leader
+character_record		Gaius Maxentius, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
+character_record		Lentulus Maxentius, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Publius Maxentius, 	male, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
+character_record		Honoria, 	female, command 0, influence 0, management 0, subterfuge 0, age 50, alive, never_a_leader
+character_record		Licinia, 	female, command 0, influence 0, management 0, subterfuge 0, age 29, alive, never_a_leader
+character_record		Marciana, 	female, command 0, influence 0, management 0, subterfuge 0, age 34, alive, never_a_leader
+character_record		Papiria, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
+character_record		Prisca, 	female, command 0, influence 0, management 0, subterfuge 0, age 19, alive, never_a_leader
 
 relative 	Decius Maxentius, 	Honoria,		Servius Maxentius,	Marcus Maxentius,	Prisca,	end
 relative 	Marcus Maxentius, 	Licinia,		Publius Maxentius,	Gaius Maxentius,	end
@@ -1022,13 +1022,13 @@ unit		naval biremes				exp 0 armour 0 weapon_lvl 0
 unit		naval biremes				exp 0 armour 0 weapon_lvl 0
 
 
-character_Record		Abreas, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
-character_Record		Deukalos, 	male, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
-character_Record		Aloeus, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Thessala, 	female, command 0, influence 0, management 0, subterfuge 0, age 50, alive, never_a_leader
-character_Record		Alkmena, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Pervica, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
-character_Record		Caleope, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
+character_record		Abreas, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
+character_record		Deukalos, 	male, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
+character_record		Aloeus, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Thessala, 	female, command 0, influence 0, management 0, subterfuge 0, age 50, alive, never_a_leader
+character_record		Alkmena, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Pervica, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
+character_record		Caleope, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
 
 relative 	Antigonos, 	Thessala,		Gyras,	Euenus,	Damasos,	end
 relative 	Gyras, 	Alkmena,		Aloeus,	Abreas,	end
@@ -1314,17 +1314,17 @@ unit		egyptian peltast				exp 0 armour 0 weapon_lvl 0
 unit		egyptian peasant				exp 0 armour 0 weapon_lvl 0
 
 
-character_Record		Ahmose, 	male, command 0, influence 0, management 0, subterfuge 0, age 15, alive, never_a_leader
-character_Record		Meryre, 	male, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
-character_Record		Tanutamun, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
-character_Record		Heruben, 	male, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
-character_Record		Euredice, 	female, command 0, influence 0, management 0, subterfuge 0, age 55, alive, never_a_leader
-character_Record		Aneksi, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
-character_Record		Satsobek, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Pedibastet, 	female, command 0, influence 0, management 0, subterfuge 0, age 26, alive, never_a_leader
-character_Record		Senbi, 	female, command 0, influence 0, management 0, subterfuge 0, age 20, alive, never_a_leader
-character_Record		Hebeny, 	female, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Arsinoe, 	female, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
+character_record		Ahmose, 	male, command 0, influence 0, management 0, subterfuge 0, age 15, alive, never_a_leader
+character_record		Meryre, 	male, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
+character_record		Tanutamun, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Heruben, 	male, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
+character_record		Euredice, 	female, command 0, influence 0, management 0, subterfuge 0, age 55, alive, never_a_leader
+character_record		Aneksi, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
+character_record		Satsobek, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Pedibastet, 	female, command 0, influence 0, management 0, subterfuge 0, age 26, alive, never_a_leader
+character_record		Senbi, 	female, command 0, influence 0, management 0, subterfuge 0, age 20, alive, never_a_leader
+character_record		Hebeny, 	female, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Arsinoe, 	female, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
 
 relative 	Hekhemmut, 	Euredice,		Khnumhoptep,	Ptahhotep,	Kiya,	Senbi,	end
 relative 	Khnumhoptep, 	Aneksi,		Ahmose,	Hebeny,	Meryre,	end
@@ -1560,17 +1560,17 @@ character	Attalus, diplomat, age 20, , x 200, y 54
 traits GoodDiplomat 3
 
 
-character_Record		Cleitos, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Gyras, 	male, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
-character_Record		Kassandros, 	male, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
-character_Record		Zeuxis, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Alkmena, 	female, command 0, influence 0, management 0, subterfuge 0, age 58, alive, never_a_leader
-character_Record		Aspasia, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Parthenope, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
-character_Record		Athena, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
-character_Record		Dione, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
-character_Record		Helike, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
-character_Record		Orthia, 	female, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Cleitos, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Gyras, 	male, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
+character_record		Kassandros, 	male, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
+character_record		Zeuxis, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Alkmena, 	female, command 0, influence 0, management 0, subterfuge 0, age 58, alive, never_a_leader
+character_record		Aspasia, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Parthenope, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
+character_record		Athena, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
+character_record		Dione, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
+character_record		Helike, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
+character_record		Orthia, 	female, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
 
 relative 	Antiochus, 	Alkmena,		Aristarchus,	Alexander,	Demetrius,	Dione,	end
 relative 	Aristarchus, 	Aspasia,		Cleitos,	Zeuxis,	end
@@ -1819,14 +1819,14 @@ character	Hiram Tunis, diplomat, age 31, , x 80, y 43
 traits GoodDiplomat 3
 
 
-character_Record		Bomilkar, 	male, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
-character_Record		Bisaltes, 	male, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
-character_Record		Actaee, 	female, command 0, influence 0, management 0, subterfuge 0, age 60, alive, never_a_leader
-character_Record		Althaia, 	female, command 0, influence 0, management 0, subterfuge 0, age 36, alive, never_a_leader
-character_Record		Polymede, 	female, command 0, influence 0, management 0, subterfuge 0, age 40, alive, never_a_leader
-character_Record		Xanthe, 	female, command 0, influence 0, management 0, subterfuge 0, age 22, alive, never_a_leader
-character_Record		Roxane, 	female, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Muttunbaal, 	female, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
+character_record		Bomilkar, 	male, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
+character_record		Bisaltes, 	male, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
+character_record		Actaee, 	female, command 0, influence 0, management 0, subterfuge 0, age 60, alive, never_a_leader
+character_record		Althaia, 	female, command 0, influence 0, management 0, subterfuge 0, age 36, alive, never_a_leader
+character_record		Polymede, 	female, command 0, influence 0, management 0, subterfuge 0, age 40, alive, never_a_leader
+character_record		Xanthe, 	female, command 0, influence 0, management 0, subterfuge 0, age 22, alive, never_a_leader
+character_record		Roxane, 	female, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Muttunbaal, 	female, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
 
 relative 	Hanno, 	Actaee,		Hasdrubal,	Burrhus,	Theophanes,	Bomilkar,	end
 relative 	Hasdrubal, 	Althaia,		Bisaltes,	Muttunbaal,	end
@@ -1980,13 +1980,13 @@ traits GoodSpy 2
 ancillaries dancer
 
 
-character_Record		Arses, 	male, command 0, influence 0, management 0, subterfuge 0, age 12, alive, never_a_leader
-character_Record		Thuxra, 	male, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
-character_Record		Achaemenes, 	male, command 0, influence 0, management 0, subterfuge 0, age 15, alive, never_a_leader
-character_Record		Roxanna, 	female, command 0, influence 0, management 0, subterfuge 0, age 58, alive, never_a_leader
-character_Record		Ariyamna, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
-character_Record		Nabunaita, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
-character_Record		Bardiya, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
+character_record		Arses, 	male, command 0, influence 0, management 0, subterfuge 0, age 12, alive, never_a_leader
+character_record		Thuxra, 	male, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
+character_record		Achaemenes, 	male, command 0, influence 0, management 0, subterfuge 0, age 15, alive, never_a_leader
+character_record		Roxanna, 	female, command 0, influence 0, management 0, subterfuge 0, age 58, alive, never_a_leader
+character_record		Ariyamna, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
+character_record		Nabunaita, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
+character_record		Bardiya, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
 
 relative 	Arsaces, 	Roxanna,		Ardumanish,	Bagabigna,	Phraotes,	end
 relative 	Ardumanish, 	Ariyamna,		Achaemenes,	Arses,	Bardiya,	end
@@ -2097,15 +2097,15 @@ army
 unit		naval biremes				exp 0 armour 0 weapon_lvl 0
 
 
-character_Record		Dionysos, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Paerisades, 	male, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
-character_Record		Rhescuporis, 	male, command 0, influence 0, management 0, subterfuge 0, age 1, alive, never_a_leader
-character_Record		Spartocus, 	male, command 0, influence 0, management 0, subterfuge 0, age 15, alive, never_a_leader
-character_Record		Laodice, 	female, command 0, influence 0, management 0, subterfuge 0, age 55, alive, never_a_leader
-character_Record		Pythodoris, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Antonia, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
-character_Record		Dynamis, 	female, command 0, influence 0, management 0, subterfuge 0, age 12, alive, never_a_leader
-character_Record		Gepaepyris, 	female, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
+character_record		Dionysos, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Paerisades, 	male, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
+character_record		Rhescuporis, 	male, command 0, influence 0, management 0, subterfuge 0, age 1, alive, never_a_leader
+character_record		Spartocus, 	male, command 0, influence 0, management 0, subterfuge 0, age 15, alive, never_a_leader
+character_record		Laodice, 	female, command 0, influence 0, management 0, subterfuge 0, age 55, alive, never_a_leader
+character_record		Pythodoris, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Antonia, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
+character_record		Dynamis, 	female, command 0, influence 0, management 0, subterfuge 0, age 12, alive, never_a_leader
+character_record		Gepaepyris, 	female, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
 
 relative 	Mithradates, 	Laodice,		Pharnaces,	Herakles,	Spartocus,	end
 relative 	Pharnaces, 	Pythodoris,		Dynamis,	Gepaepyris,	Paerisades,	end
@@ -2370,16 +2370,16 @@ character	Ivomagus of Lemonum, spy, age 20, , x 81, y 91
 traits GoodSpy 3
 
 
-character_Record		Belenus, 	male, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
-character_Record		Lucco, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Virssuccius, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Meriadoc, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Huctia, 	female, command 0, influence 0, management 0, subterfuge 0, age 52, alive, never_a_leader
-character_Record		Cartimandua, 	female, command 0, influence 0, management 0, subterfuge 0, age 32, alive, never_a_leader
-character_Record		Esselt, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Keyne, 	female, command 0, influence 0, management 0, subterfuge 0, age 31, alive, never_a_leader
-character_Record		Verctissa, 	female, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Verica, 	female, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
+character_record		Belenus, 	male, command 0, influence 0, management 0, subterfuge 0, age 13, alive, never_a_leader
+character_record		Lucco, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Virssuccius, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Meriadoc, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Huctia, 	female, command 0, influence 0, management 0, subterfuge 0, age 52, alive, never_a_leader
+character_record		Cartimandua, 	female, command 0, influence 0, management 0, subterfuge 0, age 32, alive, never_a_leader
+character_record		Esselt, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Keyne, 	female, command 0, influence 0, management 0, subterfuge 0, age 31, alive, never_a_leader
+character_record		Verctissa, 	female, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Verica, 	female, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
 
 relative 	Brennus, 	Huctia,		Eporedorix,	Rianorix,	Vindex,	Lugotorix,	end
 relative 	Eporedorix, 	Cartimandua,		Belenus,	Verctissa,	Virssuccius,	end
@@ -2544,15 +2544,15 @@ character	Ricgard, diplomat, age 20, , x 89, y 117
 traits GoodDiplomat 1
 
 
-character_Record		Vannius, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Sesithacus, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Othelhildis, 	male, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
-character_Record		Carolus, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
-character_Record		Herlinda, 	female, command 0, influence 0, management 0, subterfuge 0, age 58, alive, never_a_leader
-character_Record		Thusnelda, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
-character_Record		Aurinia, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
-character_Record		Amalberga, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
-character_Record		Biua, 	female, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Vannius, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Sesithacus, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Othelhildis, 	male, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
+character_record		Carolus, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Herlinda, 	female, command 0, influence 0, management 0, subterfuge 0, age 58, alive, never_a_leader
+character_record		Thusnelda, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
+character_record		Aurinia, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
+character_record		Amalberga, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
+character_record		Biua, 	female, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
 
 relative 	Arminius, 	Herlinda,		Ariogaisus,	Hariulfus,	Ricburgis,	end
 relative 	Ariogaisus, 	Thusnelda,		Vannius,	Amalberga,	Othelhildis,	end
@@ -2700,16 +2700,16 @@ unit		barb british general briton				exp 0 armour 0 weapon_lvl 0
 unit		barb druids briton				exp 1 armour 0 weapon_lvl 0
 
 
-character_Record		Sennianus, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Calpornus, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
-character_Record		Drustan, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Wotecorix, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
-character_Record		Barita, 	female, command 0, influence 0, management 0, subterfuge 0, age 49, alive, never_a_leader
-character_Record		Cartimandua, 	female, command 0, influence 0, management 0, subterfuge 0, age 31, alive, never_a_leader
-character_Record		Esselt, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Eudaf, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
-character_Record		Iseult, 	female, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Verica, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
+character_record		Sennianus, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Calpornus, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
+character_record		Drustan, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Wotecorix, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Barita, 	female, command 0, influence 0, management 0, subterfuge 0, age 49, alive, never_a_leader
+character_record		Cartimandua, 	female, command 0, influence 0, management 0, subterfuge 0, age 31, alive, never_a_leader
+character_record		Esselt, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Eudaf, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
+character_record		Iseult, 	female, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Verica, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
 
 relative 	Barrivendos, 	Barita,		Cynfawr,	Belenus,	Prasutagus,	end
 relative 	Belenus, 	Cartimandua,		Calpornus,	end
@@ -2815,15 +2815,15 @@ character	Menua, diplomat, age 20, , x 216, y 89
 traits GoodDiplomat 3
 
 
-character_Record		Zipoetes, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Aram, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Eminos, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Sarduri, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
-character_Record		Erato, 	female, command 0, influence 0, management 0, subterfuge 0, age 51, alive, never_a_leader
-character_Record		Karo, 	female, command 0, influence 0, management 0, subterfuge 0, age 34, alive, never_a_leader
-character_Record		Pao, 	female, command 0, influence 0, management 0, subterfuge 0, age 26, alive, never_a_leader
-character_Record		Arao, 	female, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
-character_Record		Hurriya, 	female, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
+character_record		Zipoetes, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Aram, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Eminos, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Sarduri, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Erato, 	female, command 0, influence 0, management 0, subterfuge 0, age 51, alive, never_a_leader
+character_record		Karo, 	female, command 0, influence 0, management 0, subterfuge 0, age 34, alive, never_a_leader
+character_record		Pao, 	female, command 0, influence 0, management 0, subterfuge 0, age 26, alive, never_a_leader
+character_record		Arao, 	female, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
+character_record		Hurriya, 	female, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
 
 relative 	Artaxias, 	Erato,		Rusa,	Aramu,	Zipoetes,	end
 relative 	Rusa, 	Karo,		Arao,	Aram,	Sarduri,	end
@@ -2918,15 +2918,15 @@ character	Burubista, spy, age 20, , x 141, y 87
 traits GoodSpy 3
 
 
-character_Record		Palacus, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
-character_Record		Scylurus, 	male, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
-character_Record		Cotiso, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
-character_Record		Duras, 	male, command 0, influence 0, management 0, subterfuge 0, age 15, alive, never_a_leader
-character_Record		Serapia, 	female, command 0, influence 0, management 0, subterfuge 0, age 51, alive, never_a_leader
-character_Record		Dana, 	female, command 0, influence 0, management 0, subterfuge 0, age 33, alive, never_a_leader
-character_Record		Birkita, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
-character_Record		Devnet, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
-character_Record		Fallon, 	female, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Palacus, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Scylurus, 	male, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
+character_record		Cotiso, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
+character_record		Duras, 	male, command 0, influence 0, management 0, subterfuge 0, age 15, alive, never_a_leader
+character_record		Serapia, 	female, command 0, influence 0, management 0, subterfuge 0, age 51, alive, never_a_leader
+character_record		Dana, 	female, command 0, influence 0, management 0, subterfuge 0, age 33, alive, never_a_leader
+character_record		Birkita, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
+character_record		Devnet, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
+character_record		Fallon, 	female, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
 
 relative 	Zyraxes, 	Serapia,		Vezina,	Scyles,	Duras,	end
 relative 	Vezina, 	Dana,		Cotiso,	Devnet,	Palacus,	end
@@ -3154,15 +3154,15 @@ character	Diodoros of Gela, diplomat, age 49, , x 105, y 44
 traits GoodDiplomat 4
 
 
-character_Record		Clymene, 	female, command 0, influence 0, management 0, subterfuge 0, age 53, alive, never_a_leader
-character_Record		Harmonia, 	female, command 0, influence 0, management 0, subterfuge 0, age 32, alive, never_a_leader
-character_Record		Eunice, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
-character_Record		Kyra, 	female, command 0, influence 0, management 0, subterfuge 0, age 26, alive, never_a_leader
-character_Record		Cleon of Sparta, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Doros of Sparta, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
-character_Record		Eugenius of Sparta, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Nicanor of Sparta, 	male, command 0, influence 0, management 0, subterfuge 0, age 3, alive, never_a_leader
-character_Record		Hermine of Sparta, 	female, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
+character_record		Clymene, 	female, command 0, influence 0, management 0, subterfuge 0, age 53, alive, never_a_leader
+character_record		Harmonia, 	female, command 0, influence 0, management 0, subterfuge 0, age 32, alive, never_a_leader
+character_record		Eunice, 	female, command 0, influence 0, management 0, subterfuge 0, age 30, alive, never_a_leader
+character_record		Kyra, 	female, command 0, influence 0, management 0, subterfuge 0, age 26, alive, never_a_leader
+character_record		Cleon of Sparta, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Doros of Sparta, 	male, command 0, influence 0, management 0, subterfuge 0, age 11, alive, never_a_leader
+character_record		Eugenius of Sparta, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Nicanor of Sparta, 	male, command 0, influence 0, management 0, subterfuge 0, age 3, alive, never_a_leader
+character_record		Hermine of Sparta, 	female, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
 
 relative 	Kleomenes of Sparta, 	Clymene,		Dionysios of Sparta,	Antigonos of Sparta,	Eumenes of Sparta,	Memnon of Sparta,	end
 relative 	Dionysios of Sparta, 	Harmonia,		Cleon of Sparta,	Hermine of Sparta,	end
@@ -3316,15 +3316,15 @@ traits GoodSpy 2
 ancillaries dancer
 
 
-character_Record		Adonibal, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Balhanno, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Tabnit, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Abdimilki, 	male, command 0, influence 0, management 0, subterfuge 0, age 1, alive, never_a_leader
-character_Record		Dahia, 	female, command 0, influence 0, management 0, subterfuge 0, age 51, alive, never_a_leader
-character_Record		Kahina, 	female, command 0, influence 0, management 0, subterfuge 0, age 34, alive, never_a_leader
-character_Record		Aglaurus, 	female, command 0, influence 0, management 0, subterfuge 0, age 25, alive, never_a_leader
-character_Record		Pherusa, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
-character_Record		Sotera, 	female, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
+character_record		Adonibal, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Balhanno, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Tabnit, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Abdimilki, 	male, command 0, influence 0, management 0, subterfuge 0, age 1, alive, never_a_leader
+character_record		Dahia, 	female, command 0, influence 0, management 0, subterfuge 0, age 51, alive, never_a_leader
+character_record		Kahina, 	female, command 0, influence 0, management 0, subterfuge 0, age 34, alive, never_a_leader
+character_record		Aglaurus, 	female, command 0, influence 0, management 0, subterfuge 0, age 25, alive, never_a_leader
+character_record		Pherusa, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
+character_record		Sotera, 	female, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
 
 relative 	Syphax, 	Dahia,		Gisgo,	Muttines,	Adonibal,	end
 relative 	Gisgo, 	Kahina,		Balhanno,	Pherusa,	end
@@ -3465,15 +3465,15 @@ character	Rimsin, diplomat, age 20, , x 226, y 131
 traits GoodDiplomat 1
 
 
-character_Record		Ara, 	male, command 0, influence 0, management 0, subterfuge 0, age 1, alive, never_a_leader
-character_Record		Madyes, 	male, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
-character_Record		Ziaelas, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Palacus, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Serapia, 	female, command 0, influence 0, management 0, subterfuge 0, age 49, alive, never_a_leader
-character_Record		Afina, 	female, command 0, influence 0, management 0, subterfuge 0, age 29, alive, never_a_leader
-character_Record		Branka, 	female, command 0, influence 0, management 0, subterfuge 0, age 26, alive, never_a_leader
-character_Record		Devnet, 	female, command 0, influence 0, management 0, subterfuge 0, age 22, alive, never_a_leader
-character_Record		Hestia, 	female, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
+character_record		Ara, 	male, command 0, influence 0, management 0, subterfuge 0, age 1, alive, never_a_leader
+character_record		Madyes, 	male, command 0, influence 0, management 0, subterfuge 0, age 6, alive, never_a_leader
+character_record		Ziaelas, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Palacus, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Serapia, 	female, command 0, influence 0, management 0, subterfuge 0, age 49, alive, never_a_leader
+character_record		Afina, 	female, command 0, influence 0, management 0, subterfuge 0, age 29, alive, never_a_leader
+character_record		Branka, 	female, command 0, influence 0, management 0, subterfuge 0, age 26, alive, never_a_leader
+character_record		Devnet, 	female, command 0, influence 0, management 0, subterfuge 0, age 22, alive, never_a_leader
+character_record		Hestia, 	female, command 0, influence 0, management 0, subterfuge 0, age 9, alive, never_a_leader
 
 relative 	Zipoetes, 	Serapia,		Partatua,	Belnirari,	Devnet,	Palacus,	end
 relative 	Partatua, 	Afina,		Ziaelas,	Hestia,	end
@@ -3620,14 +3620,14 @@ character	Rhetogenes, spy, age 20, , x 43, y 78
 traits GoodSpy 3
 
 
-character_Record		Ambon, 	male, command 0, influence 0, management 0, subterfuge 0, age 12, alive, never_a_leader
-character_Record		Leukon, 	male, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
-character_Record		Avaros, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
-character_Record		Cartimandua, 	female, command 0, influence 0, management 0, subterfuge 0, age 59, alive, never_a_leader
-character_Record		Esselta, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
-character_Record		Iseulta, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
-character_Record		Keynea, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
-character_Record		Verica, 	female, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
+character_record		Ambon, 	male, command 0, influence 0, management 0, subterfuge 0, age 12, alive, never_a_leader
+character_record		Leukon, 	male, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
+character_record		Avaros, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Cartimandua, 	female, command 0, influence 0, management 0, subterfuge 0, age 59, alive, never_a_leader
+character_record		Esselta, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
+character_record		Iseulta, 	female, command 0, influence 0, management 0, subterfuge 0, age 28, alive, never_a_leader
+character_record		Keynea, 	female, command 0, influence 0, management 0, subterfuge 0, age 24, alive, never_a_leader
+character_record		Verica, 	female, command 0, influence 0, management 0, subterfuge 0, age 4, alive, never_a_leader
 
 relative 	Viriathus, 	Cartimandua,		Caraunios,	Lucco,	Matugenus,	end
 relative 	Caraunios, 	Esselta,		Ambon,	end
@@ -3729,15 +3729,15 @@ character	Satres, spy, age 20, , x 150, y 77
 traits GoodSpy 3
 
 
-character_Record		Bryzos, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
-character_Record		Gaidres, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
-character_Record		Iptacens, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
-character_Record		Ziles, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
-character_Record		Karia, 	female, command 0, influence 0, management 0, subterfuge 0, age 59, alive, never_a_leader
-character_Record		Bendidora, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
-character_Record		Cerzula, 	female, command 0, influence 0, management 0, subterfuge 0, age 25, alive, never_a_leader
-character_Record		Eptesyka, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
-character_Record		Mokasokos, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
+character_record		Bryzos, 	male, command 0, influence 0, management 0, subterfuge 0, age 2, alive, never_a_leader
+character_record		Gaidres, 	male, command 0, influence 0, management 0, subterfuge 0, age 7, alive, never_a_leader
+character_record		Iptacens, 	male, command 0, influence 0, management 0, subterfuge 0, age 10, alive, never_a_leader
+character_record		Ziles, 	male, command 0, influence 0, management 0, subterfuge 0, age 14, alive, never_a_leader
+character_record		Karia, 	female, command 0, influence 0, management 0, subterfuge 0, age 59, alive, never_a_leader
+character_record		Bendidora, 	female, command 0, influence 0, management 0, subterfuge 0, age 35, alive, never_a_leader
+character_record		Cerzula, 	female, command 0, influence 0, management 0, subterfuge 0, age 25, alive, never_a_leader
+character_record		Eptesyka, 	female, command 0, influence 0, management 0, subterfuge 0, age 8, alive, never_a_leader
+character_record		Mokasokos, 	female, command 0, influence 0, management 0, subterfuge 0, age 5, alive, never_a_leader
 
 relative 	Sautes, 	Karia,		Pytros,	Byzas,	end
 relative 	Pytros, 	Bendidora,		Ziles,	Iptacens,	Eptesyka,	end

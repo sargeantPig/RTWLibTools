@@ -86,7 +86,7 @@ namespace RTWLibPlus.randomiser
                     continue;
 
                 var regions = ds.GetItemsByCriteriaDepth(settlements, "", "region", "settlement");
-                var characters = ds.GetItemsByCriteria("character_Record", "character", string.Format("faction\t{0},", f));
+                var characters = ds.GetItemsByCriteria("character_record", "character", string.Format("faction\t{0},", f));
                 ChangeCharacterCoords(regions, characters, cm);
             }
 
