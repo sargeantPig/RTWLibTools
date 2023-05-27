@@ -16,14 +16,14 @@ namespace RTWLibPlus.parsers.objects
         public string CloseBrackets()
         {
             return String.Format("{0}}}{1}",
-                Format.GetWhiteSpace("", wsConfig.WhiteDepthMultiplier * depth,wsConfig.WhiteChar),
+                Format.GetWhiteSpace("", wsConfig.WhiteDepthMultiplier * Depth,wsConfig.WhiteChar),
                 Environment.NewLine);
         }
 
         public string OpenBrackets()
         {
             return String.Format("{0}{{{1}",
-                Format.GetWhiteSpace("", wsConfig.WhiteDepthMultiplier * depth, wsConfig.WhiteChar),
+                Format.GetWhiteSpace("", wsConfig.WhiteDepthMultiplier * Depth, wsConfig.WhiteChar),
                 Environment.NewLine);
         }
 

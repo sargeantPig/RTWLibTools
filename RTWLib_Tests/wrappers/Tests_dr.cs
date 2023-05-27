@@ -20,7 +20,7 @@ namespace RTWLib_Tests.wrappers
             var parsedsmf = new DR(smfParse);
             var result = parsedsmf.GetNumberOfItems(8, "Locus_Gepidae");
             var expected = 8;
-            Assert.AreEqual("Locus_Gepidae", ((BaseObj)result[0]).Tag);
+            Assert.AreEqual("Locus_Gepidae", ((BaseObj)result[0]).Value);
             Assert.AreEqual(expected, result.Count);
         }
 
@@ -32,7 +32,7 @@ namespace RTWLib_Tests.wrappers
             var parsedsmf = new DR(smfParse);
             var result = parsedsmf.GetNumberOfItems(8, "Hibernia");
             var expected = 8;
-            Assert.AreEqual("Hibernia", ((BaseObj)result[0]).Tag);
+            Assert.AreEqual("Hibernia", ((BaseObj)result[0]).Value);
             Assert.AreEqual(expected, result.Count);
         }
         [TestMethod]
@@ -43,7 +43,7 @@ namespace RTWLib_Tests.wrappers
             var parsedsmf = new DR(smfParse);
             var result = parsedsmf.GetNumberOfItems(8, "Thebais");
             var expected = 8;
-            Assert.AreEqual("Thebais", ((BaseObj)result[0]).Tag);
+            Assert.AreEqual("Thebais", ((BaseObj)result[0]).Value);
             Assert.AreEqual(expected, result.Count);
         }
 

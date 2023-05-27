@@ -91,7 +91,7 @@ namespace RTWLibPlus.parsers
         {
             int item = list.Count - 1;
             if (depth == 0)
-                ((BaseObj)list[item]).newLinesAfter = value;
+                ((BaseObj)list[item]).NewLinesAfter = value;
             else if (depth > 0)
                 SetNLWithDepth(list, depth, value, 0);
         }
@@ -100,10 +100,10 @@ namespace RTWLibPlus.parsers
             int item = objs.Count - 1;
             var itesm = objs[item].GetItems();
             if (itesm.Count == 0)
-                ((BaseObj)objs[item]).newLinesAfter = value;
+                ((BaseObj)objs[item]).NewLinesAfter = value;
             else if (depth != currentDepth)
                 SetNLWithDepth(objs[item].GetItems(), depth, value, ++currentDepth);
-            else ((BaseObj)objs[item]).newLinesAfter = value;
+            else ((BaseObj)objs[item]).NewLinesAfter = value;
 
         }
         private string[] GetLinesRemoveEmpty(string text)

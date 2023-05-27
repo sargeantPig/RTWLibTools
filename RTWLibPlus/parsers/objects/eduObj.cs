@@ -25,13 +25,13 @@ namespace RTWLibPlus.parsers.objects
         {
             EDUObj copy = new EDUObj();
             copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
-            copy.depth = depth;
+            copy.Depth = Depth;
             copy.items = items.DeepCopy();
             copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
             copy.Tag = Tag;
             copy.Value = Value;
             copy.Ident = Ident;
-            copy.newLinesAfter = newLinesAfter;
+            copy.NewLinesAfter = NewLinesAfter;
             copy.endOfUnit = endOfUnit;
             return copy;
         }

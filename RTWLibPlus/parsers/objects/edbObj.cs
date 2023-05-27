@@ -30,13 +30,13 @@ namespace RTWLibPlus.parsers.objects
         {
             EDBObj copy = new EDBObj();
             copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
-            copy.depth = depth;
+            copy.Depth = Depth;
             copy.items = items.DeepCopy();
             copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
             copy.Tag = Tag;
             copy.Value = Value;
             copy.Ident = Ident;
-            copy.newLinesAfter = newLinesAfter;
+            copy.NewLinesAfter = NewLinesAfter;
             return copy;
         }
 
@@ -45,7 +45,7 @@ namespace RTWLibPlus.parsers.objects
         {
             string output = string.Empty;
 
-            int wDepth = 4 * depth;
+            int wDepth = 4 * Depth;
             output = GetTagValue(wDepth);
             output = ChildOutput(output);
 

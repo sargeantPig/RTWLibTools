@@ -30,20 +30,20 @@ namespace RTWLibPlus.parsers.objects
         {
             DSObj copy = new DSObj();
             copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
-            copy.depth = depth;
+            copy.Depth = Depth;
             copy.items = items.DeepCopy();
             copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
             copy.Tag = Tag;
             copy.Value = Value;
             copy.Ident = Ident;
-            copy.newLinesAfter = newLinesAfter;
+            copy.NewLinesAfter = NewLinesAfter;
             copy.lastOfGroup = lastOfGroup;
             return copy;
         }
         public override string Output()
         {
             string output = string.Empty;
-            int wDepth = depth;
+            int wDepth = Depth;
             CheckForNonArrayTerminate();
             output = GetTagValue(wDepth);
             output = ChildOutput(output);
@@ -52,7 +52,7 @@ namespace RTWLibPlus.parsers.objects
             output = IfResource(output);
             output = IfRelative(output);
             output = IfCharacterRecord(output);
-            output += GetNewLine(newLinesAfter);
+            output += GetNewLine(NewLinesAfter);
             return output;
         }
 
@@ -128,7 +128,7 @@ namespace RTWLibPlus.parsers.objects
 
         private string IfCharacterRecord(string output)
         {
-            if (Ident == "character_record")
+            if (Ident == "character_Record")
             {
                 string[] splitData = Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
                 splitData = splitData.TrimAll();

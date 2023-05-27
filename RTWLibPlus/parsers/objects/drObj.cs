@@ -24,13 +24,13 @@ namespace RTWLibPlus.parsers.objects
         {
             DRObj copy = new DRObj();
             copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
-            copy.depth = depth;
+            copy.Depth = Depth;
             copy.items = items.DeepCopy();
             copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
             copy.Tag = Tag;
             copy.Value = Value;
             copy.Ident = Ident;
-            copy.newLinesAfter = newLinesAfter;
+            copy.NewLinesAfter = NewLinesAfter;
             return copy;
         }
 
