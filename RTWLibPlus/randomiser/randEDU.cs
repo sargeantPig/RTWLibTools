@@ -25,27 +25,29 @@ namespace RTWLibPlus.randomiser
 
         }
 
-        public static string RandomiseOwnership(EDU edu, int listToFetch = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
+        public static string RandomiseOwnership(EDU edu, RandWrap rnd, RemasterRome config, int listToFetch = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
         {
-            TWRand.RefreshRndSeed();
+            rnd.RefreshRndSeed();
 
-            if(edu == null)
-                edu = new EDU(RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt"));
-
+         
             var ownerships = edu.GetItemsByIdent("ownership");
-            List<string> factionList = TWRand.GetFactionListAndShuffle(listToFetch).ToList();
+            List<string> factionList = config.GetFactionList(listToFetch).ToList();
+            factionList.Shuffle(rnd.RND);
 
             
             foreach ( EDUObj ownership in ownerships ) {
 
                 if (factionList.Count() < maxPerUnit)
-                    factionList = TWRand.GetFactionListAndShuffle(listToFetch).ToList();
+                {
+                    factionList = config.GetFactionList(listToFetch).ToList();
+                    factionList.Shuffle(rnd.RND);
+                }
 
                 string[] newFactions = new string[maxPerUnit + 1] ;
                 for(int i = 0; i < maxPerUnit; i++)
                 {
                     int index;
-                    newFactions[i] = factionList.GetRandom(out index, TWRand.rnd);
+                    newFactions[i] = factionList.GetRandom(out index, rnd.RND);
                     factionList.RemoveAt(index);
                 }
                 newFactions[newFactions.Count() - 1] = "slave";
@@ -54,18 +56,18 @@ namespace RTWLibPlus.randomiser
             }
 
             AddAttributeAll(edu, "mercenary_unit");
-            SetGeneralUnits(edu, 700, 800);
+            SetGeneralUnits(edu, config, rnd, 700, 800);
             return "Random ownership complete";
         }
-        public static string SetGeneralUnits(EDU edu, int minPriceEarly, int minPriceLate)
+        public static string SetGeneralUnits(EDU edu, RemasterRome config, RandWrap rnd, int minPriceEarly, int minPriceLate)
         {
-            var FHasGenerals = TWRand.GetFactionListAndShuffle(0).InitDictFromList(new bool[2] { false, false});
+            var FHasGenerals =  config.GetFactionList(0).InitDictFromList(new bool[2] { false, false});
             var ownerships = edu.GetItemsByIdent("ownership");
             var costs = edu.GetItemsByIdent("stat_cost");
             edu.RemoveAttributesAll("\"general_unit\"", "\"general_unit_upgrade \"marian_reforms\"");
             var attr = edu.GetItemsByIdent("attributes");
 
-            new List<IbaseObj>[3] { ownerships, attr, costs }.ShuffleMany(TWRand.rnd);  
+            new List<IbaseObj>[3] { ownerships, attr, costs }.ShuffleMany(rnd.RND);  
 
             for (int i = 0; i < ownerships.Count; i++)
             {

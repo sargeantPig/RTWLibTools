@@ -10,13 +10,13 @@ namespace RTWLibPlus.map
 {
     public static class Voronoi
     {
-        public static Vector2[] GetVoronoiPoints(int amount, int width, int height)
+        public static Vector2[] GetVoronoiPoints(int amount, int width, int height, RandWrap rnd)
         {
-            TWRand.RefreshRndSeed();
+            rnd.RefreshRndSeed();
             Vector2[] points = new Vector2[amount];
             for(int i = 0; i < amount; i++)
             {
-                points[i] = new Vector2(TWRand.Rint(0, width), TWRand.Rint(0, height));
+                points[i] = new Vector2(rnd.Rint(0, width), rnd.Rint(0, height));
             }
 
             return points;

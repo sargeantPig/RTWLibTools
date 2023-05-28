@@ -1,4 +1,5 @@
-﻿using RTWLibPlus.dataWrappers;
+﻿using RTWLibPlus.data;
+using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.map;
@@ -16,14 +17,14 @@ namespace RTWLibPlus.randomiser
 {
     public static class RandDS
     {
-        public static string RandCitiesBasic(DS ds = null, CityMap cm = null)
+        public static string RandCitiesBasic(string[] factionList, RandWrap rnd, DS ds = null, CityMap cm = null)
         {
-            TWRand.RefreshRndSeed();
+            rnd.RefreshRndSeed();
 
             var settlements = ds.GetItemsByIdent("settlement").DeepCopy();
             ds.DeleteValue(ds.data, "settlement");
-            var factions = TWRand.GetFactionListAndShuffle(0);
-
+            factionList.Shuffle(rnd.RND);
+            string[] factions = factionList;
             int settlementsPerFaction = settlements.Count / factions.Length;
 
             while (settlements.Count > 0)
@@ -34,28 +35,28 @@ namespace RTWLibPlus.randomiser
                         break;
 
                     int index;
-                    ds.InsertNewObjectByCriteria(ds.data, settlements.GetRandom(out index, TWRand.rnd), string.Format("faction\t{0},", faction), "denari");
+                    ds.InsertNewObjectByCriteria(ds.data, settlements.GetRandom(out index, rnd.RND), string.Format("faction\t{0},", faction), "denari");
                     settlements.RemoveAt(index);
                 }
             }
 
-            MatchCharacterCoordsToCities(ds, cm);
+            MatchCharacterCoordsToCities(factionList, rnd, ds, cm);
 
             return "Random city allocation complete";
         }
 
-        public static string RandCitiesVoronoi(DS ds = null, CityMap cm = null)
+        public static string RandCitiesVoronoi(string[] factionList, RandWrap rnd, DS ds = null, CityMap cm = null)
         {
-            TWRand.RefreshRndSeed();
+            rnd.RefreshRndSeed();
 
             var settlements = ds.GetItemsByIdent("settlement").DeepCopy();
             ds.DeleteValue(ds.data, "settlement");
-            var factions = TWRand.GetFactionListAndShuffle(0);
-            var vp = Voronoi.GetVoronoiPoints(factions.Length, cm.width, cm.height);
+            var factions = factionList;
+            var vp = Voronoi.GetVoronoiPoints(factions.Length, cm.width, cm.height, rnd);
             var gh = Voronoi.GetVoronoiGroups(cm.CityCoordinates, vp);
 
-            gh.Shuffle(TWRand.rnd);
-            factions.Shuffle(TWRand.rnd);
+            //gh.Shuffle(TWRand.rnd);
+            //factions.Shuffle(TWRand.rnd);
 
             for(int i =0; i < factions.Count(); i++)
             {
@@ -68,15 +69,15 @@ namespace RTWLibPlus.randomiser
                 }
             }
 
-            MatchCharacterCoordsToCities(ds, cm);
+            MatchCharacterCoordsToCities(factionList, rnd, ds, cm);
 
             return "Rand cities voronoi complete";
         }
 
-        private static void MatchCharacterCoordsToCities(DS ds, CityMap cm)
+        private static void MatchCharacterCoordsToCities(string[] factionList, RandWrap rnd, DS ds, CityMap cm)
         {
-            TWRand.RefreshRndSeed();
-            var factions = TWRand.GetFactionListAndShuffle(0);
+            rnd.RefreshRndSeed();
+            var factions = factionList;
 
             foreach(var f in factions)
             {

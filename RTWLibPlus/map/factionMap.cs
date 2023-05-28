@@ -13,11 +13,11 @@ namespace RTWLibPlus.map
 {
     public class FactionMap
     {
-        public void PaintRegionMap(TGA regions, TGA baseMap, DS ds, DR dr, SMF smf)
+        public void PaintRegionMap(TGA regions, TGA baseMap, DS ds, DR dr, SMF smf, RemasterRome config, string mapDir, string[] factionList)
         {
-            Dictionary<string, TGA> factionMaps = initialiseMaps(baseMap);
+            Dictionary<string, TGA> factionMaps = initialiseMaps(baseMap, mapDir, factionList);
             TGA complete = baseMap.Copy("", "fullMap.tga");
-            Dictionary<string, List<IbaseObj>> settlementsByFaction = ds.GetSettlementsByFaction();
+            Dictionary<string, List<IbaseObj>> settlementsByFaction = ds.GetSettlementsByFaction(config);
             //loop pixels
             for(int i = 0; i < regions.pixels.Length; i++)
             {
@@ -67,14 +67,13 @@ namespace RTWLibPlus.map
             complete.Output();
         }
 
-        private Dictionary<string, TGA> initialiseMaps(TGA baseMap)
+        private Dictionary<string, TGA> initialiseMaps(TGA baseMap, string mapDir, string[] factionList)
         {
             Dictionary<string, TGA> factionMaps = new Dictionary<string, TGA>();
-            var factionList = TWRand.GetFactionListAndShuffle(0);
 
             foreach (var f in factionList)
             {
-                factionMaps.Add(f, baseMap.Copy("", RFH.CurrDirPath(RemasterRome.GetPath(Operation.Save, "dir_campaign"),
+                factionMaps.Add(f, baseMap.Copy("", RFH.CurrDirPath(mapDir,
                     string.Format("map_{0}.tga", f))));
             }
 

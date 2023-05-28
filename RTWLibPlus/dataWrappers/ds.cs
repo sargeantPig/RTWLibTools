@@ -9,6 +9,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace RTWLibPlus.dataWrappers
@@ -28,12 +29,12 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = loadPath;
         }
 
-        public DS(List<IbaseObj> data)
+        public DS(List<IbaseObj> data, RemasterRome config)
         {
             this.data = data;
             SetLastOfGroup();
-            LoadPath = RemasterRome.GetPath(Operation.Load, "ds");
-            OutputPath = RemasterRome.GetPath(Operation.Save, "ds");
+            LoadPath = config.GetPath(Operation.Load, "ds");
+            OutputPath = config.GetPath(Operation.Save, "ds");
         }
 
         public void Parse()
@@ -83,10 +84,10 @@ namespace RTWLibPlus.dataWrappers
             return split.ToString(',', ' ');
         }
 
-        public Dictionary<string, List<IbaseObj>> GetSettlementsByFaction()
+        public Dictionary<string, List<IbaseObj>> GetSettlementsByFaction(RemasterRome config)
         {
             Dictionary<string, List<IbaseObj>> settlementsByFaction = new Dictionary<string, List<IbaseObj>>();
-            foreach (var f in TWRand.GetFactionListAndShuffle(0))
+            foreach (var f in config.GetFactionList(0))
             {
                 var settlements = GetItemsByCriteria("character", "settlement", string.Format("faction\t{0},", f));
                 settlementsByFaction.Add(f, settlements);

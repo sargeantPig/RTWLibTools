@@ -25,12 +25,12 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = loadPath;
         }
 
-        public EDU(List<IbaseObj> data)
+        public EDU(List<IbaseObj> data, RemasterRome config)
         {
             this.data = data;
             SetEndOfUnits();
-            LoadPath = RemasterRome.GetPath(Operation.Load, "edu");
-            OutputPath = RemasterRome.GetPath(Operation.Save, "edu");
+            LoadPath = config.GetPath(Operation.Load, "edu");
+            OutputPath = config.GetPath(Operation.Save, "edu");
         }
 
         public void Parse()

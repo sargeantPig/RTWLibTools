@@ -1,8 +1,11 @@
 ﻿using RTWLibPlus.helpers;
+using RTWLibPlus.parsers;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using System.Text.Json;
+using System.Xml.Linq;
 
 namespace RTWLibPlus.data
 {
@@ -12,89 +15,42 @@ namespace RTWLibPlus.data
         Load
     }
 
-    public static class RemasterRome
+    public class RemasterRome
     {
-        public static string[] factions = {
-            "egypt",
-            "seleucid",
-            "carthage",
-            "parthia",
-            "gauls",
-            "germans",
-            "britons",
-            "greek_cities",
-            "macedon",
-            "pontus",
-            "armenia",
-            "dacia",
-            "numidia",
-            "scythia",
-            "spain",
-            "thrace",
-            "romans_julii",
-            "romans_brutii",
-            "romans_scipii",
-            "romans_senate",
-            "slave"
-        };
+        public string[] Factions { get;  set; }
+        public string[] FactionsRomanCombined { get; set; }
+        public string[] FactionCultures { get; set; }
 
-        public static string[] factionsRomanCombined = {
-            "egypt",
-            "seleucid",
-            "carthage",
-            "parthia",
-            "gauls",
-            "germans",
-            "britons",
-            "greek_cities",
-            "macedon",
-            "pontus",
-            "armenia",
-            "dacia",
-            "numidia",
-            "scythia",
-            "spain",
-            "thrace",
-            "roman"
-        };
+        public string BaseFolder { get; set; }
+        public string Load { get; set; }
+        public string Save { get; set; }
 
-        public static string[] factionCultures = {
-            "roman", "greek", "carthaginian", "eastern", "egyptian", "barbarian"
-        };
-
-        public static string baseFolder = @"Mods\My Mods\randomiser";
-        public static string load = "vanilla";
-        public static string save = "data";
-
-        public static Dictionary<string, string> paths = new Dictionary<string, string>()
+        public static RemasterRome LoadConfig(string path)
         {
-            { "edu", @"export_descr_unit.txt"},
-            { "ds", @"world\maps\campaign\imperial_campaign\descr_strat.txt"},
-            { "dr", @"world\maps\base\descr_regions.txt" },
-            { "mr", @"world\maps\base\map_regions.tga"},
-            { "edb", @"export_descr_buildings.txt" },
-            { "smf", @"descr_sm_factions.txt"},
-            { "bm", @"world\maps\campaign\imperial_campaign\radar_map1.tga" },
-            { "dir_campaign", @"world\maps\campaign\imperial_campaign" }
-
-        };
-
-        public static string GetPath(Operation state, string file)
-        {
-            if (state == Operation.Save)
-                return RFH.CurrDirPath(baseFolder, save, paths[file]);
-            else return RFH.CurrDirPath(baseFolder, load, paths[file]);
+            DepthParse dp = new DepthParse();
+            string json = dp.ReadFileAsString(path);
+            return JsonSerializer.Deserialize<RemasterRome>(json);
         }
 
-        public static string[] GetFactionList(int listToFetch)
+        public Dictionary<string, string> Paths { get; set; }
+
+        public string GetPath(Operation state, string file)
+        {
+            if (state == Operation.Save)
+                return RFH.CurrDirPath(BaseFolder, Save, Paths[file]);
+            else return RFH.CurrDirPath(BaseFolder, Load, Paths[file]);
+        }
+
+        public string[] GetFactionList(int listToFetch)
         {
             switch(listToFetch)
             {
-                case 0: return factions;
-                case 1: return factionsRomanCombined;
-                case 2: return factionCultures;
-                default: return factions;
+                case 0: return Factions;
+                case 1: return FactionsRomanCombined;
+                case 2: return FactionCultures;
+                default: return Factions;
             }
         }
+
     }
 }

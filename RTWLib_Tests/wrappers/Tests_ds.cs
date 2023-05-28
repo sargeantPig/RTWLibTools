@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
@@ -11,14 +12,14 @@ namespace RTWLib_Tests.wrappers
     public class Tests_ds
     {
         DepthParse dp = new DepthParse();
-
+        RemasterRome config = RemasterRome.LoadConfig(@"resources\remaster.json");
         [TestMethod]
         public void dsWholeFile()
         {
             
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
 
             string result = parsedds.Output();
             var expected = dp.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
@@ -34,7 +35,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
 
             var result = parsedds.GetItemsByIdent("settlement");
             var expected = 96; //number of settlements
@@ -47,7 +48,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
             var characters = parsedds.GetItemsByIdent("character");
             string result = DS.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1 ));
             var expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
@@ -60,7 +61,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
 
             var result = parsedds.GetItemsByIdent("resource");
             var expected = 300; //number of resources
@@ -72,7 +73,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
 
             var result = parsedds.GetItemsByIdent("faction");
             var expected = 21; //number of factions
@@ -84,7 +85,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
 
             var result = parsedds.GetItemsByIdent("core_attitudes");
             var expected = 47; //number of ca
@@ -96,7 +97,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
 
             var settlements = parsedds.GetItemsByIdent("settlement");
             parsedds.DeleteValue(parsedds.data, "settlement");
@@ -110,7 +111,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
 
             var settlements = parsedds.GetItemsByIdent("settlement");
             var add = parsedds.InsertNewObjectByCriteria(parsedds.data, settlements[30], "faction\tromans_brutii,", "denari");
@@ -124,7 +125,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
              
             var settlements = parsedds.GetItemsByIdent("settlement");
             var add = parsedds.InsertNewObjectByCriteria(parsedds.data, settlements[30], "faction\tscythia,", "denari");
@@ -137,7 +138,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
             var units = parsedds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
             var add = parsedds.InsertNewObjectByCriteria(parsedds.data, units[1] , "faction\tromans_julii,", "character\tFlavius", "unit");
             var result = parsedds.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
@@ -150,7 +151,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
             var regions = parsedds.GetItemsByCriteriaDepth(parsedds.data, "core_attitudes", "region", "settlement");
 
             var result = regions.Count;
@@ -163,7 +164,7 @@ namespace RTWLib_Tests.wrappers
         {
             var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
             var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse);
+            var parsedds = new DS(dsParse, config);
             string region = "Paionia";
             var faction = parsedds.GetFactionByRegion(region);
             

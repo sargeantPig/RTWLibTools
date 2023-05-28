@@ -28,12 +28,12 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = loadPath;
         }
 
-        public DR(List<IbaseObj> data)
+        public DR(List<IbaseObj> data, RemasterRome config)
         {
             this.data = data;
             GetRegionsByColour();
-            OutputPath = RemasterRome.GetPath(Operation.Save, "dr");
-            LoadPath = RemasterRome.GetPath(Operation.Load, "dr");
+            OutputPath = config.GetPath(Operation.Save, "dr");
+            LoadPath = config.GetPath(Operation.Load, "dr");
         }
 
         public void Clear()

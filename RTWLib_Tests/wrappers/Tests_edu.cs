@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLib_Tests.dummy;
+using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.edu;
 using RTWLibPlus.helpers;
@@ -18,12 +19,13 @@ namespace RTWLib_Tests.wrappers
     public class Tests_edu
     {
         DepthParse dp = new DepthParse();
+        RemasterRome config = RemasterRome.LoadConfig(@"resources\remaster.json");
         [TestMethod]
         public void eduWithDepthParser()
         {
             var edu = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
             var eduParse = dp.Parse(edu, Creator.EDUcreator);
-            var parsedds = new EDU(eduParse);
+            var parsedds = new EDU(eduParse, config);
 
             string result = parsedds.Output();
             var expected = dp.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_unit.txt"));
@@ -40,7 +42,7 @@ namespace RTWLib_Tests.wrappers
         {
             var edu = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
             var eduParse = dp.Parse(edu, Creator.EDUcreator);
-            var parsedds = new EDU(eduParse);
+            var parsedds = new EDU(eduParse, config);
             var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "roman_hastati", "ownership");
             var expected = new KeyValuePair<string, string>("ownership", "roman"); //number of ca
   
@@ -50,7 +52,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void eduModifyOwnership()
         {
-            var parsedds = new EDU(RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt") );
+            var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+            var parsedds = new EDU(parse, config);
 
             var change = parsedds.ModifyValue(parsedds.data, "roman", 0, false, "carthaginian_generals_cavalry_early", "ownership");
             var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "carthaginian_generals_cavalry_early", "ownership");
@@ -63,7 +66,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void eduModifyBulkModifyOwnership()
         {
-            var edu = new EDU(RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt"));
+            var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+            var edu = new EDU(parse, config);
             var ownerships = edu.GetItemsByIdent("ownership");
 
             foreach (EDUObj o in ownerships)
@@ -84,8 +88,8 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void eduRemoveAttributeGeneral()
         {
-            var parsedds = new EDU(RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt"));
-
+            var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+            var parsedds = new EDU(parse, config);
             parsedds.RemoveAttributesAll("general_unit", "general_unit_upgrade \"marian_reforms\"");
             var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "barb_chieftain_cavalry_german", "attributes");
             var expected = new KeyValuePair<string, string>("attributes", "sea_faring, hide_forest, hardy");

@@ -3,7 +3,7 @@ using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers.objects;
 using RTWLibPlus.parsers;
-
+using RTWLibPlus.data;
 
 namespace RTWLib_Tests.wrappers
 {
@@ -11,13 +11,13 @@ namespace RTWLib_Tests.wrappers
     public class Tests_dr
     {
         DepthParse dp = new DepthParse();
-
+        RemasterRome config = RemasterRome.LoadConfig(@"resources\remaster.json");
         [TestMethod]
         public void DRGetRegionDataLocusGepidae()
         {
             var smf = dp.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
             var smfParse = dp.Parse(smf, Creator.DRcreator, '\t');
-            var parsedsmf = new DR(smfParse);
+            var parsedsmf = new DR(smfParse, config);
             var result = parsedsmf.GetNumberOfItems(8, "Locus_Gepidae");
             var expected = 8;
             Assert.AreEqual("Locus_Gepidae", ((BaseObj)result[0]).Value);
@@ -29,7 +29,7 @@ namespace RTWLib_Tests.wrappers
         {
             var smf = dp.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
             var smfParse = dp.Parse(smf, Creator.DRcreator, '\t');
-            var parsedsmf = new DR(smfParse);
+            var parsedsmf = new DR(smfParse, config);
             var result = parsedsmf.GetNumberOfItems(8, "Hibernia");
             var expected = 8;
             Assert.AreEqual("Hibernia", ((BaseObj)result[0]).Value);
@@ -40,7 +40,7 @@ namespace RTWLib_Tests.wrappers
         {
             var smf = dp.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
             var smfParse = dp.Parse(smf, Creator.DRcreator, '\t');
-            var parsedsmf = new DR(smfParse);
+            var parsedsmf = new DR(smfParse, config);
             var result = parsedsmf.GetNumberOfItems(8, "Thebais");
             var expected = 8;
             Assert.AreEqual("Thebais", ((BaseObj)result[0]).Value);

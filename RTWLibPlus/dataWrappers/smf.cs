@@ -4,6 +4,7 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace RTWLibPlus.dataWrappers
 {
@@ -22,12 +23,12 @@ namespace RTWLibPlus.dataWrappers
         }
 
 
-        public SMF(List<IbaseObj> data)
+        public SMF(List<IbaseObj> data, RemasterRome config)
         {
             this.data = data;
             Sanitise(data);
-            LoadPath = RemasterRome.GetPath(Operation.Load, "smf");
-            OutputPath = RemasterRome.GetPath(Operation.Save, "smf");
+            LoadPath = config.GetPath(Operation.Load, "smf");
+            OutputPath = config.GetPath(Operation.Save, "smf");
         }
         public void Parse()
         {

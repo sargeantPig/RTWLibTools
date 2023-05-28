@@ -24,12 +24,12 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = loadPath;
         }
 
-        public EDB(List<IbaseObj> data)
+        public EDB(List<IbaseObj> data, RemasterRome config)
         {
             this.data = data;
             Sanitise(data);
-            LoadPath = RemasterRome.GetPath(Operation.Load, "edb");
-            OutputPath = RemasterRome.GetPath(Operation.Save, "edb");
+            LoadPath = config.GetPath(Operation.Load, "edb");
+            OutputPath = config.GetPath(Operation.Save, "edb");
         }
         public void Parse()
         {

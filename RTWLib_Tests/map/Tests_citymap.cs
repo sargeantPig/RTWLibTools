@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using RTWLibPlus.data;
 
 namespace RTWLib_Tests.map
 {
@@ -15,7 +16,7 @@ namespace RTWLib_Tests.map
     public class Tests_citymap
     {
         DepthParse dp = new DepthParse();
-
+        RemasterRome config = RemasterRome.LoadConfig(@"resources\remaster.json");
         [TestMethod]
         public void CityCoordinatesFetchedCorrectly()
         {
@@ -23,7 +24,7 @@ namespace RTWLib_Tests.map
 
             var drread = dp.ReadFile(RFH.CurrDirPath("resources", "descr_regions.txt"), false);
             var drparse = dp.Parse(drread, Creator.DRcreator, '\t');
-            DR dr = new DR(drparse);
+            DR dr = new DR(drparse, config);
 
             CityMap cm = new CityMap(image, dr);
 
