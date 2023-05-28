@@ -15,54 +15,69 @@ using System.Threading;
 
 namespace RTWLib_CLI.cmd
 {
-    public static class Rand
+    public class RandCMD
     {
-        static EDB edb = new EDB(RemasterRome.GetPath(Operation.Save, "edb"), RemasterRome.GetPath(Operation.Load, "edb"));
-        static EDU edu = new EDU(RemasterRome.GetPath(Operation.Save, "edu"), RemasterRome.GetPath(Operation.Load, "edu"));
-        static DS ds = new DS(RemasterRome.GetPath(Operation.Save, "ds"), RemasterRome.GetPath(Operation.Load, "ds"));
-        static DR dr = new DR(RemasterRome.GetPath(Operation.Save, "dr"), RemasterRome.GetPath(Operation.Load, "dr"));
-        static SMF smf = new SMF(RemasterRome.GetPath(Operation.Save, "smf"), RemasterRome.GetPath(Operation.Load, "smf"));
-        static TGA mr = new TGA(RemasterRome.GetPath(Operation.Load, "mr"), "");
-        static TGA bm = new TGA(RemasterRome.GetPath(Operation.Load, "bm"), "");
-        static CityMap cm = new CityMap();
+        RemasterRome config;
+        RandWrap rnd;
+        EDB edb;
+        EDU edu;
+        DS ds;
+        DR dr;
+        SMF smf;
+        TGA mr;
+        TGA bm;
+        CityMap cm = new CityMap();
 
-        public static string Ownership(int factionList = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
+        public RandCMD(RemasterRome config)
+        {
+            this.config = config;
+            edb = new EDB(config.GetPath(Operation.Save, "edb"), config.GetPath(Operation.Load, "edb"));
+            edu = new EDU(config.GetPath(Operation.Save, "edu"), config.GetPath(Operation.Load, "edu"));
+            ds = new DS(config.GetPath(Operation.Save, "ds"), config.GetPath(Operation.Load, "ds"));
+            dr = new DR(config.GetPath(Operation.Save, "dr"), config.GetPath(Operation.Load, "dr"));
+            smf = new SMF(config.GetPath(Operation.Save, "smf"), config.GetPath(Operation.Load, "smf"));
+            mr = new TGA(config.GetPath(Operation.Load, "mr"), "");
+            bm = new TGA(config.GetPath(Operation.Load, "bm"), "");
+            rnd = new RandWrap("0");
+        }
+
+        public string Ownership(int factionList = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
         {
             if (edu == null)
                 return "EDU not loaded - run 'rand initialsetup'";
 
-            return RandEDU.RandomiseOwnership(edu, factionList, maxPerUnit, minimumPerUnit);
+            return RandEDU.RandomiseOwnership(edu, rnd, config, factionList, maxPerUnit, minimumPerUnit);
         }
 
-        public static string CitiesBasic()
+        public string CitiesBasic()
         {
             if (ds == null)
                 return "DS not loaded - run 'rand initialsetup'";
-            return RandDS.RandCitiesBasic(ds, cm);
+            return RandDS.RandCitiesBasic(config.GetFactionList(0), rnd, ds, cm);
         }
 
-        public static string CitiesVoronoi()
+        public string CitiesVoronoi()
         {
             if (ds == null)
                 return "DS not loaded - run 'rand initialsetup'";
-            return RandDS.RandCitiesVoronoi(ds, cm);
+            return RandDS.RandCitiesVoronoi(config.GetFactionList(0), rnd, ds, cm);
         }
 
-        public static string PaintFactionMap()
+        public string PaintFactionMap()
         {
             FactionMap factionMap = new FactionMap();
-            factionMap.PaintRegionMap(mr, bm, ds, dr, smf);
+            factionMap.PaintRegionMap(mr, bm, ds, dr, smf, config, config.GetPath(Operation.Save, "dir_campaign"), config.GetFactionList(0));
             return "Maps Painted";
         }
 
-        public static string SetSeed(string seed)
+        public string SetSeed(string seed)
         {
-            TWRand.RefreshRndSeed(seed);
+            rnd.RefreshRndSeed(seed);
             return "Seed set to: " + seed;
         }
 
 
-        public static string InitialSetup() {
+        public string InitialSetup() {
 
             List<IWrapper> list = new List<IWrapper>() {edu, edb, ds, dr, smf, mr, bm};
             Progress p = new Progress(1f/(list.Count+1), "Setting up");
@@ -82,7 +97,7 @@ namespace RTWLib_CLI.cmd
             return "Files Loaded";
         }
 
-        public static string Output()
+        public string Output()
         {
             string path = string.Empty;
 
@@ -94,15 +109,14 @@ namespace RTWLib_CLI.cmd
                 p.Update();
             }
 
-
             if (edu != null)
             {
-                path = RemasterRome.GetPath(Operation.Save, "edu");
+                path = config.GetPath(Operation.Save, "edu");
                 RFH.Write(path, edu.Output());
             }
             if (ds != null)
             {
-                path = RemasterRome.GetPath(Operation.Save, "ds");
+                path = config.GetPath(Operation.Save, "ds");
                 RFH.Write(path, ds.Output());
             }
             return "output complete";

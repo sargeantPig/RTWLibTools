@@ -8,12 +8,16 @@ using RTWLIB_CLI;
 using System.IO;
 using RTWLibPlus.parsers;
 using RTWLib_CLI.draw;
+using System.Security;
 
 namespace RTWLib_CLI.cmd
 {
     public static class CMDProcess
     {
         public static Dictionary<string, string[]> templates = new Dictionary<string, string[]>();
+        public static Dictionary<int, string> configs = new Dictionary<int, string>();
+
+        public static ModuleRegister modules = new ModuleRegister();
 
         public static string ReadCMD(string cmd, Type type = null)
         {
@@ -33,6 +37,9 @@ namespace RTWLib_CLI.cmd
             }
             if (type == null)
                 return KW.error + ": Type not found";
+
+            var invokableObject = modules.GetModule(type.Name);
+
 
             foreach(MethodInfo t in type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
             {
@@ -62,7 +69,7 @@ namespace RTWLib_CLI.cmd
                 }
 
 
-                return (string)t.Invoke(new object(), newArg);              
+                return (string)t.Invoke(invokableObject, newArg);              
             }
             return KW.error + ": Command not found, are the arguments correct?";
         }
@@ -91,6 +98,22 @@ namespace RTWLib_CLI.cmd
                 string name = Path.GetFileName(file);
                 var parse = dp.ReadFile(file);
                 templates.Add(name, parse);
+            }
+            return "Templates Loaded";
+        }
+
+        public static string LoadConfigs()
+        {
+            var files = Directory.GetFiles("randomiser_config");
+
+            DepthParse dp = new DepthParse();
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                string file = files[i];
+                string name = Path.GetFileName(file);
+                var parse = file;
+                configs.Add(i, parse);
             }
             return "Templates Loaded";
         }
