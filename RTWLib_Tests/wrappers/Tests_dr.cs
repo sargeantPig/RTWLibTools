@@ -11,7 +11,7 @@ namespace RTWLib_Tests.wrappers
     public class Tests_dr
     {
         DepthParse dp = new DepthParse();
-        RemasterRome config = RemasterRome.LoadConfig(@"resources\remaster.json");
+        RemasterRome config = RemasterRome.LoadConfig(@"resources/remaster.json");
         [TestMethod]
         public void DRGetRegionDataLocusGepidae()
         {
