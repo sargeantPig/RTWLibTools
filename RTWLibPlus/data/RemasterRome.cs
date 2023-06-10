@@ -15,24 +15,19 @@ namespace RTWLibPlus.data
         Load
     }
 
-    public class RemasterRome
+    public class TWConfig
     {
-        public string[] Factions { get;  set; }
-        public string[] FactionsRomanCombined { get; set; }
-        public string[] FactionCultures { get; set; }
-
+        public Dictionary<string, string> Paths { get; set; }
         public string BaseFolder { get; set; }
         public string Load { get; set; }
         public string Save { get; set; }
 
-        public static RemasterRome LoadConfig(string path)
+        public static TWConfig LoadConfig(string path)
         {
             DepthParse dp = new DepthParse();
             string json = dp.ReadFileAsString(path);
-            return JsonSerializer.Deserialize<RemasterRome>(json);
+            return JsonSerializer.Deserialize<TWConfig>(json);
         }
-
-        public Dictionary<string, string> Paths { get; set; }
 
         public string GetPath(Operation state, string file)
         {
@@ -40,17 +35,5 @@ namespace RTWLibPlus.data
                 return RFH.CurrDirPath(BaseFolder, Save, Paths[file]);
             else return RFH.CurrDirPath(BaseFolder, Load, Paths[file]);
         }
-
-        public string[] GetFactionList(int listToFetch)
-        {
-            switch(listToFetch)
-            {
-                case 0: return Factions;
-                case 1: return FactionsRomanCombined;
-                case 2: return FactionCultures;
-                default: return Factions;
-            }
-        }
-
     }
 }

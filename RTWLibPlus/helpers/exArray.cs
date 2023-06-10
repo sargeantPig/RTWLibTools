@@ -197,5 +197,15 @@ namespace RTWLibPlus.helpers
             index = rnd.Next(array.Count());
             return array[index];
         }
+
+        public static string DictToString<T, X>(this Dictionary<T, X> dict)
+        {
+            string newString = string.Empty;
+            foreach( var kv in dict)
+            {
+                newString += string.Format("{0}: {1}{2}", kv.Key.ToString(), kv.Value.ToString(), "\n");
+            }
+            return newString;
+        }
     }
 }

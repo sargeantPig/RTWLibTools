@@ -115,7 +115,7 @@ namespace RTWLib_CLI.cmd
                 var parse = file;
                 configs.Add(i, parse);
             }
-            return "Templates Loaded";
+            return "Configs Loaded";
         }
     }
 }

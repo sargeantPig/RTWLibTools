@@ -28,7 +28,7 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = loadPath;
         }
 
-        public DR(List<IbaseObj> data, RemasterRome config)
+        public DR(List<IbaseObj> data, TWConfig config)
         {
             this.data = data;
             GetRegionsByColour();

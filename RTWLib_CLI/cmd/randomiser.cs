@@ -17,7 +17,7 @@ namespace RTWLib_CLI.cmd
 {
     public class RandCMD
     {
-        RemasterRome config;
+        TWConfig config;
         RandWrap rnd;
         EDB edb;
         EDU edu;
@@ -28,7 +28,7 @@ namespace RTWLib_CLI.cmd
         TGA bm;
         CityMap cm = new CityMap();
 
-        public RandCMD(RemasterRome config)
+        public RandCMD(TWConfig config)
         {
             this.config = config;
             edb = new EDB(config.GetPath(Operation.Save, "edb"), config.GetPath(Operation.Load, "edb"));
@@ -41,32 +41,32 @@ namespace RTWLib_CLI.cmd
             rnd = new RandWrap("0");
         }
 
-        public string Ownership(int factionList = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
+        public string Ownership(int maxPerUnit = 3, int minimumPerUnit = 1)
         {
             if (edu == null)
                 return "EDU not loaded - run 'rand initialsetup'";
 
-            return RandEDU.RandomiseOwnership(edu, rnd, config, factionList, maxPerUnit, minimumPerUnit);
+            return RandEDU.RandomiseOwnership(edu, rnd, smf, maxPerUnit, minimumPerUnit);
         }
 
         public string CitiesBasic()
         {
             if (ds == null)
                 return "DS not loaded - run 'rand initialsetup'";
-            return RandDS.RandCitiesBasic(config.GetFactionList(0), rnd, ds, cm);
+            return RandDS.RandCitiesBasic(smf, rnd, ds, cm);
         }
 
         public string CitiesVoronoi()
         {
             if (ds == null)
                 return "DS not loaded - run 'rand initialsetup'";
-            return RandDS.RandCitiesVoronoi(config.GetFactionList(0), rnd, ds, cm);
+            return RandDS.RandCitiesVoronoi(smf, rnd, ds, cm);
         }
 
         public string PaintFactionMap()
         {
             FactionMap factionMap = new FactionMap();
-            factionMap.PaintRegionMap(mr, bm, ds, dr, smf, config, config.GetPath(Operation.Save, "dir_campaign"), config.GetFactionList(0));
+            factionMap.PaintRegionMap(mr, bm, ds, dr, smf, config.GetPath(Operation.Save, "dir_campaign"));
             return "Maps Painted";
         }
 

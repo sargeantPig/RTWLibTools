@@ -25,7 +25,7 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = loadPath;
         }
 
-        public EDU(List<IbaseObj> data, RemasterRome config)
+        public EDU(List<IbaseObj> data, TWConfig config)
         {
             this.data = data;
             SetEndOfUnits();

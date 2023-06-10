@@ -19,7 +19,7 @@ namespace RTWLib_Tests.wrappers
     public class Tests_edu
     {
         DepthParse dp = new DepthParse();
-        RemasterRome config = RemasterRome.LoadConfig(@"resources/remaster.json");
+        TWConfig config = TWConfig.LoadConfig(@"resources/remaster.json");
         [TestMethod]
         public void eduWithDepthParser()
         {

@@ -16,7 +16,7 @@ namespace RTWLib_Tests.map
     public class Tests_citymap
     {
         DepthParse dp = new DepthParse();
-        RemasterRome config = RemasterRome.LoadConfig(@"resources\remaster.json");
+        TWConfig config = TWConfig.LoadConfig(@"resources/remaster.json");
         [TestMethod]
         public void CityCoordinatesFetchedCorrectly()
         {

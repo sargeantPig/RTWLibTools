@@ -25,9 +25,7 @@ namespace RTWLibPlus.randomiser
 
         public void RefreshRndSeed()
         {
-            using var algo = SHA1.Create();
-            var hash = BitConverter.ToInt32(algo.ComputeHash(Encoding.UTF8.GetBytes(seed)));
-            rnd = new Random(hash);
+            RefreshRndSeed(seed);
         }
 
         public int Rint(int min, int max)

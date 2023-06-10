@@ -13,11 +13,11 @@ namespace RTWLibPlus.map
 {
     public class FactionMap
     {
-        public void PaintRegionMap(TGA regions, TGA baseMap, DS ds, DR dr, SMF smf, RemasterRome config, string mapDir, string[] factionList)
+        public void PaintRegionMap(TGA regions, TGA baseMap, DS ds, DR dr, SMF smf, string mapDir)
         {
-            Dictionary<string, TGA> factionMaps = initialiseMaps(baseMap, mapDir, factionList);
+            Dictionary<string, TGA> factionMaps = initialiseMaps(baseMap, mapDir, smf.GetFactions().ToArray());
             TGA complete = baseMap.Copy("", "fullMap.tga");
-            Dictionary<string, List<IbaseObj>> settlementsByFaction = ds.GetSettlementsByFaction(config);
+            Dictionary<string, List<IbaseObj>> settlementsByFaction = ds.GetSettlementsByFaction(smf);
             //loop pixels
             for(int i = 0; i < regions.pixels.Length; i++)
             {

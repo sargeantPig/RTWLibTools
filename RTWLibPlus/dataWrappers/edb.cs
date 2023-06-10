@@ -24,7 +24,7 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = loadPath;
         }
 
-        public EDB(List<IbaseObj> data, RemasterRome config)
+        public EDB(List<IbaseObj> data, TWConfig config)
         {
             this.data = data;
             Sanitise(data);

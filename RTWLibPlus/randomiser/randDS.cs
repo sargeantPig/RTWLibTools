@@ -17,14 +17,16 @@ namespace RTWLibPlus.randomiser
 {
     public static class RandDS
     {
-        public static string RandCitiesBasic(string[] factionList, RandWrap rnd, DS ds = null, CityMap cm = null)
+        public static string RandCitiesBasic(SMF smf, RandWrap rnd, DS ds = null, CityMap cm = null)
         {
             rnd.RefreshRndSeed();
 
             var settlements = ds.GetItemsByIdent("settlement").DeepCopy();
             ds.DeleteValue(ds.data, "settlement");
+            List<string> factionList = smf.GetFactions();
+
             factionList.Shuffle(rnd.RND);
-            string[] factions = factionList;
+            string[] factions = factionList.ToArray();
             int settlementsPerFaction = settlements.Count / factions.Length;
 
             while (settlements.Count > 0)
@@ -40,19 +42,19 @@ namespace RTWLibPlus.randomiser
                 }
             }
 
-            MatchCharacterCoordsToCities(factionList, rnd, ds, cm);
+            MatchCharacterCoordsToCities(factions, rnd, ds, cm);
 
             return "Random city allocation complete";
         }
 
-        public static string RandCitiesVoronoi(string[] factionList, RandWrap rnd, DS ds = null, CityMap cm = null)
+        public static string RandCitiesVoronoi(SMF smf, RandWrap rnd, DS ds = null, CityMap cm = null)
         {
             rnd.RefreshRndSeed();
 
             var settlements = ds.GetItemsByIdent("settlement").DeepCopy();
             ds.DeleteValue(ds.data, "settlement");
-            var factions = factionList;
-            var vp = Voronoi.GetVoronoiPoints(factions.Length, cm.width, cm.height, rnd);
+            var factions = smf.GetFactions();
+            var vp = Voronoi.GetVoronoiPoints(factions.Count, cm.width, cm.height, rnd);
             var gh = Voronoi.GetVoronoiGroups(cm.CityCoordinates, vp);
 
             //gh.Shuffle(TWRand.rnd);
@@ -69,7 +71,7 @@ namespace RTWLibPlus.randomiser
                 }
             }
 
-            MatchCharacterCoordsToCities(factionList, rnd, ds, cm);
+            MatchCharacterCoordsToCities(factions.ToArray(), rnd, ds, cm);
 
             return "Rand cities voronoi complete";
         }

@@ -29,7 +29,7 @@ namespace RTWLibPlus.dataWrappers
             LoadPath = loadPath;
         }
 
-        public DS(List<IbaseObj> data, RemasterRome config)
+        public DS(List<IbaseObj> data, TWConfig config)
         {
             this.data = data;
             SetLastOfGroup();
@@ -84,10 +84,10 @@ namespace RTWLibPlus.dataWrappers
             return split.ToString(',', ' ');
         }
 
-        public Dictionary<string, List<IbaseObj>> GetSettlementsByFaction(RemasterRome config)
+        public Dictionary<string, List<IbaseObj>> GetSettlementsByFaction(SMF smf)
         {
             Dictionary<string, List<IbaseObj>> settlementsByFaction = new Dictionary<string, List<IbaseObj>>();
-            foreach (var f in config.GetFactionList(0))
+            foreach (var f in smf.GetFactions())
             {
                 var settlements = GetItemsByCriteria("character", "settlement", string.Format("faction\t{0},", f));
                 settlementsByFaction.Add(f, settlements);

@@ -12,6 +12,7 @@ namespace RTWLib_CLI.cmd
         public void RegisterModule(Object module)
         {
             modules.Add(module);
+            Console.WriteLine("Registered Module: " + module.GetType().Name);
         }
 
         public Object GetModule(string name)

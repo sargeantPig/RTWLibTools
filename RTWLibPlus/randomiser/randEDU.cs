@@ -25,13 +25,13 @@ namespace RTWLibPlus.randomiser
 
         }
 
-        public static string RandomiseOwnership(EDU edu, RandWrap rnd, RemasterRome config, int listToFetch = 0, int maxPerUnit = 3, int minimumPerUnit = 1)
+        public static string RandomiseOwnership(EDU edu, RandWrap rnd, SMF smf, int maxPerUnit = 3, int minimumPerUnit = 1)
         {
             rnd.RefreshRndSeed();
 
          
             var ownerships = edu.GetItemsByIdent("ownership");
-            List<string> factionList = config.GetFactionList(listToFetch).ToList();
+            List<string> factionList = smf.GetFactions();
             factionList.Shuffle(rnd.RND);
 
             
@@ -39,7 +39,7 @@ namespace RTWLibPlus.randomiser
 
                 if (factionList.Count() < maxPerUnit)
                 {
-                    factionList = config.GetFactionList(listToFetch).ToList();
+                    factionList = smf.GetFactions();
                     factionList.Shuffle(rnd.RND);
                 }
 
@@ -56,12 +56,12 @@ namespace RTWLibPlus.randomiser
             }
 
             AddAttributeAll(edu, "mercenary_unit");
-            SetGeneralUnits(edu, config, rnd, 700, 800);
+            SetGeneralUnits(edu, smf, rnd, 700, 800);
             return "Random ownership complete";
         }
-        public static string SetGeneralUnits(EDU edu, RemasterRome config, RandWrap rnd, int minPriceEarly, int minPriceLate)
+        public static string SetGeneralUnits(EDU edu, SMF smf, RandWrap rnd, int minPriceEarly, int minPriceLate)
         {
-            var FHasGenerals =  config.GetFactionList(0).InitDictFromList(new bool[2] { false, false});
+            var FHasGenerals =  smf.GetFactions().ToArray().InitDictFromList(new bool[2] { false, false});
             var ownerships = edu.GetItemsByIdent("ownership");
             var costs = edu.GetItemsByIdent("stat_cost");
             edu.RemoveAttributesAll("\"general_unit\"", "\"general_unit_upgrade \"marian_reforms\"");
