@@ -32,7 +32,7 @@ namespace RTWLib_CLI.cmd
 
             if (type == null)
             {
-                type = Type.GetType("RTWLib_CLI.cmd." + cmdSplit[0], false, true);//   Type.GetType(cmdSplit[0], true, true);
+                type = Type.GetType("RTWLib_CLI.cmd.modules." + cmdSplit[0], false, true);//   Type.GetType(cmdSplit[0], true, true);
                 invokeInd = 1;
             }
             if (type == null)

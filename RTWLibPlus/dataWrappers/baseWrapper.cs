@@ -3,12 +3,15 @@ using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace RTWLibPlus.dataWrappers
 {
@@ -57,6 +60,7 @@ namespace RTWLibPlus.dataWrappers
                     else locInd++;
                 }
             }
+
             return done;
         }
         public void DeleteValue(List<IbaseObj> items, string ident, int locInd = 0)
@@ -119,7 +123,7 @@ namespace RTWLibPlus.dataWrappers
             return false;
         }
         public List<IbaseObj> GetItemsByIdent(string ident) {
-            List<IbaseObj> found = new List<IbaseObj>();
+             List<IbaseObj> found = new List<IbaseObj>();
             foreach(BaseObj item in data)
             {
                 if(item.Ident == ident)
@@ -127,6 +131,15 @@ namespace RTWLibPlus.dataWrappers
                     found.Add(item);
                 }
             }
+            /*Parallel.ForEach(data, item =>
+            {
+                if (item.Ident == ident)
+                {
+                    found.Push(item);
+                }
+            });*/
+
+
             return found;
         }
         public List<IbaseObj> GetItemsByCriteria(string stopAt, string lookFor, params string[] criteriaTags)
@@ -134,6 +147,8 @@ namespace RTWLibPlus.dataWrappers
             bool[] criteria = new bool[criteriaTags.Count()];
             int currCrit = 0;
             List<IbaseObj> found = new List<IbaseObj>();
+
+
             foreach (BaseObj item in data)
             {
                 if (item.Ident == criteriaTags[currCrit] || item.Tag == criteriaTags[currCrit])

@@ -24,7 +24,6 @@ namespace RTWLibPlus.randomiser
             return string.Format("Added {0} to all units", attribute);
 
         }
-
         public static string RandomiseOwnership(EDU edu, RandWrap rnd, SMF smf, int maxPerUnit = 3, int minimumPerUnit = 1)
         {
             rnd.RefreshRndSeed();

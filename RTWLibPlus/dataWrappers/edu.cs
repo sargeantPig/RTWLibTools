@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RTWLibPlus.dataWrappers
 {
@@ -42,10 +43,12 @@ namespace RTWLibPlus.dataWrappers
         public string Output()
         {
             string output = string.Empty;
+
             foreach (EDUObj obj in data)
             {
                 output += obj.Output();
             }
+
             RFH.Write(OutputPath, output + Environment.NewLine);
             return output + Environment.NewLine;
         }

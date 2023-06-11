@@ -1,5 +1,6 @@
 ﻿using RTWLib_CLI;
 using RTWLib_CLI.cmd;
+using RTWLib_CLI.cmd.modules;
 using RTWLib_CLI.draw;
 using RTWLib_CLI.input;
 using RTWLibPlus.data;

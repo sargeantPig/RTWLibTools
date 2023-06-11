@@ -13,7 +13,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 
-namespace RTWLib_CLI.cmd
+namespace RTWLib_CLI.cmd.modules
 {
     public class RandCMD
     {
@@ -77,23 +77,24 @@ namespace RTWLib_CLI.cmd
         }
 
 
-        public string InitialSetup() {
+        public string InitialSetup()
+        {
 
-            List<IWrapper> list = new List<IWrapper>() {edu, edb, ds, dr, smf, mr, bm};
-            Progress p = new Progress(1f/(list.Count+1), "Setting up");
+            List<IWrapper> list = new List<IWrapper>() { edu, edb, ds, dr, smf, mr, bm };
+            Progress p = new Progress(1f / (list.Count + 1), "Setting up");
             for (int i = 0; i < list.Count; i++)
             {
-                
+
                 list[i].Clear();
                 p.Message("Loading: " + RFH.GetPartOfPath(list[i].LoadPath, "randomiser"));
                 list[i].Parse();
                 p.Update("Complete");
             }
-            
+
             cm = new CityMap(mr, dr);
             p.Message("Forming: City Map");
             p.Update("Complete");
-            
+
             return "Files Loaded";
         }
 
@@ -101,7 +102,7 @@ namespace RTWLib_CLI.cmd
         {
             string path = string.Empty;
 
-            List<IWrapper> list = new List<IWrapper>() { edu, ds};
+            List<IWrapper> list = new List<IWrapper>() { edu, ds };
             Progress p = new Progress(0.50f, "Writing Files");
             for (int i = 0; i < list.Count; i++)
             {

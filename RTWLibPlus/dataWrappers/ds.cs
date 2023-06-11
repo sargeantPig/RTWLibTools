@@ -11,6 +11,7 @@ using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 
 namespace RTWLibPlus.dataWrappers
 {
@@ -49,7 +50,7 @@ namespace RTWLibPlus.dataWrappers
             string output = string.Empty;
             foreach (DSObj obj in data)
             {
-                output += obj.Output();
+                  output += obj.Output();
             }
             RFH.Write(OutputPath, output);
             return output;

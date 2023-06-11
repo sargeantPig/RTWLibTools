@@ -5,6 +5,7 @@ using RTWLibPlus.parsers.objects;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace RTWLibPlus.dataWrappers
 {
@@ -83,7 +84,7 @@ namespace RTWLibPlus.dataWrappers
 
         private void Sanitise(List<IbaseObj> toSanitise)
         {
-            foreach (BaseObj obj in toSanitise)
+            Parallel.ForEach(toSanitise, obj =>
             {
                 obj.Value = obj.Value.Trim();
                 obj.Tag = obj.Tag.Trim();
@@ -98,7 +99,7 @@ namespace RTWLibPlus.dataWrappers
                 obj.Ident = obj.Ident.Trim(':');
                 obj.Ident = obj.Ident.Trim('"');
                 Sanitise(obj.GetItems());
-            }
+            });
         }
     }
 }
