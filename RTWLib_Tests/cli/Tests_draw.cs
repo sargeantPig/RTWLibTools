@@ -2,6 +2,7 @@
 using RTWLib_CLI.draw;
 using RTWLib_CLI;
 using System;
+using RTWLibPlus.helpers;
 
 namespace RTWLib_Tests.cli
 {
@@ -13,9 +14,9 @@ namespace RTWLib_Tests.cli
         {
             var result = "A Test".ApplyBorder('#', 1, 0);
             var expected = 
-                "########" + Environment.NewLine +
-                "#A Test#" + Environment.NewLine +
-                "########" + Environment.NewLine;
+                "########" + Format.UniversalNewLine() +
+                "#A Test#" + Format.UniversalNewLine() +
+                "########" + Format.UniversalNewLine();
             Assert.AreEqual(expected, result);
         }
         [TestMethod]
@@ -23,11 +24,11 @@ namespace RTWLib_Tests.cli
         {
             var result = "A Test".ApplyBorder('#', 1, 1);
             var expected = 
-                  "##########" + Environment.NewLine 
-                + "#        #" + Environment.NewLine 
-                + "# A Test #" + Environment.NewLine 
-                + "#        #" + Environment.NewLine 
-                + "##########" + Environment.NewLine;
+                  "##########" + Format.UniversalNewLine() 
+                + "#        #" + Format.UniversalNewLine() 
+                + "# A Test #" + Format.UniversalNewLine() 
+                + "#        #" + Format.UniversalNewLine() 
+                + "##########" + Format.UniversalNewLine();
             Assert.AreEqual(expected, result);
         }
 

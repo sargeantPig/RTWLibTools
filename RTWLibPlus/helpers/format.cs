@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace RTWLibPlus.helpers
@@ -24,6 +25,12 @@ namespace RTWLibPlus.helpers
                 str += character;
             }
             return str;
+        }
+
+        public static string UniversalNewLine(){
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) == true)
+                return "\r\n";
+            else return "\r\n"; // environment.newline
         }
 
     }

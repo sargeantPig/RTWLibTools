@@ -19,10 +19,13 @@ namespace RTWLIB_CLI
 
         static void Main(string[] args)
         {
-            CMDProcess.LoadTemplates();
-            CMDProcess.LoadConfigs();
-            CLIHelper.ScreenChange(title.ApplyBorder('#', 2, 1));
+            Console.WriteLine(CMDProcess.LoadTemplates());
+            Console.WriteLine(CMDProcess.LoadConfigs());
 
+            if(CMDProcess.configs.Count == 0)
+                Environment.Exit(1);
+
+            CLIHelper.ScreenChange(title.ApplyBorder('#', 2, 1));
             int input = Input.GetIntInput(configTitle, x => x >= 0 && x < CMDProcess.configs.Count);
             TWConfig config = TWConfig.LoadConfig(CMDProcess.configs[input]);
             RandCMD rand = new RandCMD(config);

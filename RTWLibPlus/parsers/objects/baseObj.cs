@@ -35,14 +35,14 @@ namespace RTWLibPlus.parsers.objects
             return String.Format("{0}{1} {2}{3}",
                 Format.GetWhiteSpace("", end, whiteSpace),
                 Record.Tag, Record.Value,
-                Environment.NewLine);
+                Format.UniversalNewLine());
         }
         public string IgnoreValue(char whiteSpace, int end)
         {
             return String.Format("{0}{1}{2}",
                 Format.GetWhiteSpace("", end, whiteSpace),
                 Record.Tag,
-                Environment.NewLine);
+                Format.UniversalNewLine());
         }
 
         public string Tag

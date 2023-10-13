@@ -7,6 +7,8 @@ using RTWLibPlus.dataWrappers;
 using System.Collections.Generic;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.data;
+using System;
+using System.Runtime.InteropServices;
 
 namespace RTWLib_Tests.wrappers
 {
@@ -35,6 +37,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void edbWholeFile()
         {
+            bool ismac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
             var edb = dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
             var edbParse = dp.Parse(edb, Creator.EDBcreator);
             var parsedEdb = new EDB(edbParse, config);

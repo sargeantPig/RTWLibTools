@@ -90,7 +90,7 @@ namespace RTWLibPlus.parsers.objects
                     splitData[1],
                     Format.GetWhiteSpace(splitData[1], 5, ' '),
                     splitData[2],
-                    Environment.NewLine);
+                    Format.UniversalNewLine());
                 return resource;
             }
             else return output;
@@ -107,7 +107,7 @@ namespace RTWLibPlus.parsers.objects
                 foreach (string str in splitData)
                 {
                     if (i == splitData.Count() - 1 && i == 2)
-                        formatted += string.Format("{0}{1}{2}", Format.GetWhiteSpace("", 2, '\t'), str, Environment.NewLine);
+                        formatted += string.Format("{0}{1}{2}", Format.GetWhiteSpace("", 2, '\t'), str, Format.UniversalNewLine());
                     else if (i == 0)
                         formatted += string.Format("{0} \t{1},", Tag, str);
                     else if (i == 1)
@@ -115,7 +115,7 @@ namespace RTWLibPlus.parsers.objects
                     else if (i == 2)
                         formatted += string.Format("\t\t{0},", str);
                     else if (i == splitData.Count() - 1)
-                        formatted += string.Format("\t{0}{1}", str, Environment.NewLine);
+                        formatted += string.Format("\t{0}{1}", str, Format.UniversalNewLine());
                     else
                         formatted += string.Format("\t{0},", str);
                     i++;
@@ -145,7 +145,7 @@ namespace RTWLibPlus.parsers.objects
                     else if (i == 1 && splitData[i - 1] != "female" && splitData[i - 1] != "male")
                         formatted += string.Format(" \t{0},", str);
                     else if (i == splitData.Count() - 1)
-                        formatted += string.Format(" {0}{1}", str, Environment.NewLine);
+                        formatted += string.Format(" {0}{1}", str, Format.UniversalNewLine());
                     else
                         formatted += string.Format(" {0},", str);
                     i++;
@@ -209,7 +209,7 @@ namespace RTWLibPlus.parsers.objects
 
         private string GetNewLine(int end)
         {
-            return Format.GetWhiteSpace("", end, Environment.NewLine);
+            return Format.GetWhiteSpace("", end, Format.UniversalNewLine());
         }
 
     }

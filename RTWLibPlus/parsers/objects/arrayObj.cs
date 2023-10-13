@@ -17,14 +17,14 @@ namespace RTWLibPlus.parsers.objects
         {
             return String.Format("{0}}}{1}",
                 Format.GetWhiteSpace("", wsConfig.WhiteDepthMultiplier * Depth,wsConfig.WhiteChar),
-                Environment.NewLine);
+                Format.UniversalNewLine());
         }
 
         public string OpenBrackets()
         {
             return String.Format("{0}{{{1}",
                 Format.GetWhiteSpace("", wsConfig.WhiteDepthMultiplier * Depth, wsConfig.WhiteChar),
-                Environment.NewLine);
+                Format.UniversalNewLine());
         }
 
     }

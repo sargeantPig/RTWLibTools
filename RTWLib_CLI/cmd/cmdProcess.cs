@@ -89,6 +89,9 @@ namespace RTWLib_CLI.cmd
 
         public static string LoadTemplates()
         {
+            if(!Directory.Exists("randomiser_templates"))
+                return "Template folder does not exist. Skipping template loading";
+
             var files = Directory.GetFiles("randomiser_templates");
 
             DepthParse dp = new DepthParse();
@@ -104,6 +107,9 @@ namespace RTWLib_CLI.cmd
 
         public static string LoadConfigs()
         {
+            if(!Directory.Exists("randomiser_config"))
+                return "Config folder does not exist.\nERROR config required. Exiting Program";
+
             var files = Directory.GetFiles("randomiser_config");
 
             DepthParse dp = new DepthParse();

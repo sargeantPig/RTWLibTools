@@ -1,0 +1,2 @@
+protectorate :: 0
+improved diplomacy :: 0

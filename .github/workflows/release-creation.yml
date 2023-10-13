@@ -1,0 +1,83 @@
+on:
+  workflow_run:
+    workflows:
+      - "macos-build-test.yml"
+      - "windows-build-test.yml"
+      - "linux-build-test.yml"
+    types:
+      - completed
+  push:
+    branches:
+      - main
+name: combined-release-workflow
+
+env:
+  Repo: "sargeantPig/RTWLibTools"
+
+jobs:
+  combined-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Release Please
+        id: release
+        uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: simple
+      
+      - name: Wait for 80 seconds
+        run: |
+          sleep 80  # Sleep for 80 seconds 
+        shell: bash
+      
+      - name: Install Git LFS
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          git lfs install
+        shell: bash
+  
+      - name: Pull Large Files from Git LFS
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          git lfs pull
+        shell: bash
+          
+      - name: Publish Windows Build
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
+          mv ./publish/win-x64/RTW-CLI-Randomiser.exe ./publish/win-x64/RTW-CLI-Randomiser-windows.exe
+
+      - name: Publish macOS Build
+        if: ${{ steps.release.outputs.release_created }}
+        run: | 
+          dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r osx-x64 --self-contained true -o ./publish/osx-x64
+          mv ./publish/osx-x64/RTW-CLI-Randomiser ./publish/osx-x64/RTW-CLI-Randomiser-macOS
+
+      - name: Publish Linux Build
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
+          mv ./publish/linux-x64/RTW-CLI-Randomiser ./publish/linux-x64/RTW-CLI-Randomiser-linux
+      
+      - name: Create Zip Archive
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          cd ${{github.workspace}}/mod_files
+          ls -a
+          zip -r mod_files.zip Mods
+          cd ../
+          mv  ./mod_files/mod_files.zip ./publish/mod_files.zip
+        shell: bash
+        
+      - name: Upload Release Artifact
+        if: ${{ steps.release.outputs.release_created }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/win-x64/* --clobber
+          gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/osx-x64/* --clobber
+          gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/linux-x64/* --clobber
+          gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/mod_files.zip --clobber

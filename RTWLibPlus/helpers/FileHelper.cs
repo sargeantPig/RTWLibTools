@@ -1,12 +1,8 @@
 ﻿using RTWLibPlus.interfaces;
-using RTWLibPlus.parsers.objects;
 using RTWLibPlus.parsers;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using static RTWLibPlus.parsers.DepthParse;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace RTWLibPlus.helpers
 {

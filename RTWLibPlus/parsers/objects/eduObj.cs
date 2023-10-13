@@ -47,7 +47,7 @@ namespace RTWLibPlus.parsers.objects
             else output = FormatLine();
 
             if (endOfUnit)
-                output += Environment.NewLine;
+                output += Format.UniversalNewLine();
 
 
             return output;
@@ -56,17 +56,17 @@ namespace RTWLibPlus.parsers.objects
 
         private string FormatLine()
         {
-            return string.Format("{0}{1}{2}{3}", Tag, Format.GetWhiteSpace(Tag, 20, ' '), Value, Environment.NewLine);
+            return string.Format("{0}{1}{2}{3}", Tag, Format.GetWhiteSpace(Tag, 20, ' '), Value, Format.UniversalNewLine());
         }
 
         private string FormatLineDropValue()
         {
-            return string.Format("{0} {1}", Tag, Environment.NewLine);
+            return string.Format("{0} {1}", Tag, Format.UniversalNewLine());
         }
 
         private string FormatLineWithWhitespaceDropValue()
         {
-            return string.Format("{0}{1}{2}", Tag, Format.GetWhiteSpace(Tag, 20, ' '), Environment.NewLine);
+            return string.Format("{0}{1}{2}", Tag, Format.GetWhiteSpace(Tag, 20, ' '), Format.UniversalNewLine());
         }
 
     }
