@@ -1,4 +1,5 @@
-﻿using RTWLibPlus.interfaces;
+﻿using RTWLibPlus.data.unit;
+using RTWLibPlus.interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,12 @@ namespace RTWLibPlus.helpers
         {
             for(int i = 0; i < amount; i++)
                 list.Add(new T[0]);
+        }
+
+        public static void init(this List<Unit> list, int amount)
+        {
+            for (int i = 0; i < amount; i++)
+                list.Add(new Unit());
         }
 
         public static List<IbaseObj> DeepCopy(this List<IbaseObj> list)
@@ -90,6 +97,56 @@ namespace RTWLibPlus.helpers
             value.CopyTo(array, orig.Length);
 
             return array;
+        }
+
+        public static T[] Remove<T>(this T[] values, int index)
+        {
+            T[] array = new T[values.Length - 1];
+
+            if (index > 0)
+            { 
+                for(int i = 0; i < index; i++)
+                {
+                    array[i] = values[i];
+                }
+            }
+
+            for(int i = index+1; i < values.Length; i++)
+            {
+                if(i <= values.Length-1)
+                    array[i-1] = values[i];
+            }
+            return array;
+        }
+
+        public static int Find(this string[] array, string value)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i].Trim() == value.Trim()) 
+                    return i;
+            }
+            return -1;
+        }
+
+        public static int Find(this int[] array, int value)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] == value) return i;
+            }
+            return -1;
+        }
+
+        public static string[] FindAndRemove(this string[] array, string value)
+        {
+            int index = array.Find(value);
+
+            if(index == -1)
+                return array;
+
+            var newArr = array.Remove(index);
+            return newArr;
         }
 
         public static string[] TrimAll(this string[] array)

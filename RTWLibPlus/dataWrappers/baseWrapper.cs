@@ -78,10 +78,42 @@ namespace RTWLibPlus.dataWrappers
 
                 if (item.GetItems().Count > 0)
                 {
-                    ModifyValue(item.GetItems(), ident, ++locInd);
+                    DeleteValue(item.GetItems(), ident, ++locInd);
                 }
             }
         }
+
+        public void DeleteChunks(string stopAt, string ident)
+        {
+            bool identFound = false;
+            int startI = -1;
+            int count = 0;
+            for (int i = 0; i < data.Count; i++)
+            {
+                var item = data[i];
+
+                if (ident == item.Ident)
+                {
+                    identFound = true;
+                    startI = i;
+                }
+
+                if(identFound && stopAt == item.Ident)
+                {
+                    data.RemoveRange(startI, count);
+                    startI = -1;
+                    i = i - (count +1);
+                    count = 0;
+                    identFound = false;
+                }
+                   
+                if (identFound)
+                {
+                    count++;
+                }
+            }
+        }
+
         public bool AddObjToList(List<IbaseObj> items, IbaseObj obj, int locInd = 0, bool done = false, params string[] location)
         {
             foreach (BaseObj item in items)
@@ -167,7 +199,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return found;
         }
-
         public List<IbaseObj> GetItemsByCriteriaDepth(List<IbaseObj> list, string stopAt, string lookFor, params string[] criteriaTags)
         {
             bool[] criteria = new bool[criteriaTags.Count()];
@@ -193,7 +224,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return found;
         }
-
         public List<IbaseObj> GetAllItemsButStopAt(Func<string, bool> stopAt, params string[] criteriaTags)
         {
             bool[] criteria = new bool[criteriaTags.Count()];
@@ -217,7 +247,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return found;
         }
-
         public List<IbaseObj> GetNumberOfItems(int stopAt, params string[] criteriaTags)
         {
             bool[] criteria = new bool[criteriaTags.Count()];
@@ -241,7 +270,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return found;
         }
-
         public List<IbaseObj> GetItemList(List<IbaseObj> items, int locInd = 0, params string[] location)
         {
             foreach (BaseObj item in items)
@@ -256,7 +284,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return null;
         }
-
         public IbaseObj GetItemAtLocation(List<IbaseObj> items, int locInd = 0, params string[] location)
         {
             foreach (BaseObj item in items)
@@ -272,7 +299,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return null;
         }
-
         public KeyValuePair<string, string> GetKeyValueAtLocation(List<IbaseObj> items, int locInd = 0, params string[] location)
         {
             foreach (BaseObj item in items)
@@ -288,7 +314,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return new KeyValuePair<string, string>();
         }
-
         public IbaseObj GetItemByValue(List<IbaseObj> items, string lookFor)
         {
             foreach (BaseObj item in items)
@@ -302,7 +327,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return null;
         }
-
         public string GetTagByContentsValue(List<IbaseObj> items, string lookFor, string contentsValue)
         {
             string atLook = string.Empty;
@@ -321,7 +345,6 @@ namespace RTWLibPlus.dataWrappers
             }
             return null;
         }
-
         private bool CheckForValue(List<IbaseObj> items, string lookFor)
         {
             foreach(BaseObj item in items)

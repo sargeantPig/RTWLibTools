@@ -42,8 +42,57 @@ namespace RTWLib_Tests.helper
             CollectionAssert.AreEqual(expected, result);
             Assert.AreEqual(expected.Length, result.Length);
         }
+        [TestMethod]
+        public void RemoveFromArrayMiddle()
+        {
+            string[] arr = new string[] { "a", "b", "c", "d", "e", "f", "g" };
+            var result = arr.Remove(3);
+            var expected = new string[] { "a", "b", "c", "e", "f", "g" };
+            CollectionAssert.AreEqual(expected, result);
+        }
+        [TestMethod]
+        public void RemoveFromArrayEnd()
+        {
+            string[] arr = new string[] { "a", "b", "c", "d", "e", "f", "g" };
+            var result = arr.Remove(6);
+            var expected = new string[] { "a", "b", "c", "d", "e", "f"};
+            CollectionAssert.AreEqual(expected, result);
+        }
 
+        [TestMethod]
+        public void RemoveFromArrayAlmostEnd()
+        {
+            string[] arr = new string[] { "a", "b", "c", "d", "e", "f", "g" };
+            var result = arr.Remove(5);
+            var expected = new string[] { "a", "b", "c", "d", "e", "g"};
+            CollectionAssert.AreEqual(expected, result);
+        }
 
+        [TestMethod]
+        public void RemoveFromArrayStart()
+        {
+            string[] arr = new string[] { "a", "b", "c", "d", "e", "f", "g" };
+            var result = arr.Remove(0);
+            var expected = new string[] { "b", "c", "d", "e", "f", "g" };
+            CollectionAssert.AreEqual(expected, result);
+        }
 
+        [TestMethod]
+        public void FindAndRemove()
+        {
+            string[] arr = new string[] { "a", "b", "c", "d", "e", "f", "g" };
+            var result = arr.FindAndRemove("c");
+            var expected = new string[] {"a", "b", "d", "e", "f", "g" };
+            CollectionAssert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void FindAndRemoveOddFormat()
+        {
+            string[] arr = new string[] { "a", "b", " c ", "d", "e", "f", "g" };
+            var result = arr.FindAndRemove("c");
+            var expected = new string[] { "a", "b", "d", "e", "f", "g" };
+            CollectionAssert.AreEqual(expected, result);
+        }
     }
 }

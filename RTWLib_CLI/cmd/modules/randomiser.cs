@@ -90,7 +90,7 @@ namespace RTWLib_CLI.cmd.modules
                 list[i].Parse();
                 p.Update("Complete");
             }
-
+            edu.PrepareEDU();
             cm = new CityMap(mr, dr);
             p.Message("Forming: City Map");
             p.Update("Complete");

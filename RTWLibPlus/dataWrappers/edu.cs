@@ -53,6 +53,11 @@ namespace RTWLibPlus.dataWrappers
             return output + Environment.NewLine;
         }
 
+        public void PrepareEDU()
+        {
+            DeleteChunks("type", "rebalance_statblock");
+        }
+
         public void Clear()
         {
             data.Clear();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLib_Tests.dummy;
 using RTWLibPlus.data;
+using RTWLibPlus.data.unit;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.edu;
 using RTWLibPlus.helpers;
@@ -93,6 +94,37 @@ namespace RTWLib_Tests.wrappers
             parsedds.RemoveAttributesAll("general_unit", "general_unit_upgrade \"marian_reforms\"");
             var result = parsedds.GetKeyValueAtLocation(parsedds.data, 0, "barb_chieftain_cavalry_german", "attributes");
             var expected = new KeyValuePair<string, string>("attributes", "sea_faring, hide_forest, hardy");
+            var attr = parsedds.GetItemsByIdent("attributes");
+            
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void eduRemoveRemasterStatBlocks()
+        {
+            var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+            var parsedds = new EDU(parse, config);
+            parsedds.PrepareEDU();
+            var result = parsedds.GetItemsByIdent("rebalance_statblock");
+            var expected = 0;
+
+            string file = parsedds.Output();
+
+            Assert.AreEqual(expected, result.Count);
+        }
+
+        [TestMethod]
+        public void eduUnitWrapper()
+        {
+            var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+            var parsedds = new EDU(parse, config);
+            parsedds.PrepareEDU();
+
+            UnitsWrapper uw = new UnitsWrapper(parsedds);
+
+            var result = 0;
+            var expected = 1;
+
 
             Assert.AreEqual(expected, result);
         }
