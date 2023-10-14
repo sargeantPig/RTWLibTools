@@ -31,7 +31,7 @@ jobs:
           dotnet-version: '7.0.x'
           
       - name: Create Output Directory
-        run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp3.1/resources'
+        run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp7.0/resources'
 
       - name: Copy Resources
         run: cp -r ./RTWLib_Tests/resources/. ${{ github.workspace }}/RTWLib_Tests/bin/Debug/netcoreapp7.0/resources/
