@@ -81,9 +81,10 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
       
     - name: Copy Resources
-      run: cp -r ./RTWLib_Tests/resources ./RTWLib_Tests/bin/Debug/netcoreapp3.1/resources
+      run: cp -r ./RTWLib_Tests/resources ./RTWLib_Tests/bin/Debug/netcoreapp7.0/resources
+      
     - name: Log files
-      run: ls ./RTWLib_Tests/bin/Debug/netcoreapp3.1/
+      run: ls ./RTWLib_Tests/bin/Debug/netcoreapp7.0/
       
     # Execute all unit tests in the solution
     - name: Execute unit tests
