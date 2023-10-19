@@ -49,8 +49,8 @@ namespace RTWLibPlus.dataWrappers
                 output += obj.Output();
             }
 
-            RFH.Write(OutputPath, output + Environment.NewLine);
-            return output + Environment.NewLine;
+            RFH.Write(OutputPath, output + Format.UniversalNewLine());
+            return output + Format.UniversalNewLine();
         }
 
         public void PrepareEDU()

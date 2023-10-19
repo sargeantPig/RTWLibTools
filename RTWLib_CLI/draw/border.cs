@@ -21,7 +21,7 @@ namespace RTWLib_CLI.draw
             int borderLength = lengthOfStr + (borderWidth * 2) + (padding * 2);
             int wSLength = borderLength - (borderWidth * 2);
 
-            right = bord + Environment.NewLine;
+            right = bord + Format.UniversalNewLine();
 
             foreach (string line in lineSplit)
             {
@@ -38,14 +38,14 @@ namespace RTWLib_CLI.draw
 
             for (int i  = 0; i < borderWidth; i++)
             {
-                top += Format.GetStringOf(borderChar, borderLength) + Environment.NewLine;
-                bottom += Format.GetStringOf(borderChar, borderLength) + Environment.NewLine;
+                top += Format.GetStringOf(borderChar, borderLength) + Format.UniversalNewLine();
+                bottom += Format.GetStringOf(borderChar, borderLength) + Format.UniversalNewLine();
             }
 
             for (int i = 0; i < (padding + lineSplit.Length) - lineSplit.Length; i++)
             {
-                top += bord + Format.GetStringOf(' ', wSLength) + bord + Environment.NewLine;
-                bottom = bord + Format.GetStringOf(' ', wSLength) + bord + Environment.NewLine + bottom;
+                top += bord + Format.GetStringOf(' ', wSLength) + bord + Format.UniversalNewLine();
+                bottom = bord + Format.GetStringOf(' ', wSLength) + bord + Format.UniversalNewLine() + bottom;
             }
                        
             return string.Format("{0}{1}{2}", top, title, bottom);

@@ -27,7 +27,7 @@ namespace RTWLibPlus.parsers
             {
                 string lineTrimEnd = line.TrimEnd();
 
-                if ((lineTrimEnd == string.Empty || line == Environment.NewLine[0].ToString()) && !line.StartsWith(";"))
+                if ((lineTrimEnd == string.Empty || line == Format.UniversalNewLine()[0].ToString()) && !line.StartsWith(";"))
                 {
                     whiteSpaceSeparator++;
                     continue;
@@ -108,11 +108,11 @@ namespace RTWLibPlus.parsers
         }
         private string[] GetLinesRemoveEmpty(string text)
         {
-            return text.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            return text.Split(Format.UniversalNewLine().ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
         }
         private string[] GetLines(string text)
         {
-            return text.Split("\n");
+            return text.Split(Format.UniversalNewLine());
         }
     }
 }

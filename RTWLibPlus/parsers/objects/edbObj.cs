@@ -50,10 +50,10 @@ namespace RTWLibPlus.parsers.objects
             output = ChildOutput(output);
 
             if (Tag == "alias")
-                output += Environment.NewLine + Environment.NewLine;
+                output += Format.UniversalNewLine() + Format.UniversalNewLine();
 
             if (Tag == "tags")
-                output += Environment.NewLine;
+                output += Format.UniversalNewLine();
 
             return output;
         }
@@ -141,18 +141,20 @@ namespace RTWLibPlus.parsers.objects
         }
         private string GetDoubleSpaceBetweenTagValue(int end)
         {
+
             return String.Format("{0}{1}  {2}{3}",
                 Format.GetWhiteSpace("", end, wsConfig.WhiteChar),
                 Tag, Value,
-                Environment.NewLine);
+                Format.UniversalNewLine());
         }
 
         private string GetDoubleSpaceEnding(int end)
         {
+
             return String.Format("{0}{1} {2}  {3}",
                 Format.GetWhiteSpace("", end, wsConfig.WhiteChar),
                 Tag, Value,
-                Environment.NewLine);
+                Format.UniversalNewLine());
         }
 
     }

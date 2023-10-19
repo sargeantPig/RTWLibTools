@@ -22,14 +22,16 @@ namespace RTWLib_Tests.wrappers
             var parsedds = new DS(dsParse, config);
 
             string result = parsedds.Output();
+            
             var expected = dp.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
 
-            int rl = result.Length;
-            int el = expected.Length;
+            int rl = result.Length;  //123502
+            int el = expected.Length; //127957
 
             Assert.AreEqual(el, rl);
             Assert.AreEqual(expected, result);
         }
+        
         [TestMethod]
         public void dsGetItemsByIdentSettlements()
         {
