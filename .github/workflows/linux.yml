@@ -44,6 +44,9 @@ jobs:
       - name: pwd
         run: pwd
 
+      - name: Restore packages
+        run: dotnet restore ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj
+
       - name: Build with dotnet
         run: dotnet build ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj --configuration Release --no-restore
 
