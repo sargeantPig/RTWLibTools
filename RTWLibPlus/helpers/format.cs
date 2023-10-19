@@ -30,7 +30,7 @@ namespace RTWLibPlus.helpers
         public static string UniversalNewLine(){
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) == true)
                 return "\r\n";
-            else return Format.UniversalNewLine();
+            else return Environment.NewLine;
         }
 
     }
