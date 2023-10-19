@@ -45,7 +45,7 @@ jobs:
         run: pwd
 
       - name: Build with dotnet
-        run: dotnet build ${{github.workspace}}/RTWLib_CLI/ --configuration Release --no-restore
+        run: dotnet build ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj --configuration Release --no-restore
 
       - name: Run Tests
         run: dotnet test ${{ env.Test_Project_Path }}
