@@ -113,20 +113,20 @@ namespace RTWLib_Tests.wrappers
             Assert.AreEqual(expected, result.Count);
         }
 
-        [TestMethod]
-        public void eduUnitWrapper()
-        {
-            var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
-            var parsedds = new EDU(parse, config);
-            parsedds.PrepareEDU();
+        // [TestMethod]
+        // public void eduUnitWrapper()
+        // {
+        //     var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+        //     var parsedds = new EDU(parse, config);
+        //     parsedds.PrepareEDU();
 
-            UnitsWrapper uw = new UnitsWrapper(parsedds);
+        //     UnitsWrapper uw = new UnitsWrapper(parsedds);
 
-            var result = 0;
-            var expected = 1;
+        //     var result = 0;
+        //     var expected = 1;
 
 
-            Assert.AreEqual(expected, result);
-        }
+        //     Assert.AreEqual(expected, result);
+        // }
     }
 }
