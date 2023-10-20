@@ -57,7 +57,7 @@ namespace RTWLibPlus.parsers
         }
         public string[] ReadFile(string path, bool removeEmptyLines = true)
         {
-            StreamReader streamReader = new StreamReader(path);
+            StreamReader streamReader = new StreamReader(path, Encoding.UTF8);
             string text = streamReader.ReadToEnd();
             streamReader.Close();
 
@@ -67,7 +67,7 @@ namespace RTWLibPlus.parsers
         }
         public string ReadFileAsString(string path)
         {
-            StreamReader streamReader = new StreamReader(path);
+            StreamReader streamReader = new StreamReader(path,  Encoding.UTF8);
             string text = streamReader.ReadToEnd();
             streamReader.Close();
             return text;
