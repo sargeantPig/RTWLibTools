@@ -35,7 +35,7 @@ namespace RTWLib_Tests.wrappers
         [TestMethod]
         public void dsGetItemsByIdentSettlements()
         {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), true);
             var dsParse = dp.Parse(ds, Creator.DScreator);
             var parsedds = new DS(dsParse, config);
 
