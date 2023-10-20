@@ -108,7 +108,7 @@ namespace RTWLibPlus.parsers
         }
         private string[] GetLinesRemoveEmpty(string text)
         {
-            return text.Split(Format.UniversalNewLine().ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            return text.Split(Format.UniversalNewLine(), StringSplitOptions.RemoveEmptyEntries);
         }
         private string[] GetLines(string text)
         {
