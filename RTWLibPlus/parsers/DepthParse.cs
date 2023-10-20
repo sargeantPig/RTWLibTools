@@ -27,7 +27,7 @@ namespace RTWLibPlus.parsers
             {
                 string lineTrimEnd = line.TrimEnd();
 
-                if ((lineTrimEnd == string.Empty || line == Environment.NewLine) && !line.StartsWith(";"))
+                if ((lineTrimEnd == string.Empty || line == Format.UniversalNewLine()) && !line.StartsWith(";"))
                 {
                     whiteSpaceSeparator++;
                     continue;
