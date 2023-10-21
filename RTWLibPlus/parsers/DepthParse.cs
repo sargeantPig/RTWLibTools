@@ -27,7 +27,7 @@ namespace RTWLibPlus.parsers
             {
                 string lineTrimEnd = line.TrimEnd();
 
-                if ((lineTrimEnd == string.Empty || line == Format.UniversalNewLine()[0].ToString()) && !line.StartsWith(";"))
+                if ((lineTrimEnd == string.Empty || line == Format.UniversalNewLine()) && !line.StartsWith(";"))
                 {
                     whiteSpaceSeparator++;
                     continue;
@@ -57,7 +57,7 @@ namespace RTWLibPlus.parsers
         }
         public string[] ReadFile(string path, bool removeEmptyLines = true)
         {
-            StreamReader streamReader = new StreamReader(path);
+            StreamReader streamReader = new StreamReader(path, Encoding.UTF8);
             string text = streamReader.ReadToEnd();
             streamReader.Close();
 
@@ -67,7 +67,7 @@ namespace RTWLibPlus.parsers
         }
         public string ReadFileAsString(string path)
         {
-            StreamReader streamReader = new StreamReader(path);
+            StreamReader streamReader = new StreamReader(path,  Encoding.UTF8);
             string text = streamReader.ReadToEnd();
             streamReader.Close();
             return text;
@@ -108,7 +108,7 @@ namespace RTWLibPlus.parsers
         }
         private string[] GetLinesRemoveEmpty(string text)
         {
-            return text.Split(Format.UniversalNewLine().ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            return text.Split(Format.UniversalNewLine(), StringSplitOptions.RemoveEmptyEntries);
         }
         private string[] GetLines(string text)
         {
