@@ -53,8 +53,11 @@ jobs:
       - name: Run Tests
         run: dotnet test ${{ env.Test_Project_Path }}
 
+      - name: Publish Build
+        run: dotnet publish ./RTWLib_CLI/RTWLib_CLI.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
+
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
           name: RTWRand-linux
-          path:  ${{github.workspace}}/RTWLib_CLI/bin/Release/netcoreapp7.0
+          path:  ${{github.workspace}}/publish/linux-x64

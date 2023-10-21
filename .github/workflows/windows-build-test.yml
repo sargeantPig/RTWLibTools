@@ -86,12 +86,15 @@ jobs:
     
     - name: Build with dotnet
       run: dotnet build ./RTWLib_CLI/RTWLib_CLI.csproj --configuration Release --no-restore
-    # Execute all unit tests in the solution
+
     - name: Execute unit tests
       run: dotnet test ${{ env.Test_Project_Path }}
+    
+    - name: Publish Build
+      run: dotnet publish ./RTWLib_CLI/RTWLib_CLI.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
     
     - name: Publish Artifact
       uses: actions/upload-artifact@v2
       with:
         name: RTWRand-windows
-        path: ./RTWLib_CLI/bin/Release/netcoreapp7.0
+        path: ./publish/win-x64

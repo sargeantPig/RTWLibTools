@@ -9,6 +9,9 @@
     <FileVersion>0.1.0</FileVersion>
     <Version>0.1.0</Version>
     <!-- x-release-please-endmment -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <DebugType Condition="'$(Configuration)' == 'Debug'">portable</DebugType>
+    <DebugType Condition="'$(Configuration)' != 'Debug'">none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
