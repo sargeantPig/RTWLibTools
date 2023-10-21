@@ -52,11 +52,6 @@ on:
 jobs:
 
   build:
-
-    strategy:
-      matrix:
-        configuration: [Debug]
-
     runs-on: windows-latest  # For a list of available runner types, refer to
                              # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
@@ -94,3 +89,9 @@ jobs:
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test ${{ env.Test_Project_Path }}
+    
+    - name: Publish Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: RTWRand-windows
+        path: ./RTWLib_CLI/bin/Release/netcoreapp7.0

@@ -48,3 +48,9 @@ jobs:
 
       - name: Run Tests
         run: dotnet test ${{ env.Test_Project_Path }}
+
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RTWRand-macos
+          path:  ${{github.workspace}}/RTWLib_CLI/bin/Release/netcoreapp7.0

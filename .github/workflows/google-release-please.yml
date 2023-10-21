@@ -1,7 +1,15 @@
 on:
+  workflow_run:
+    workflows:
+      - "macos-build-test.yml"
+      - "windows-build-test.yml"
+      - "linux-build-test.yml"
+    types:
+      - completed
   push:
     branches:
       - main
+
 name: release-please
 jobs:
   release-please:
@@ -15,5 +23,7 @@ jobs:
       if: ${{ steps.release.outputs.release_created }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run:
-        gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/some-build-artifact.zip
+      run: |
+        gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/RTWRand-macos.zip
+        gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/RTWRand-windows.zip
+        gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/RTWRand-linux.zip

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp7.0</TargetFramework>
-    <AssemblyName>RTW-CLI Randomiser</AssemblyName>
+    <AssemblyName>RTW-CLI-Randomiser</AssemblyName>
     <Copyright>Copyright © 2023</Copyright>
     <!-- x-release-please-start-version -->
     <AssemblyVersion>0.1.0</AssemblyVersion>
