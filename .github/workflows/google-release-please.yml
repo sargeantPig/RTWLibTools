@@ -23,7 +23,5 @@ jobs:
       if: ${{ steps.release.outputs.release_created }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/RTWRand-macos.zip
-        gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/RTWRand-windows.zip
-        gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/RTWRand-linux.zip
+      run: 
+        gh release upload ${{ steps.release.outputs.tag_name }} ./artifact/RTWRand-macos.zip ./artifact/RTWRand-windows.zip ./artifact/RTWRand-linux.zip
