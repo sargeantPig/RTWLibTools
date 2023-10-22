@@ -9,6 +9,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
     - name: Install GitHub CLI
       run: |
         # Download and install GitHub CLI
