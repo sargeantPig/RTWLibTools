@@ -9,13 +9,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Install GitHub CLI
-      run: |
-        # Download and install GitHub CLI
-        wget https://github.com/cli/cli/releases/latest/download/gh_linux_amd64.deb
-        sudo dpkg -i gh_linux_amd64.deb
-        rm gh_linux_amd64.deb
-      shell: bash
     - name: Check for Release Creation
       id: check-release
       run: |
