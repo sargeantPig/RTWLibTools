@@ -9,13 +9,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Set up GitHub CLI
+    - name: Install GitHub CLI
       run: |
-        # Install GitHub CLI
-        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-        sudo apt-add-repository https://cli.github.com/packages
-        sudo apt update
-        sudo apt install gh
+        # Download and install GitHub CLI
+        wget https://github.com/cli/cli/releases/latest/download/gh_linux_amd64.deb
+        sudo dpkg -i gh_linux_amd64.deb
+        rm gh_linux_amd64.deb
       shell: bash
     - name: Check for Release Creation
       id: check-release
