@@ -1,0 +1,35 @@
+name: Release Artifacts Upload
+on:
+  push:
+    branches:
+      - main
+jobs:
+  upload-release-artifacts:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Install GitHub CLI
+      run: |
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+        echo "deb [signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg arch=amd64] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+        apt update
+        apt install gh
+    - name: Upload Release Artifacts
+      if: contains(github.event.head_commit.message, 'refs/pull/') && contains(github.event.head_commit.message, 'release')
+      run: |
+        # Replace 'release' with your custom label name if needed
+        label="release"
+        # Use 'jq' to extract the PR number from the commit message
+        pr_number=$(echo ${{ github.event.head_commit.message }} | grep -oE 'pull/[0-9]+' | cut -d'/' -f2)
+        # Check if the PR has the specified label
+        if gh pr view $pr_number --json labels -q ".[].name" | grep -q "$label"; then
+          # Replace these paths with the actual locations of your release artifacts
+          gh release upload ${{ github.event.ref }} ./artifact/RTWRand-macos.zip
+          gh release upload ${{ github.event.ref }} ./artifact/RTWRand-windows.zip
+          gh release upload ${{ github.event.ref }} ./artifact/RTWRand-linux.zip
+        fi
