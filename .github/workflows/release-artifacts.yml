@@ -9,6 +9,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
     - name: Check for Release Creation
       id: check-release
       run: |
@@ -19,7 +20,7 @@ jobs:
           release_url=$(gh pr view $pr_number --json links.html -q ".[] | select(.rel == \"html\") | .href")
           release_id=$(basename $release_url)
           echo "::set-output name=release_id::$release_id"
-          
+
       shell: bash
     - name: Upload Release Artifacts
       if: steps.check-release.outputs.release_id != ''
