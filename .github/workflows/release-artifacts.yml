@@ -21,8 +21,14 @@ jobs:
       shell: bash
 
     - name: Upload Release Artifacts
+      if: ${{ steps.get-release-tag.outputs.release_tag != '' }}
       run: |
         release_tag="${{ steps.get-release-tag.outputs.release_tag }}"
         # Use the release tag to determine which release to upload to
-        # Add the necessary commands for uploading artifacts
+        
+        # Assuming $release_tag contains the tag name of the release
+        # Replace 'your-artifact-directory' with the path to your artifact directory
+        gh release upload "$release_tag" ./artifact/RTWRand-macos.zip --clobber
+        gh release upload "$release_tag" ./artifact/RTWRand-windows.zip --clobber
+        gh release upload "$release_tag" ./artifact/RTWRand-linux.zip --clobber
       shell: bash
