@@ -14,12 +14,13 @@ jobs:
       run: |
         label="release"
         pr_number=$(echo ${{ github.event.head_commit.message }} | grep -oE 'pull/[0-9]+' | cut -d'/' -f2)
+      
         if gh pr view $pr_number --json labels -q ".[].name" | grep -q "$label"; then
-          # Release label applied, check for release creation
-          release_url=$(gh pr view $pr_number --json links.html -q ".[] | select(.rel == \"html\") | .href")
-          release_id=$(basename $release_url)
-          echo "::set-output name=release_id::$release_id"
-          
+            release_url=$(gh pr view $pr_number --json links.html -q ".[] | select(.rel == \"html\") | .href")
+            release_id=$(basename $release_url)
+            echo "::set-output name=release_id::$release_id"
+        fi
+      
       shell: bash
     - name: Upload Release Artifacts
       if: steps.check-release.outputs.release_id != ''
