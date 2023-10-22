@@ -9,6 +9,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
     - name: Check for Release Creation
       id: check-release
       run: |
@@ -22,6 +23,7 @@ jobs:
         fi
       
       shell: bash --noprofile --norc -e -o pipefail
+
     - name: Upload Release Artifacts
       if: steps.check-release.outputs.release_id != ''
       run: |
