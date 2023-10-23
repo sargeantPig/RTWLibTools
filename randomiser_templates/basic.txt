@@ -1,0 +1,6 @@
+randcmd setseed yeet yes
+randcmd initialsetup
+randcmd citiesbasic
+randcmd ownership 0 3 1
+randcmd PaintFactionMap
+randcmd output

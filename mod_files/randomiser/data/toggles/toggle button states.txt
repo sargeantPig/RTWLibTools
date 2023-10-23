@@ -1,0 +1,39 @@
+// This file controls the overall toggles (the ones you can control through the UI)
+// "Enabled" controls whether the user is able to change between Classic and Remastered
+// "Default" controls which state the toggle will be set to by default (Classic = 0, Remastered = 1)
+
+unit balancing
+enabled :: 0
+default :: 1
+
+diplomacy
+enabled :: 1
+default :: 1
+
+trade
+enabled :: 1
+default :: 1
+
+end turn
+enabled :: 1
+default :: 1
+
+camera
+enabled :: 1
+default :: 1
+
+campaign
+enabled :: 0
+default :: 1
+
+battle
+enabled :: 1
+default :: 1
+
+ai improvements
+enabled :: 1
+default :: 1
+
+population balancing
+enabled :: 1
+default :: 1
