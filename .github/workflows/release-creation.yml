@@ -1,0 +1,72 @@
+on:
+  workflow_run:
+    workflows:
+      - "macos-build-test.yml"
+      - "windows-build-test.yml"
+      - "linux-build-test.yml"
+    types:
+      - completed
+  push:
+    branches:
+      - main
+name: combined-release-workflow
+
+jobs:
+  combined-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Release Please
+        uses: google-github-actions/release-please-action@v3
+        with:
+          release-type: simple
+      
+      - name: Check Release Creation
+        id: check-release-created
+        run: |
+            if gh release view "${{ steps.release.outputs.tag_name }}" > /dev/null; then
+                echo "Release was created."
+              else
+                echo "Release not created. Exiting."
+                exit 1
+            fi
+        shell: bash
+
+      - name: Publish Windows Build
+        run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
+      
+      - name: Publish Windows Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RTWRand-windows
+          path: ${{github.workspace}}/publish/win-x64
+
+      - name: Publish macOS Build
+        run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r osx-x64 --self-contained true -o ./publish/osx-x64
+  
+      - name: Publish macOS Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RTWRand-macos
+          path:  ${{github.workspace}}/publish/osx-64
+
+      - name: Publish Linux Build
+        run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
+  
+      - name: Publish linux Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RTWRand-linux
+          path:  ${{github.workspace}}/publish/linux-x64
+      
+      
+      - name: Upload Release Artifacts
+        run: |
+            release_tag="${{ steps.release.outputs.tag_name }}"
+            gh release upload "$release_tag" ${{github.workspace}}/publish/win-x64/* --clobber
+            gh release upload "$release_tag" ${{github.workspace}}/publish/osx-x64/* --clobber
+            gh release upload "$release_tag" ${{github.workspace}}/publish/linux-x64/* --clobber
+        shell: bash
+      
