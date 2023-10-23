@@ -12,7 +12,6 @@ on:
 name: combined-release-workflow
 
 env:
-  GH_TOKEN: ${{ github.token }}
   Repo: "sargeantPig/RTWLibTools"
 
 jobs:
@@ -30,13 +29,15 @@ jobs:
       
       - name: Wait for 2 minutes
         run: |
-          sleep 120  # Sleep for 2 minutes (2 minutes * 60 seconds/minute)
+          sleep 80  # Sleep for 80 seconds 
         shell: bash
 
       - name: Publish Windows Build
         if: ${{ steps.release.outputs.release_created }}
-        run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
-      
+        run: |
+          dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
+          mv ./publish/win-x64/RTW-CLI-Randomiser.exe ./publish/win-x64/RTW-CLI-Randomiser-windows.exe
+
       - name: Publish Windows Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -45,7 +46,9 @@ jobs:
 
       - name: Publish macOS Build
         if: ${{ steps.release.outputs.release_created }}
-        run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r osx-x64 --self-contained true -o ./publish/osx-x64
+        run: | 
+          dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r osx-x64 --self-contained true -o ./publish/osx-x64
+          mv ./publish/osx-x64/RTW-CLI-Randomiser ./publish/osx-x64/RTW-CLI-Randomiser-macOS
   
       - name: Publish macOS Artifact
         uses: actions/upload-artifact@v2
@@ -55,8 +58,10 @@ jobs:
 
       - name: Publish Linux Build
         if: ${{ steps.release.outputs.release_created }}
-        run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
-  
+        run: |
+          dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
+          mv ./publish/linux-x64/RTW-CLI-Randomiser ./publish/linux-x64/RTW-CLI-Randomiser-linux
+
       - name: Publish linux Artifact
         uses: actions/upload-artifact@v2
         with:
