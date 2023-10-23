@@ -25,10 +25,12 @@ jobs:
         uses: google-github-actions/release-please-action@v3
         with:
           release-type: simple
-
+  
       - name: Check Release Creation
-        if: ${{ steps.release.outputs.tag_name }}  != '' 
         run: |
+            if [[ -z "${{ steps.release.outputs.tag_name }}" ]]; then
+                exit 1
+            fi
             if gh release view "${{ steps.release.outputs.tag_name }}" > /dev/null; then
                 echo "Release was created."
               else
