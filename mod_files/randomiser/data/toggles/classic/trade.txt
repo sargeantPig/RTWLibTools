@@ -1,0 +1,4 @@
+merchants :: 0
+embargo :: 0
+resource_quantity :: 0
+trade_anywhere :: 0
