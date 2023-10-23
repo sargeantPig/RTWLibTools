@@ -11,6 +11,7 @@ on:
       - main
 name: combined-release-workflow
 
+
 env:
   GH_TOKEN: ${{ github.token }}
 
