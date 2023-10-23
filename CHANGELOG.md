@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.4](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.3...v1.0.4) (2023-10-23)
+
+
+### Features
+
+* auto release ([#26](https://github.com/sargeantPig/RTWLibTools/issues/26)) ([584c587](https://github.com/sargeantPig/RTWLibTools/commit/584c5874c5087cca23a1c88a3217bf8ac8bf3f82))
+* auto release ([#28](https://github.com/sargeantPig/RTWLibTools/issues/28)) ([cd02b0c](https://github.com/sargeantPig/RTWLibTools/commit/cd02b0c2c5c3a84d50e7d480c44389be2f1c1050))
+* auto release ([#29](https://github.com/sargeantPig/RTWLibTools/issues/29)) ([abf247d](https://github.com/sargeantPig/RTWLibTools/commit/abf247d37e04f53c1e327fcd90a1461d6513d13c))
+* auto release ([#30](https://github.com/sargeantPig/RTWLibTools/issues/30)) ([5ff3e1d](https://github.com/sargeantPig/RTWLibTools/commit/5ff3e1d3062e6f35362842a2180b36c2bdd518a3))
+
 ## [1.0.3](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.2...v1.0.3) (2023-10-23)
 
 
