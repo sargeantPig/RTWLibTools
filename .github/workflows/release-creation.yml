@@ -26,10 +26,11 @@ jobs:
         with:
           release-type: simple
       
-        if: ${{ steps.release.outputs.tag_name  != '' }}
-      - name: Check Release Creation
         
+      - name: Check Release Creation
+        if: ${{ steps.release.outputs.tag_name }}  != '' 
         run: |
+            if 
             if gh release view "${{ steps.release.outputs.tag_name }}" > /dev/null; then
                 echo "Release was created."
               else
