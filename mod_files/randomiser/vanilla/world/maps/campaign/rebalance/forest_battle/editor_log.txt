@@ -1,0 +1,58 @@
+************** STARTING BATTLE EDITOR
+
+CREATE_ARMY::do_func() - Creating army at 0x270700 (General: Captain Rando), adding to germans
+CREATE_ARMY::do_func() - Creating army at 0x4ecd90 (General: Captain Conan), adding to gauls
+INSERT_DEPLOY_POINT::do_func() - Adding deploy point at (-361.902944, 711.69984)
+INSERT_DEPLOY_POINT::do_func() - Adding deploy point at (-836.999872, 791.69184)
+INSERT_DEPLOY_POINT::do_func() - Adding deploy point at (-752.414784, -781.049088)
+INSERT_DEPLOY_POINT::do_func() - Adding deploy point at (-320.122912, -772.633088)
+INSERT_DEPLOY_POINT::do_func() - Adding deploy point at (291.16432, -690.733376)
+INSERT_DEPLOY_POINT::do_func() - Adding deploy point at (817.611264, -695.330048)
+INSERT_DEPLOY_POINT::do_func() - Adding deploy point at (815.150464, 642.19616)
+INSERT_DEPLOY_POINT::do_func() - Adding deploy point at (82.332128, 721.314944)
+Adding unit (Barbarian Chosen Warlord) at 0x18b880 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Barbarian Chosen Warlord) at 0x18b880 - Deployed at (-458.481632, -266.1088) in deployment area at 0xf2300
+Adding unit (Spear Warband) at 0x202500 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Spear Warband) at 0x202500 - Deployed at (-409.637088, -136.769296) in deployment area at 0xf2300
+Adding unit (Spear Warband) at 0x638500 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Spear Warband) at 0x638500 - Deployed at (-408.414432, -176.464512) in deployment area at 0xf2300
+Adding unit (Spear Warband) at 0x638c00 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Spear Warband) at 0x638c00 - Deployed at (-407.836288, -217.38576) in deployment area at 0xf2300
+Adding unit (Axemen) at 0x639300 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Axemen) at 0x639300 - Deployed at (-400.727616, -328.536128) in deployment area at 0xf2300
+Adding unit (Axemen) at 0x638180 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Axemen) at 0x638180 - Deployed at (-395.896544, -362.90928) in deployment area at 0xf2300
+Adding unit (Gothic Cavalry) at 0x50f080 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Gothic Cavalry) at 0x50f080 - Deployed at (-390.737984, -428.213024) in deployment area at 0xf2300
+Adding unit (Gothic Cavalry) at 0x4d6280 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Gothic Cavalry) at 0x4d6280 - Deployed at (-386.584896, -481.437856) in deployment area at 0xf2300
+Adding unit (Bedouin Archers) at 0x4d6d00 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Bedouin Archers) at 0x4d6d00 - Deployed at (-400.211488, -246.2848) in deployment area at 0xf2300
+Adding unit (Bedouin Archers) at 0x49fb00 to deployment area at 0xf2300
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Bedouin Archers) at 0x49fb00 - Deployed at (-431.24208, -330.17936) in deployment area at 0xf2300
+Adding unit (Barbarian Warlord) at 0x347280 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Barbarian Warlord) at 0x347280 - Deployed at (303.58464, -142.001488) in deployment area at 0xf2358
+Adding unit (Barbarian Cavalry) at 0x1c7080 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Barbarian Cavalry) at 0x1c7080 - Deployed at (258.467744, 123.709272) in deployment area at 0xf2358
+Adding unit (Barbarian Cavalry) at 0x310b00 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Barbarian Cavalry) at 0x310b00 - Deployed at (248.956144, 191.167968) in deployment area at 0xf2358
+Adding unit (Warband) at 0x34d100 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Warband) at 0x34d100 - Deployed at (308.982752, -288.692544) in deployment area at 0xf2358
+Adding unit (Warband) at 0x5d0680 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Warband) at 0x5d0680 - Deployed at (299.285696, -245.681792) in deployment area at 0xf2358
+Adding unit (Warband) at 0x3d3280 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Warband) at 0x3d3280 - Deployed at (295.863904, -201.270448) in deployment area at 0xf2358
+Adding unit (Swordsmen) at 0x4f2d00 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Swordsmen) at 0x4f2d00 - Deployed at (251.669168, -91.877216) in deployment area at 0xf2358
+Adding unit (Swordsmen) at 0x10a80 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Swordsmen) at 0x10a80 - Deployed at (253.059136, -30.179478) in deployment area at 0xf2358
+Adding unit (Warhounds) at 0x4f9600 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Warhounds) at 0x4f9600 - Deployed at (253.821072, 26.325348) in deployment area at 0xf2358
+Adding unit (Cretan Archers) at 0x5e8080 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Cretan Archers) at 0x5e8080 - Deployed at (289.00688, -63.734024) in deployment area at 0xf2358
+Adding unit (Cretan Archers) at 0x5e8b00 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Cretan Archers) at 0x5e8b00 - Deployed at (257.413024, -185.018304) in deployment area at 0xf2358
+Adding unit (Druids) at 0x325080 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Druids) at 0x325080 - Deployed at (345.919008, -206.71744) in deployment area at 0xf2358
+Adding unit (Barbarian Peasants) at 0x4a8000 to deployment area at 0xf2358
+CREATE_UNIT_FUNCTION::do_func() - Creating unit (Barbarian Peasants) at 0x4a8000 - Deployed at (347.625536, -18.874304) in deployment area at 0xf2358

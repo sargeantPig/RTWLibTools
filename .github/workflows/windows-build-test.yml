@@ -75,6 +75,14 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
       
+    - name: Install Git LFS
+      run: |
+        git lfs install
+
+    - name: Pull Large Files from Git LFS
+      run: |
+        git lfs pull
+
     - name: Copy Resources
       run: cp -r ./RTWLib_Tests/resources ./RTWLib_Tests/bin/Debug/netcoreapp7.0/resources
       
@@ -89,12 +97,3 @@ jobs:
 
     - name: Execute unit tests
       run: dotnet test ${{ env.Test_Project_Path }}
-    
-    - name: Publish Build
-      run: dotnet publish ./RTWLib_CLI/RTWLib_CLI.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
-    
-    - name: Publish Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: RTWRand-windows
-        path: ./publish/win-x64

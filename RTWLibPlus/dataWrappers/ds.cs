@@ -23,7 +23,7 @@ namespace RTWLibPlus.dataWrappers
         {
             return name;
         }
-
+        
         public DS(string outputPath, string loadPath)
         {
             OutputPath = outputPath;

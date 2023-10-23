@@ -32,7 +32,17 @@ jobs:
           
       - name: Create Output Directory
         run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp7.0/resources'
-
+      
+      - name: Install Git LFS
+        run: |
+          git lfs install
+        shell: bash
+  
+      - name: Pull Large Files from Git LFS
+        run: |
+          git lfs pull
+        shell: bash
+  
       - name: Copy Resources
         run: cp -r ./RTWLib_Tests/resources/. ${{ github.workspace }}/RTWLib_Tests/bin/Debug/netcoreapp7.0/resources/
 
@@ -52,12 +62,3 @@ jobs:
 
       - name: Run Tests
         run: dotnet test ${{ env.Test_Project_Path }}
-
-      - name: Publish Build
-        run: dotnet publish ./RTWLib_CLI/RTWLib_CLI.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
-
-      - name: Publish Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: RTWRand-linux
-          path:  ${{github.workspace}}/publish/linux-x64
