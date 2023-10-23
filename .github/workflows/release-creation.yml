@@ -28,6 +28,7 @@ jobs:
       
       - name: Check Release Creation
         id: check-release-created
+        if: ${{ steps.release.outputs.tag_name  != '' }}
         run: |
             if gh release view "${{ steps.release.outputs.tag_name }}" > /dev/null; then
                 echo "Release was created."
