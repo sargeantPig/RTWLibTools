@@ -11,6 +11,10 @@ on:
       - main
 name: combined-release-workflow
 
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   combined-release:
     runs-on: ubuntu-latest
