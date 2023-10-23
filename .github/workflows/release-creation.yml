@@ -22,22 +22,23 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Release Please
+        id: release-please
         uses: google-github-actions/release-please-action@v3
         with:
           release-type: simple
-
+      
       
       - name: Wait for 2 minutes
         run: |
           sleep 120  # Sleep for 2 minutes (2 minutes * 60 seconds/minute)
         shell: bash
-      
+
       - name: Check Release Creation
         run: |
-            if [[ -z "${{ steps.release.outputs.tag_name }}" ]]; then
+            if [[ -z "${{ steps.release-please.outputs.tag }}" ]]; then
                 exit 1
             fi
-            if gh release view "${{ steps.release.outputs.tag_name }}" > /dev/null; then
+            if gh release view "${{ steps.release-please.outputs.tag }}" > /dev/null; then
                 echo "Release was created."
               else
                 echo "Release not created. Exiting."
@@ -75,7 +76,7 @@ jobs:
       
       - name: Upload Release Artifacts
         run: |
-            release_tag="${{ steps.release.outputs.tag_name }}"
+            release_tag="${{ steps.release-please.outputs.tag }}"
             gh release upload "$release_tag" ${{github.workspace}}/publish/win-x64/* --clobber
             gh release upload "$release_tag" ${{github.workspace}}/publish/osx-x64/* --clobber
             gh release upload "$release_tag" ${{github.workspace}}/publish/linux-x64/* --clobber
