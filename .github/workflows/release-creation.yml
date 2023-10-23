@@ -36,11 +36,13 @@ jobs:
 
       - name: Check Release Creation
         run: |
-            if [[ -z "${{ steps.release-please.outputs.release_created }}" ]]; then
+            if  ${{ steps.release-please.outputs.release_created }} == true; then
                 exit 1
             fi
             latest_tag=$(gh release list --limit 1 --repo ${{ env.Repo }} | awk '{print $1}')
             echo "latest_tag=$latest_tag" >> $GITHUB_ENV
+            release_please_tag= ${{ steps.release-please.outputs.tag_name }}
+            echo "release_please_tag=$release_please_tag" >> $GITHUB_ENV
             if gh release view " $latest_tag " > /dev/null; then
                 echo "Release was created."
               else
