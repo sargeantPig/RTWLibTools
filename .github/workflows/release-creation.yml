@@ -28,15 +28,13 @@ jobs:
         with:
           release-type: simple
       
-      
       - name: Wait for 2 minutes
         run: |
           sleep 120  # Sleep for 2 minutes (2 minutes * 60 seconds/minute)
         shell: bash
 
-        if: ${{ steps.release.outputs.release_created }}
-
       - name: Publish Windows Build
+        if: ${{ steps.release.outputs.release_created }}
         run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
       
       - name: Publish Windows Artifact
@@ -46,6 +44,7 @@ jobs:
           path: ${{github.workspace}}/publish/win-x64
 
       - name: Publish macOS Build
+        if: ${{ steps.release.outputs.release_created }}
         run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r osx-x64 --self-contained true -o ./publish/osx-x64
   
       - name: Publish macOS Artifact
@@ -55,6 +54,7 @@ jobs:
           path:  ${{github.workspace}}/publish/osx-64
 
       - name: Publish Linux Build
+        if: ${{ steps.release.outputs.release_created }}
         run: dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
   
       - name: Publish linux Artifact
