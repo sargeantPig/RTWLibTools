@@ -25,8 +25,7 @@ jobs:
         uses: google-github-actions/release-please-action@v3
         with:
           release-type: simple
-      
-        
+  
       - name: Check Release Creation
         run: |
             if [[ -z "${{ steps.release.outputs.tag_name }}" ]]; then
