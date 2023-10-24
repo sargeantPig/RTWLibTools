@@ -1,8 +1,0 @@
-// This file lists the original override files that are loaded when the specified HD toggle is disabled
-
-// Usage:
-// Toggle ID :: Path to HD File
-
-resource_quantity :: data/world/maps/campaign/imperial_campaign/descr_strat.txt
-merchants :: data/export_descr_buildings.txt
-improved_historical_disasters :: data/world/maps/campaign/imperial_campaign/descr_events.txt

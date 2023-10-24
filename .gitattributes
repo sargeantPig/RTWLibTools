@@ -1,5 +1,5 @@
 * -crlf
-*.tga filter=lfs diff=lfs merge=lfs -text
+mod_files/**/*.tga filter=lfs diff=lfs merge=lfs -text
 *.png filter=lfs diff=lfs merge=lfs -text
 *.tga.pvr filter=lfs diff=lfs merge=lfs -text
 *.wfc filter=lfs diff=lfs merge=lfs -text

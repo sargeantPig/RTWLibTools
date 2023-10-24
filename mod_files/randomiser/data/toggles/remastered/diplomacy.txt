@@ -1,2 +1,0 @@
-protectorate :: 1
-improved diplomacy :: 1
