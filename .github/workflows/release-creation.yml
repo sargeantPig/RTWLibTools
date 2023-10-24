@@ -45,7 +45,11 @@ jobs:
       - name: Create Zip Archive
         if: ${{ steps.release.outputs.release_created }}
         run: |
-          zip -r mod_files.zip ${{github.workspace}}/mod_files/Mods
+          cd ${{github.workspace}}/mod_files
+          ls -a
+          zip -r -j mod_files.zip ./Mods
+          cd ../
+          mv  ./mod_files/mod_files.zip ./publish/mod_files.zip
         shell: bash
           
       - name: Publish Windows Build
@@ -74,4 +78,5 @@ jobs:
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/win-x64/* --clobber
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/osx-x64/* --clobber
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/linux-x64/* --clobber
-          gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/mod_files.zip --clobber
+          gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/mod_files.zip --clobber
+
