@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.5...v1.0.6) (2023-10-24)
+
+
+### Features
+
+* zip resources correctly ([#36](https://github.com/sargeantPig/RTWLibTools/issues/36)) ([c7a4670](https://github.com/sargeantPig/RTWLibTools/commit/c7a4670bfa5db3265035738eee389cb56bf3d641))
+
 ## [1.0.5](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.4...v1.0.5) (2023-10-24)
 
 
