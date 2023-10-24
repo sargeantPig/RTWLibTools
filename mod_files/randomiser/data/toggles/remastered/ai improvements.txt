@@ -1,2 +1,0 @@
-improved ai :: 1
-improved battle ai :: 1
