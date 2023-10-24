@@ -14,7 +14,6 @@ on:
 jobs:
 
     build-linux:
-  
      runs-on: ubuntu-latest
      
      env:
@@ -32,16 +31,6 @@ jobs:
           
       - name: Create Output Directory
         run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp7.0/resources'
-      
-      - name: Install Git LFS
-        run: |
-          git lfs install
-        shell: bash
-  
-      - name: Pull Large Files from Git LFS
-        run: |
-          git lfs pull
-        shell: bash
   
       - name: Copy Resources
         run: cp -r ./RTWLib_Tests/resources/. ${{ github.workspace }}/RTWLib_Tests/bin/Debug/netcoreapp7.0/resources/
