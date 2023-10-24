@@ -1,0 +1,6 @@
+texture-width	2040
+texture-height	1248
+regions-x	0
+regions-y	0
+regions-width	1024
+regions-height	768
