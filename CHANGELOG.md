@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.9](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.8...v1.0.9) (2023-10-24)
+
+
+### Features
+
+* lfs fix ([#42](https://github.com/sargeantPig/RTWLibTools/issues/42)) ([13181b1](https://github.com/sargeantPig/RTWLibTools/commit/13181b15a4e3f5d5daa4f38b59bf05317e2ab2cc))
+
+
+### Bug Fixes
+
+* readd test tgas ([#44](https://github.com/sargeantPig/RTWLibTools/issues/44)) ([77b606b](https://github.com/sargeantPig/RTWLibTools/commit/77b606bde4fd88dcbb224e682b68adecad082dec))
+
 ## [1.0.8](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.7...v1.0.8) (2023-10-24)
 
 
