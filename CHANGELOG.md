@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.0.7](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.6...v1.0.7) (2023-10-24)
+
+
+### Features
+
+* fixing zip step ([#38](https://github.com/sargeantPig/RTWLibTools/issues/38)) ([68cd1e7](https://github.com/sargeantPig/RTWLibTools/commit/68cd1e7cf2f427ffc3d93125677b37e775b5d806))
+
+## [1.0.6](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.5...v1.0.6) (2023-10-24)
+
+
+### Features
+
+* zip resources correctly ([#36](https://github.com/sargeantPig/RTWLibTools/issues/36)) ([c7a4670](https://github.com/sargeantPig/RTWLibTools/commit/c7a4670bfa5db3265035738eee389cb56bf3d641))
+
+## [1.0.5](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.4...v1.0.5) (2023-10-24)
+
+
+### Features
+
+* folder structure, workflow streamlined ([#34](https://github.com/sargeantPig/RTWLibTools/issues/34)) ([3c3cdc2](https://github.com/sargeantPig/RTWLibTools/commit/3c3cdc29940981af98c6a443ae679d097f4341d6))
+* rename artifacts ([#32](https://github.com/sargeantPig/RTWLibTools/issues/32)) ([12c4147](https://github.com/sargeantPig/RTWLibTools/commit/12c4147fbe1adca7b4b9bb5a8b2f990db3ab9ec1))
+* rename artifacts ([#35](https://github.com/sargeantPig/RTWLibTools/issues/35)) ([3b285bb](https://github.com/sargeantPig/RTWLibTools/commit/3b285bbfd188808fd5884aa8b6da79760d638d7d))
+
 ## [1.0.4](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.3...v1.0.4) (2023-10-23)
 
 
