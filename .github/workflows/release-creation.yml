@@ -27,46 +27,44 @@ jobs:
         with:
           release-type: simple
       
-      - name: Wait for 2 minutes
+      - name: Wait for 80 seconds
         run: |
           sleep 80  # Sleep for 80 seconds 
         shell: bash
-
+      
+      - name: Install Git LFS
+        run: |
+          git lfs install
+        shell: bash
+  
+      - name: Pull Large Files from Git LFS
+        run: |
+          git lfs pull
+        shell: bash
+      
+      - name: Create Zip Archive
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          zip -r mod_files.zip ${{github.workspace}}/mod_files/Mods
+        shell: bash
+          
       - name: Publish Windows Build
         if: ${{ steps.release.outputs.release_created }}
         run: |
           dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r win-x64 --self-contained true -o ./publish/win-x64
           mv ./publish/win-x64/RTW-CLI-Randomiser.exe ./publish/win-x64/RTW-CLI-Randomiser-windows.exe
 
-      - name: Publish Windows Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: RTWRand-windows
-          path: ${{github.workspace}}/publish/win-x64
-
       - name: Publish macOS Build
         if: ${{ steps.release.outputs.release_created }}
         run: | 
           dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r osx-x64 --self-contained true -o ./publish/osx-x64
           mv ./publish/osx-x64/RTW-CLI-Randomiser ./publish/osx-x64/RTW-CLI-Randomiser-macOS
-  
-      - name: Publish macOS Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: RTWRand-macos
-          path:  ${{github.workspace}}/publish/osx-64
 
       - name: Publish Linux Build
         if: ${{ steps.release.outputs.release_created }}
         run: |
           dotnet publish ${{github.workspace}}/RTWLib_CLI/RTWLib_CLI.csproj -c Release -r linux-x64 --self-contained true -o ./publish/linux-x64
           mv ./publish/linux-x64/RTW-CLI-Randomiser ./publish/linux-x64/RTW-CLI-Randomiser-linux
-
-      - name: Publish linux Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: RTWRand-linux
-          path:  ${{github.workspace}}/publish/linux-x64
       
       - name: Upload Release Artifact
         if: ${{ steps.release.outputs.release_created }}
@@ -76,4 +74,4 @@ jobs:
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/win-x64/* --clobber
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/osx-x64/* --clobber
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/linux-x64/* --clobber
-      
+          gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/mod_files.zip --clobber
