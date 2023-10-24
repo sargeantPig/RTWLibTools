@@ -33,11 +33,13 @@ jobs:
         shell: bash
       
       - name: Install Git LFS
+        if: ${{ steps.release.outputs.release_created }}
         run: |
           git lfs install
         shell: bash
   
       - name: Pull Large Files from Git LFS
+        if: ${{ steps.release.outputs.release_created }}
         run: |
           git lfs pull
         shell: bash
@@ -47,7 +49,7 @@ jobs:
         run: |
           cd ${{github.workspace}}/mod_files
           ls -a
-          zip -r -j mod_files.zip ./Mods
+          zip -r mod_files.zip Mods
           cd ../
           mv  ./mod_files/mod_files.zip ./publish/mod_files.zip
         shell: bash
