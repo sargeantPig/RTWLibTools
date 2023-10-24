@@ -1,0 +1,19 @@
+squalor effects :: 1
+barb bonuses :: 1
+upkeep costs :: 1
+construction costs :: 1
+slave distribution :: 1
+ambushes :: 1
+tavern changes :: 1
+improved historical disasters :: 1
+normalised disaster radius :: 1
+base or bi storms :: 1
+disaster tail off :: 1
+mercenary retraining :: 1
+edit automanaged settlement :: 1
+blockaded navy :: 1
+settlement condition :: 1
+remastered education :: 1
+gradual trait loss :: 1
+dismissable agents :: 1
+ai civil war :: 1
