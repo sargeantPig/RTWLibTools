@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.7...v1.0.8) (2023-10-24)
+
+
+### Features
+
+* reorder workflow ([#40](https://github.com/sargeantPig/RTWLibTools/issues/40)) ([f5b7d95](https://github.com/sargeantPig/RTWLibTools/commit/f5b7d9509a7fba0368dcef9f1e96cc8ac8331ce4))
+
 ## [1.0.7](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.6...v1.0.7) (2023-10-24)
 
 
