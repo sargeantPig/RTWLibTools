@@ -1,0 +1,132 @@
+; Disable input
+disable_cursor
+disable_shortcuts true
+inhibit_camera_input true
+
+; Disable advice
+suspend_unscripted_advice true
+
+; Disable any uishell filters (async game commands)
+filter_all_ui_commands off
+
+; Disable fog of war, to give that 'late game' feel
+console_command set_fow off	
+
+; Wait a bit for loading to finish
+campaign_wait 1
+
+; Start in the middle of the map
+snap_strat_camera 127, 77
+
+; Set the movement speed of the camera
+set_strat_camera_speed 20
+
+; Some more waiting to let the FPS settle down
+campaign_wait 3
+
+; 1st run of the campaign benchmark to cache terrain textures
+start_benchmark campaign_caching
+
+; Move bottom left and back
+move_strat_camera 0, 0
+move_strat_camera 127, 77
+
+; Move top left and back 
+move_strat_camera 0, 155
+move_strat_camera 127, 77
+
+; Move top right and back
+move_strat_camera 254, 155
+move_strat_camera 127, 77
+
+; Move bottom right and back
+move_strat_camera 254, 0
+move_strat_camera 127, 77
+
+; Move to the battle loc
+move_strat_camera 100, 130
+
+end_benchmark
+
+; Start in the middle of the map
+snap_strat_camera 127, 77
+
+; Some more waiting to let the FPS settle down
+campaign_wait 3
+
+; 2nd run of the campaign benchmark to use the new cache
+start_benchmark campaign
+
+; Move bottom left and back
+move_strat_camera 0, 0
+move_strat_camera 127, 77
+
+; Move top left and back 
+move_strat_camera 0, 155
+move_strat_camera 127, 77
+
+; Move top right and back
+move_strat_camera 254, 155
+move_strat_camera 127, 77
+
+; Move bottom right and back
+move_strat_camera 254, 0
+move_strat_camera 127, 77
+
+;; Start Forest Battle
+
+; Move to the battle loc
+move_strat_camera 100, 130
+
+end_benchmark
+
+; To skip the post battle scroll, we need to monitor the battle state
+; outside the actual battle script (from spawn_battle to end_battle)
+; This is because once the battle is in the finished state the campaign script
+; stops running the battle script
+declare_counter FINISHED_BATTLE
+set_counter FINISHED_BATTLE 0
+monitor_conditions I_BattleFinished and I_CompareCounter FINISHED_BATTLE = 0
+	; Complete the finished phase and leave the battle
+	finish_battle
+	set_counter FINISHED_BATTLE 1
+end_monitor
+
+spawn_battle campaign/benchmark/forest_battle
+	prepare_for_battle
+
+	; Label the gaul commander
+	label_unit 0 0 0 gaul_commander
+
+	; Wait for the proper battle start
+	while ! I_BattleStarted
+	end_while
+
+	; Wait for a few seconds to let the FPS settle down
+	battle_wait 3
+
+	start_benchmark battle
+
+	; Give every unit to the AI
+	force_ai_control
+
+	; Follow the gaul commander
+	camera_track_unit gaul_commander back 30 10 -15
+
+	; Let the AI duke it out for a bit
+	battle_wait 300
+
+	; Kill one side
+	console_command sudo force_battle_victory
+
+	end_benchmark
+
+	; Wait until the battle is over before leaving the battle script
+	while I_InBattle
+	end_while
+end_battle
+
+;; Forect Battle Ended
+
+; Turn fog of war back on, since it's a sticky setting
+console_command set_fow on

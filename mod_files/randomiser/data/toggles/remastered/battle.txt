@@ -1,0 +1,13 @@
+autoresolve improvements :: 1
+romano-british units :: 1
+night battles :: 1
+unlimited men :: 1
+rain affects flames :: 1
+improved routing :: 1
+misc battle improvements :: 1
+friendly spear passthrough :: 1
+reduce collider climbing walls :: 1
+elephant collision :: 1
+reorder unit group :: 1
+enhanced locked group attack :: 1
+improved blocked placement :: 1
