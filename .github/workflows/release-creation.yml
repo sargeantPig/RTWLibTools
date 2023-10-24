@@ -79,3 +79,4 @@ jobs:
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/osx-x64/* --clobber
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/linux-x64/* --clobber
           gh release upload ${{ steps.release.outputs.tag_name }} ${{github.workspace}}/publish/mod_files.zip --clobber
+
