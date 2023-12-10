@@ -22,7 +22,7 @@ namespace RTWLIB_CLI
             Console.WriteLine(CMDProcess.LoadTemplates());
             Console.WriteLine(CMDProcess.LoadConfigs());
 
-            if(CMDProcess.configs.Count == 0)
+            if (CMDProcess.configs.Count == 0)
                 Environment.Exit(1);
 
             CLIHelper.ScreenChange(title.ApplyBorder('#', 2, 1));
@@ -38,7 +38,7 @@ namespace RTWLIB_CLI
 
                 if (ret != KW.back) { Console.WriteLine(ret.ApplyBorder('=', 1, 1)); continue; }
                 CLIHelper.ScreenChange(title);
-            }  
+            }
         }
 
     }

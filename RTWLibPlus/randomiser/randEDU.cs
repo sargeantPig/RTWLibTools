@@ -1,4 +1,4 @@
-﻿using RTWLibPlus.data;
+﻿namespace RTWLibPlus.randomiser;
 using RTWLibPlus.data.unit;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
@@ -6,145 +6,147 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace RTWLibPlus.randomiser
+public static class RandEDU
 {
-    public static class RandEDU
+    public static string AddAttributeAll(EDU edu, string attribute)
     {
-        public static string AddAttributeAll(EDU edu, string attribute) {
-            var attributes = edu.GetItemsByIdent("attributes");
+        List<IBaseObj> attributes = edu.GetItemsByIdent("attributes");
 
-            foreach (EDUObj attri in attributes)
-            {
-                if (!attri.Value.Contains(attribute))
-                    attri.Value += ", " + attribute;
-            }
-
-            return string.Format("Added {0} to all units", attribute);
-
-        }
-        public static string RandomiseOwnership(EDU edu, RandWrap rnd, SMF smf, int maxPerUnit = 3, int minimumPerUnit = 1)
+        foreach (EDUObj attri in attributes)
         {
-            rnd.RefreshRndSeed();
-
-         
-            var ownerships = edu.GetItemsByIdent("ownership");
-            List<string> factionList = smf.GetFactions();
-            factionList.Shuffle(rnd.RND);
-
-            
-            foreach ( EDUObj ownership in ownerships ) {
-
-                if (factionList.Count() < maxPerUnit)
-                {
-                    factionList = smf.GetFactions();
-                    factionList.Shuffle(rnd.RND);
-                }
-
-                string[] newFactions = new string[maxPerUnit + 1] ;
-                for(int i = 0; i < maxPerUnit; i++)
-                {
-                    int index;
-                    newFactions[i] = factionList.GetRandom(out index, rnd.RND);
-                    factionList.RemoveAt(index);
-                }
-                newFactions[newFactions.Count() - 1] = "slave";
-
-                ownership.Value = newFactions.ToString(',', ' ');
-            }
-
-            AddAttributeAll(edu, "mercenary_unit");
-            SetGeneralUnits(edu, smf, rnd, 700, 950);
-            return "Random ownership complete";
-        }
-        public static string SetGeneralUnits(EDU edu, SMF smf, RandWrap rnd, int minPriceEarly, int minPriceLate)
-        {
-            var FHasGenerals =  smf.GetFactions().ToArray().InitDictFromList(new bool[2] { false, false});
-            var ownerships = edu.GetItemsByIdent("ownership");
-            var costs = edu.GetItemsByIdent("stat_cost");
-            edu.RemoveAttributesAll("general_unit", "general_unit_upgrade \"marian_reforms\"");
-            var attr = edu.GetItemsByIdent("attributes");
-
-            var factions = smf.GetFactions();
-
-            UnitsWrapper uw = new UnitsWrapper(edu);
-
-            foreach (var f in factions)
+            if (!attri.Value.Contains(attribute))
             {
-                List<int> unitOwned = new List<int>();
-                List<int> shortlist = new List<int>();
+                attri.Value += ", " + attribute;
+            }
+        }
 
-                for (int i = 0; i < ownerships.Count; i++)
-                {
-                    if (ownerships[i].Value.Contains(f))
-                        unitOwned.Add(i);
-                }
+        return string.Format("Added {0} to all units", attribute);
 
-                foreach(var unit in unitOwned)
-                {
-                    string[] cost = costs[unit].Value.Split(',').TrimAll();
-                    var attributes = attr[unit].Value.Split(',').TrimAll();
+    }
+    public static string RandomiseOwnership(EDU edu, RandWrap rnd, SMF smf, int maxPerUnit = 3, int minimumPerUnit = 1)
+    {
+        rnd.RefreshRndSeed();
 
-                }
 
+        List<IBaseObj> ownerships = edu.GetItemsByIdent("ownership");
+        List<string> factionList = smf.GetFactions();
+        factionList.Shuffle(rnd.RND);
+
+
+        foreach (EDUObj ownership in ownerships)
+        {
+
+            if (factionList.Count < maxPerUnit)
+            {
+                factionList = smf.GetFactions();
+                factionList.Shuffle(rnd.RND);
             }
 
-            // get units of a faction
+            string[] newFactions = new string[maxPerUnit + 1];
+            for (int i = 0; i < maxPerUnit; i++)
+            {
+                newFactions[i] = factionList.GetRandom(out int index, rnd.RND);
+                factionList.RemoveAt(index);
+            }
+            newFactions[^1] = "slave";
 
-            // shortlist the most expensive/best stats 
+            ownership.Value = newFactions.ToString(',', ' ');
+        }
 
-            // pick from shortlist
+        AddAttributeAll(edu, "mercenary_unit");
+        SetGeneralUnits(edu, smf, rnd, 700, 950);
+        return "Random ownership complete";
+    }
+    public static string SetGeneralUnits(EDU edu, SMF smf, RandWrap rnd, int minPriceEarly, int minPriceLate)
+    {
+        Dictionary<string, bool[]> fHasGenerals = smf.GetFactions().ToArray().InitDictFromList(new bool[2] { false, false });
+        List<IBaseObj> ownerships = edu.GetItemsByIdent("ownership");
+        List<IBaseObj> costs = edu.GetItemsByIdent("stat_cost");
+        edu.RemoveAttributesAll("general_unit", "general_unit_upgrade \"marian_reforms\"");
+        List<IBaseObj> attr = edu.GetItemsByIdent("attributes");
 
-            // general random bottom half
+        List<string> factions = smf.GetFactions();
 
-            // marian reform general random top half
+        UnitsWrapper uw = new(edu);
 
-
-            new List<IbaseObj>[3] { ownerships, attr, costs }.ShuffleMany(rnd.RND);  
+        foreach (string f in factions)
+        {
+            List<int> unitOwned = new();
+            List<int> shortlist = new();
 
             for (int i = 0; i < ownerships.Count; i++)
             {
-                EDUObj a = (EDUObj)attr[i];
-                EDUObj b = (EDUObj)ownerships[i];
-                EDUObj cost = (EDUObj)costs[i];
-
-                string[] asplit = a.Value.Split(',').TrimAll();
-                string[] bsplit = b.Value.Split(',').TrimAll();
-                string[] costStr = cost.Value.Split(",").TrimAll();
-
-                bool cont = false;
-
-
-                if (Convert.ToInt16(costStr[1]) >= minPriceEarly && Convert.ToInt16(costStr[1]) < minPriceLate)
+                if (ownerships[i].Value.Contains(f))
                 {
-                    ((EDUObj)attr[i]).Value = asplit.Add("general_unit").ToString(',', ' ');
-
-                    foreach (var faction in bsplit)
-                    {
-                        if (FHasGenerals.ContainsKey(faction))
-                            FHasGenerals[faction][0] = true;
-                    }
-
+                    unitOwned.Add(i);
                 }
-                if (Convert.ToInt16(costStr[1]) >= minPriceLate)
-                {
-                    asplit = asplit.Add("general_unit_upgrade \"marian_reforms\"");
-                    asplit = asplit.FindAndRemove("general_unit");
-                    ((EDUObj)attr[i]).Value = asplit.ToString(',', ' ');
-                    foreach (var faction in bsplit)
-                    {
-                        if (FHasGenerals.ContainsKey(faction))
-                            FHasGenerals[faction][1] = true;
-                    }
-                }
-                else continue;
-
-                
             }
 
-            return "Generals set";
+            foreach (int unit in unitOwned)
+            {
+                string[] cost = costs[unit].Value.Split(',').TrimAll();
+                string[] attributes = attr[unit].Value.Split(',').TrimAll();
+
+            }
+
         }
+
+        // get units of a faction
+
+        // shortlist the most expensive/best stats
+
+        // pick from shortlist
+
+        // general random bottom half
+
+        // marian reform general random top half
+
+
+        new List<IBaseObj>[3] { ownerships, attr, costs }.ShuffleMany(rnd.RND);
+
+        for (int i = 0; i < ownerships.Count; i++)
+        {
+            EDUObj a = (EDUObj)attr[i];
+            EDUObj b = (EDUObj)ownerships[i];
+            EDUObj cost = (EDUObj)costs[i];
+
+            string[] asplit = a.Value.Split(',').TrimAll();
+            string[] bsplit = b.Value.Split(',').TrimAll();
+            string[] costStr = cost.Value.Split(",").TrimAll();
+
+            if (Convert.ToInt16(costStr[1]) >= minPriceEarly && Convert.ToInt16(costStr[1]) < minPriceLate)
+            {
+                ((EDUObj)attr[i]).Value = asplit.Add("general_unit").ToString(',', ' ');
+
+                foreach (string faction in bsplit)
+                {
+                    if (fHasGenerals.ContainsKey(faction))
+                    {
+                        fHasGenerals[faction][0] = true;
+                    }
+                }
+
+            }
+            if (Convert.ToInt16(costStr[1]) >= minPriceLate)
+            {
+                asplit = asplit.Add("general_unit_upgrade \"marian_reforms\"");
+                asplit = asplit.FindAndRemove("general_unit");
+                ((EDUObj)attr[i]).Value = asplit.ToString(',', ' ');
+                foreach (string faction in bsplit)
+                {
+                    if (fHasGenerals.ContainsKey(faction))
+                    {
+                        fHasGenerals[faction][1] = true;
+                    }
+                }
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        return "Generals set";
     }
 }

@@ -1,54 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
-using static RTWLibPlus.dataWrappers.TGA;
+﻿namespace RTWLibPlus.helpers;
+using System;
+using RTWLibPlus.dataWrappers.TGA;
 
-namespace RTWLibPlus.helpers
+public static class Colours
 {
-    public static class Colours
+    public static string ColourToString(int r, int g, int b) => string.Format("{0}, {1}, {2}", r, g, b);
+
+    public static PIXEL ColourToPixel(this string colourInts)
     {
-        public static string ColourToString(int r, int g, int b)
+        if (colourInts.Contains('[') || colourInts.Contains(']'))
         {
-            return string.Format("{0}, {1}, {2}", r, g, b);
+            RemoveBracers(ref colourInts);
         }
 
-        public static PIXEL ColourToPixel(this string colourInts)
+        string[] split = colourInts.Split(',');
+
+        PIXEL p = new()
         {
-            if (colourInts.Contains("[") || colourInts.Contains("]"))
-                RemoveBracers(ref colourInts);
+            R = Convert.ToByte(split[0]),
+            G = Convert.ToByte(split[1]),
+            B = Convert.ToByte(split[2])
+        };
+        return p;
+    }
 
-            string[] split = colourInts.Split(',');
+    private static void RemoveBracers(ref string str)
+    {
+        str = str.Trim(']');
+        str = str.Trim('[');
+    }
 
-            PIXEL p = new PIXEL();
-            p.r = Convert.ToByte(split[0]);
-            p.g = Convert.ToByte(split[1]);
-            p.b = Convert.ToByte(split[2]);
-            return p;
+    public static PIXEL Blend(this PIXEL color, PIXEL backColor, double amount)
+    {
+        PIXEL blended = new()
+        {
+            R = (byte)((color.R * amount) + (backColor.R * (1 - amount))),
+            G = (byte)((color.G * amount) + (backColor.G * (1 - amount))),
+            B = (byte)((color.B * amount) + (backColor.B * (1 - amount)))
+        };
+
+        return blended;
+    }
+
+    public static bool EqualTo(this PIXEL a, PIXEL b)
+    {
+        if (a.R == b.R && a.G == b.G && a.B == b.B)
+        {
+            return true;
         }
-
-        private static void RemoveBracers(ref string str)
+        else
         {
-            str = str.Trim(']');
-            str = str.Trim('[');
-        }
-
-        public static PIXEL Blend(this PIXEL color, PIXEL backColor, double amount)
-        {
-            PIXEL blended = new PIXEL();
-            blended.r = (byte)((color.r * amount) + backColor.r * (1 - amount));
-            blended.g = (byte)((color.g * amount) + backColor.g * (1 - amount));
-            blended.b = (byte)((color.b * amount) + backColor.b * (1 - amount));
-
-            return blended;
-        }
-
-        public static bool EqualTo(this PIXEL a, PIXEL b)
-        {
-            if (a.r == b.r && a.g == b.g && a.b == b.b)
-                return true;
-            else return false;
-
+            return false;
         }
     }
 }

@@ -1,62 +1,63 @@
-﻿using RTWLibPlus.interfaces;
+﻿namespace RTWLibPlus.helpers;
+using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers;
 using System.Collections.Generic;
 using System.IO;
 using static RTWLibPlus.parsers.DepthParse;
 
-namespace RTWLibPlus.helpers
+public static class RFH
 {
-    public static class RFH
+    public static void Write(string path, string content)
     {
-        public static void Write(string path, string content)
+        StreamWriter sw = new(path);
+        sw.Write(content);
+        sw.Flush();
+        sw.Close();
+    }
+
+    public static string CurrDirPath(params string[] path)
+    {
+        string finpath = Directory.GetCurrentDirectory();
+        foreach (string s in path)
         {
-            StreamWriter sw = new StreamWriter(path);
-            sw.Write(content);
-            sw.Flush();
-            sw.Close();
+            finpath = Path.Combine(finpath, s);
         }
+        return finpath;
+    }
 
-        public static string CurrDirPath(params string[] path) {
-            string finpath = Directory.GetCurrentDirectory();
-            foreach (string s in path)
-            {
-                finpath = Path.Combine(finpath, s);
-            }
-            return finpath;
-        }
-
-        public static string ConstructPath(params string[] path)
+    public static string ConstructPath(params string[] path)
+    {
+        string finpath = string.Empty;
+        foreach (string s in path)
         {
-            string finpath = string.Empty;
-            foreach (string s in path)
-            {
-                finpath = Path.Combine(finpath, s);
-            }
-            return finpath;
+            finpath = Path.Combine(finpath, s);
         }
+        return finpath;
+    }
 
-        public static List<IbaseObj> ParseFile(ObjectCreator creator, char splitter = ' ',  bool removeEmptyLines = false, params string[] path)
+    public static List<IBaseObj> ParseFile(ObjectCreator creator, char splitter = ' ', bool removeEmptyLines = false, params string[] path)
+    {
+        DepthParse dp = new();
+        string[] fileLines = dp.ReadFile(CurrDirPath(path), removeEmptyLines);
+        List<IBaseObj> parsed = dp.Parse(fileLines, creator, splitter);
+
+        return parsed;
+    }
+
+    public static string GetPartOfPath(string path, string from)
+    {
+        if (path == null)
         {
-            DepthParse dp = new DepthParse();
-            var fileLines = dp.ReadFile(RFH.CurrDirPath(path), removeEmptyLines);
-            var parsed = dp.Parse(fileLines, creator, splitter);
-
-            return parsed;
+            return "";
         }
 
-        public static string GetPartOfPath(string path, string from)
-        {
-            if (path == null)
-                return "";
+        string[] split = path.Split('\\');
 
-            string[] split = path.Split('\\');
+        string[] arr = split.GetItemsFromFirstOf(from.GetHashCode());
 
-            var arr = split.GetItemsFromFirstOf(from.GetHashCode());
-
-            var str = RFH.ConstructPath(arr);
-            return string.Format("..\\{0}", str);
+        string str = ConstructPath(arr);
+        return string.Format("..\\{0}", str);
 
 
-        }
     }
 }

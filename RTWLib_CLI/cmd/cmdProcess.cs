@@ -21,11 +21,11 @@ namespace RTWLib_CLI.cmd
 
         public static string ReadCMD(string cmd, Type type = null)
         {
-            if(cmd == KW.back) { return KW.back; }
-            if(cmd == KW.help) { return Help.help(); }
-            if(cmd == string.Empty) { return "no command"; }
+            if (cmd == KW.back) { return KW.back; }
+            if (cmd == KW.help) { return Help.help(); }
+            if (cmd == string.Empty) { return "no command"; }
             if (templates.ContainsKey(cmd))
-                return ProcessTemplate(cmd); 
+                return ProcessTemplate(cmd);
             int invokeInd = 0;
 
             string[] cmdSplit = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -41,20 +41,21 @@ namespace RTWLib_CLI.cmd
             var invokableObject = modules.GetModule(type.Name);
 
 
-            foreach(MethodInfo t in type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
+            foreach (MethodInfo t in type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
             {
                 if (t.Name.ToLower() != cmdSplit[invokeInd].ToLower()) continue;
 
                 string[] args = cmdSplit.GetItemsFrom(invokeInd + 1);
                 var par = t.GetParameters();
 
-                if(par.Length > args.Length) {
+                if (par.Length > args.Length)
+                {
                     return string.Format("{0}: Incorrect args, expected: {1}", KW.error, par.ToString(','));
                 }
 
                 object[] newArg = new object[par.Length];
 
-                for(int i =0; i < par.Length; i++)
+                for (int i = 0; i < par.Length; i++)
                 {
                     type = par[i].ParameterType;
 
@@ -69,7 +70,7 @@ namespace RTWLib_CLI.cmd
                 }
 
 
-                return (string)t.Invoke(invokableObject, newArg);              
+                return (string)t.Invoke(invokableObject, newArg);
             }
             return KW.error + ": Command not found, are the arguments correct?";
         }
@@ -78,7 +79,7 @@ namespace RTWLib_CLI.cmd
         {
             var cmds = templates[template];
             Progress p = new Progress(1f / (cmds.Count()), "Running: " + template);
-            foreach( var cmd in cmds)
+            foreach (var cmd in cmds)
             {
                 p.Message("Doing: " + cmd);
                 ReadCMD(cmd);
@@ -89,14 +90,14 @@ namespace RTWLib_CLI.cmd
 
         public static string LoadTemplates()
         {
-            if(!Directory.Exists("randomiser_templates"))
+            if (!Directory.Exists("randomiser_templates"))
                 return "Template folder does not exist. Skipping template loading";
 
             var files = Directory.GetFiles("randomiser_templates");
 
             DepthParse dp = new DepthParse();
 
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 string name = Path.GetFileName(file);
                 var parse = dp.ReadFile(file);
@@ -107,7 +108,7 @@ namespace RTWLib_CLI.cmd
 
         public static string LoadConfigs()
         {
-            if(!Directory.Exists("randomiser_config"))
+            if (!Directory.Exists("randomiser_config"))
                 return "Config folder does not exist.\nERROR config required. Exiting Program";
 
             var files = Directory.GetFiles("randomiser_config");

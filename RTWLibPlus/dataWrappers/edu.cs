@@ -1,102 +1,90 @@
-﻿using RTWLibPlus.data;
+﻿namespace RTWLibPlus.dataWrappers;
+using RTWLibPlus.data;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace RTWLibPlus.dataWrappers
+public class EDU : BaseWrapper, IWrapper
 {
-    public class EDU : BaseWrapper, IWrapper
+    private readonly string name = "edu";
+
+    public string GetName() => this.name;
+    public EDU(string outputPath, string loadPath)
     {
-        private readonly string name = "edu";
+        this.OutputPath = outputPath;
+        this.LoadPath = loadPath;
+    }
 
-        public string GetName()
+    public EDU(List<IBaseObj> data, TWConfig config)
+    {
+        this.Data = data;
+        this.SetEndOfUnits();
+        this.LoadPath = config.GetPath(Operation.Load, "edu");
+        this.OutputPath = config.GetPath(Operation.Save, "edu");
+    }
+
+    public void Parse()
+    {
+        this.Data = RFH.ParseFile(Creator.EDUcreator, ' ', false, this.LoadPath);
+        this.SetEndOfUnits();
+    }
+
+    public string Output()
+    {
+        string output = string.Empty;
+
+        foreach (EDUObj obj in this.Data)
         {
-            return name;
+            output += obj.Output();
         }
-        public EDU(string outputPath, string loadPath)
-        {
-            OutputPath = outputPath;
-            LoadPath = loadPath;
-        }
 
-        public EDU(List<IbaseObj> data, TWConfig config)
-        {
-            this.data = data;
-            SetEndOfUnits();
-            LoadPath = config.GetPath(Operation.Load, "edu");
-            OutputPath = config.GetPath(Operation.Save, "edu");
-        }
+        RFH.Write(this.OutputPath, output + Format.UniversalNewLine());
+        return output + Format.UniversalNewLine();
+    }
 
-        public void Parse()
-        {
-            this.data = RFH.ParseFile(Creator.EDUcreator, ' ', false, LoadPath);
-            SetEndOfUnits();
-        }
+    public void PrepareEDU() => this.DeleteChunks("type", "rebalance_statblock");
 
-        public string Output()
-        {
-            string output = string.Empty;
+    public void Clear() => this.Data.Clear();
 
-            foreach (EDUObj obj in data)
+    private void SetEndOfUnits()
+    {
+        for (int i = 0; i < this.Data.Count; i++)
+        {
+            if (i + 1 >= this.Data.Count)
             {
-                output += obj.Output();
+                return;
             }
 
-            RFH.Write(OutputPath, output + Format.UniversalNewLine());
-            return output + Format.UniversalNewLine();
-        }
-
-        public void PrepareEDU()
-        {
-            DeleteChunks("type", "rebalance_statblock");
-        }
-
-        public void Clear()
-        {
-            data.Clear();
-        }
-
-        private void SetEndOfUnits()
-        {
-            for(int i = 0; i < data.Count; i++)
+            EDUObj obj = (EDUObj)this.Data[i];
+            EDUObj nextObj = (EDUObj)this.Data[i + 1];
+            if (nextObj.Tag is "type" or "rebalance_statblock" or "is_female")
             {
-                if (i + 1 >= data.Count)
-                    return;
 
-                EDUObj obj = (EDUObj)data[i];
-                EDUObj nextObj = (EDUObj)data[i + 1];
-                if (nextObj.Tag == "type" || nextObj.Tag == "rebalance_statblock"  || nextObj.Tag == "is_female" ) {
-
-                    obj.endOfUnit = true;
-                }
+                obj.EndOfUnit = true;
             }
         }
+    }
 
-        public void RemoveAttributesAll(params string[] attriToRemove)
+    public void RemoveAttributesAll(params string[] attriToRemove)
+    {
+        List<IBaseObj> attri = this.GetItemsByIdent("attributes");
+
+        foreach (EDUObj a in attri)
         {
-            var attri = GetItemsByIdent("attributes");
-
-            foreach(EDUObj a in attri)
+            string[] values = a.Value.Split(',').TrimAll();
+            string[] newVals = Array.Empty<string>();
+            foreach (string val in values)
             {
-                string[] values = a.Value.Split(',').TrimAll();
-                string[] newVals = new string[0];
-                foreach(var val in values)
+                if (!attriToRemove.Contains(val))
                 {
-                    if(!attriToRemove.Contains(val))
-                    {
-                        newVals = newVals.Add(val);
-                    }
+                    newVals = newVals.Add(val);
                 }
-
-                a.Value = newVals.ToString(',', ' ');
             }
+
+            a.Value = newVals.ToString(',', ' ');
         }
     }
 }

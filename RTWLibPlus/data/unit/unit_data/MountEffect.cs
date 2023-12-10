@@ -1,24 +1,20 @@
-﻿using System;
+﻿namespace RTWLibPlus.data.unit.unit_data;
 using System.Collections.Generic;
-using System.Text;
 
-namespace RTWLibPlus.data.unit.unit_data
+public class MountEffect
 {
-    public class MountEffect
-    {
-        /// <summary>
-        /// mount types that this unit has bonuses against
-        /// </summary>
-        public List<string> mountType;
-        /// <summary>
-        /// the bonus or negative for each mount type
-        /// </summary>
-        public List<int> modifier;
+    /// <summary>
+    /// mount types that this unit has bonuses against
+    /// </summary>
+    private readonly List<string> mountType;
+    /// <summary>
+    /// the bonus or negative for each mount type
+    /// </summary>
+    private readonly List<int> modifier;
 
-        public MountEffect()
-        {
-            mountType = new List<string>();
-            modifier = new List<int>();
-        }
+    public MountEffect()
+    {
+        this.mountType = new List<string>();
+        this.modifier = new List<int>();
     }
 }

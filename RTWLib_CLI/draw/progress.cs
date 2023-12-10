@@ -18,7 +18,8 @@ namespace RTWLib_CLI.draw
 
         int offset = 1;
         int barInd = 0;
-        public Progress(float increment, string task) {
+        public Progress(float increment, string task)
+        {
             this.increment = max * increment;
             this.task = task;
             Console.WriteLine();
@@ -45,15 +46,16 @@ namespace RTWLib_CLI.draw
             {
                 Message(message);
             }
-            
+
             current += increment;
             Draw();
         }
 
-        private void Draw() {
+        private void Draw()
+        {
 
             string blocks = string.Empty;
-            for(int i = 0; i < current; i++)
+            for (int i = 0; i < current; i++)
             {
                 blocks += "=";
             }
@@ -73,7 +75,7 @@ namespace RTWLib_CLI.draw
         {
             if (barInd > 0)
             {
-                for(int i = barInd-1; i >= 0; i--)
+                for (int i = barInd - 1; i >= 0; i--)
                 {
                     activeBars[i].offset += by;
                 }

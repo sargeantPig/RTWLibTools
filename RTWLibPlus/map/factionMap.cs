@@ -1,165 +1,130 @@
-﻿using RTWLibPlus.data;
+﻿namespace RTWLibPlus.map;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
-using RTWLibPlus.randomiser;
 using System.Numerics;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using static RTWLibPlus.dataWrappers.TGA;
+using RTWLibPlus.dataWrappers.TGA;
 using System.Threading.Tasks;
-using System.Threading;
 
-namespace RTWLibPlus.map
+public class FactionMap
 {
-    public class FactionMap
+
+    public void PaintRegionMap(TGA regions, TGA baseMap, DS ds, DR dr, SMF smf, string mapDir)
     {
-        /*public void PaintRegionMap(TGA regions, TGA baseMap, DS ds, DR dr, SMF smf, string mapDir)
+        Dictionary<string, TGA> factionMaps = this.InitialiseMaps(baseMap, mapDir, smf.GetFactions().ToArray());
+        TGA complete = baseMap.Copy("", "fullMap.tga");
+        Dictionary<string, List<IBaseObj>> settlementsByFaction = ds.GetSettlementsByFaction(smf);
+        //loop Pixels
+        Parallel.For(0, regions.Pixels.Length, i =>
         {
-            Dictionary<string, TGA> factionMaps = initialiseMaps(baseMap, mapDir, smf.GetFactions().ToArray());
-            TGA complete = baseMap.Copy("", "fullMap.tga");
-            Dictionary<string, List<IbaseObj>> settlementsByFaction = ds.GetSettlementsByFaction(smf);
-            //loop pixels
-            for(int i = 0; i < regions.pixels.Length; i++)
+            PIXEL rp = regions.Pixels[i];
+            //check for sea or city or port
+            if (rp.R == 41 && rp.G == 140 && rp.B == 233)
             {
-                var rp = regions.pixels[i];
-                //check for sea or city or port
-                if (rp.r == 41 && rp.g == 140 && rp.b == 233)
-                    continue;
-                if (rp.r == 41 && rp.g == 140 && rp.b == 235)
-                    continue;
-                if (rp.r == 41 && rp.g == 140 && rp.b == 236)
-                    continue;
-                if (rp.r == 41 && rp.g == 140 && rp.b == 237)
-                    continue;
-                if (rp.r == 0 && rp.g == 0 && rp.b == 0)
-                    continue;
-                if (rp.r == 255 && rp.g == 255 && rp.b == 255)
-                    continue;
-                //get region by pixel colour
-                string region = dr.GetRegionByColour(rp.r, rp.g, rp.b);
-                //get which faction has the region
-                string faction = ds.GetFactionByRegion(region);
-                //get faction colours
-                var pri = smf.GetKeyValueAtLocation(smf.data, 0, faction, "colours", "primary").Value;
-                var sec = smf.GetKeyValueAtLocation(smf.data, 0, faction, "colours", "secondary").Value;
-                PIXEL primaryCol = pri.ColourToPixel();
-                PIXEL secondaryCol = sec.ColourToPixel();
-                //check for border
-                int bc = BorderCheck(i, regions, regions.pixels[i]);
-                if (bc >= 1 && bc < 4)
-                {
-                    //paint border
-                    factionMaps[faction].pixels[i] = secondaryCol.Blend(baseMap.pixels[i], 0.6);
-                    complete.pixels[i] = secondaryCol.Blend(baseMap.pixels[i], 0.6);
-                }
-                else
-                {
-                    //paint pixel on correct faction map
-                    factionMaps[faction].pixels[i] = primaryCol.Blend(baseMap.pixels[i], 0.6);
-                    complete.pixels[i] = primaryCol.Blend(baseMap.pixels[i], 0.6);
-                }
+                return;
             }
-            //output
-            foreach(var tga in  factionMaps)
+
+            if (rp.R == 41 && rp.G == 140 && rp.B == 235)
             {
-                tga.Value.Output();
+                return;
             }
-            complete.Output();
-        }*/
-    
-        public void PaintRegionMap(TGA regions, TGA baseMap, DS ds, DR dr, SMF smf, string mapDir)
+
+            if (rp.R == 41 && rp.G == 140 && rp.B == 236)
+            {
+                return;
+            }
+
+            if (rp.R == 41 && rp.G == 140 && rp.B == 237)
+            {
+                return;
+            }
+
+            if (rp.R == 0 && rp.G == 0 && rp.B == 0)
+            {
+                return;
+            }
+
+            if (rp.R == 255 && rp.G == 255 && rp.B == 255)
+            {
+                return;
+            }
+            //get region by pixel colour
+            string region = dr.GetRegionByColour(rp.R, rp.G, rp.B);
+            //get which faction has the region
+            string faction = ds.GetFactionByRegion(region);
+            //get faction colours
+            string pri = smf.GetKeyValueAtLocation(smf.Data, 0, faction, "colours", "primary").Value;
+            string sec = smf.GetKeyValueAtLocation(smf.Data, 0, faction, "colours", "secondary").Value;
+            PIXEL primaryCol = pri.ColourToPixel();
+            PIXEL secondaryCol = sec.ColourToPixel();
+            //check for border
+            int bc = this.BorderCheck(i, regions, regions.Pixels[i]);
+            if (bc is >= 1 and < 4)
+            {
+                //paint border
+                factionMaps[faction].Pixels[i] = secondaryCol.Blend(baseMap.Pixels[i], 0.6);
+                complete.Pixels[i] = secondaryCol.Blend(baseMap.Pixels[i], 0.6);
+            }
+            else
+            {
+                //paint pixel on correct faction map
+                factionMaps[faction].Pixels[i] = primaryCol.Blend(baseMap.Pixels[i], 0.6);
+                complete.Pixels[i] = primaryCol.Blend(baseMap.Pixels[i], 0.6);
+            }
+        });
+        //output
+        foreach (KeyValuePair<string, TGA> tga in factionMaps)
         {
-            Dictionary<string, TGA> factionMaps = initialiseMaps(baseMap, mapDir, smf.GetFactions().ToArray());
-            TGA complete = baseMap.Copy("", "fullMap.tga");
-            Dictionary<string, List<IbaseObj>> settlementsByFaction = ds.GetSettlementsByFaction(smf);
-            //loop pixels
-            Parallel.For(0, regions.pixels.Length, i =>
-            {
-                var rp = regions.pixels[i];
-                //check for sea or city or port
-                if (rp.r == 41 && rp.g == 140 && rp.b == 233)
-                    return;
-                if (rp.r == 41 && rp.g == 140 && rp.b == 235)
-                    return;
-                if (rp.r == 41 && rp.g == 140 && rp.b == 236)
-                    return;
-                if (rp.r == 41 && rp.g == 140 && rp.b == 237)
-                    return;
-                if (rp.r == 0 && rp.g == 0 && rp.b == 0)
-                    return;
-                if (rp.r == 255 && rp.g == 255 && rp.b == 255)
-                    return;
-                //get region by pixel colour
-                string region = dr.GetRegionByColour(rp.r, rp.g, rp.b);
-                //get which faction has the region
-                string faction = ds.GetFactionByRegion(region);
-                //get faction colours
-                var pri = smf.GetKeyValueAtLocation(smf.data, 0, faction, "colours", "primary").Value;
-                var sec = smf.GetKeyValueAtLocation(smf.data, 0, faction, "colours", "secondary").Value;
-                PIXEL primaryCol = pri.ColourToPixel();
-                PIXEL secondaryCol = sec.ColourToPixel();
-                //check for border
-                int bc = BorderCheck(i, regions, regions.pixels[i]);
-                if (bc >= 1 && bc < 4)
-                {
-                    //paint border
-                    factionMaps[faction].pixels[i] = secondaryCol.Blend(baseMap.pixels[i], 0.6);
-                    complete.pixels[i] = secondaryCol.Blend(baseMap.pixels[i], 0.6);
-                }
-                else
-                {
-                    //paint pixel on correct faction map
-                    factionMaps[faction].pixels[i] = primaryCol.Blend(baseMap.pixels[i], 0.6);
-                    complete.pixels[i] = primaryCol.Blend(baseMap.pixels[i], 0.6);
-                }
-            });
-            //output
-            foreach (var tga in factionMaps)
-            {
-                tga.Value.Output();
-            }
-            complete.Output();
+            tga.Value.Output();
+        }
+        complete.Output();
+    }
+
+    private Dictionary<string, TGA> InitialiseMaps(TGA baseMap, string mapDir, string[] factionList)
+    {
+        Dictionary<string, TGA> factionMaps = new();
+
+        foreach (string f in factionList)
+        {
+            factionMaps.Add(f, baseMap.Copy("", RFH.CurrDirPath(mapDir,
+                string.Format("map_{0}.tga", f))));
         }
 
-        private Dictionary<string, TGA> initialiseMaps(TGA baseMap, string mapDir, string[] factionList)
+        return factionMaps;
+    }
+
+    private int BorderCheck(int index, TGA rm, PIXEL mc)
+    {
+        int bcount = 0;
+        Vector2 coord = rm.ConvertIndexToCoordinates(index);
+        int indLeft = rm.ConvertCoordinatesToIndex(new Vector2(coord.X - 1, coord.Y));
+        int indRight = rm.ConvertCoordinatesToIndex(new Vector2(coord.X + 1, coord.Y));
+        int indUp = rm.ConvertCoordinatesToIndex(new Vector2(coord.X, coord.Y + 1));
+        int indDown = rm.ConvertCoordinatesToIndex(new Vector2(coord.X, coord.Y - 1));
+
+        if (!rm.Pixels[indRight].EqualTo(mc))
         {
-            Dictionary<string, TGA> factionMaps = new Dictionary<string, TGA>();
-
-            foreach (var f in factionList)
-            {
-                factionMaps.Add(f, baseMap.Copy("", RFH.CurrDirPath(mapDir,
-                    string.Format("map_{0}.tga", f))));
-            }
-
-            return factionMaps;
+            bcount++;
         }
 
-        private int BorderCheck(int index, TGA rm, PIXEL mc)
+        if (!rm.Pixels[indLeft].EqualTo(mc))
         {
-            int bcount = 0;
-            var coord = rm.ConvertIndexToCoordinates(index);
-            var indLeft = rm.ConvertCoordinatesToIndex(new Vector2(coord.X - 1, coord.Y));
-            var indRight = rm.ConvertCoordinatesToIndex(new Vector2(coord.X + 1, coord.Y));
-            var indUp = rm.ConvertCoordinatesToIndex(new Vector2(coord.X, coord.Y + 1));
-            var indDown = rm.ConvertCoordinatesToIndex(new Vector2(coord.X, coord.Y - 1));
-            
-            if (!rm.pixels[indRight].EqualTo(mc))
-                bcount++;
-         
-            if (!rm.pixels[indLeft].EqualTo(mc))
-                bcount++;
-            
-            if (!rm.pixels[indUp].EqualTo(mc))
-                bcount++;
-            
-            if (!rm.pixels[indDown].EqualTo(mc))
-                bcount++;
-
-            return bcount;
-
+            bcount++;
         }
+
+        if (!rm.Pixels[indUp].EqualTo(mc))
+        {
+            bcount++;
+        }
+
+        if (!rm.Pixels[indDown].EqualTo(mc))
+        {
+            bcount++;
+        }
+
+        return bcount;
 
     }
+
 }

@@ -16,20 +16,23 @@ namespace RTWLib_CLI.cmd
             string methods = GetMethodList();
             title = string.Format("RTWLib CLI\nHelp Screen\n---\nTry the following commands in\nformat [name] [arg1] [arg2] etc\n---\n{0}", methods).ApplyBorder('#', 2);
 
-            if (open) { 
-                return "Already on Help screen"; }
+            if (open)
+            {
+                return "Already on Help screen";
+            }
             open = true;
 
             CLIHelper.ScreenChange(title);
             while (true)
             {
                 string ret = CMDProcess.ReadCMD(Console.ReadLine(), typeof(Help));
-                if(ret == KW.back) { open = false; return KW.back; }
-                Console.WriteLine(ret.ApplyBorder('~', 1, 1));  
+                if (ret == KW.back) { open = false; return KW.back; }
+                Console.WriteLine(ret.ApplyBorder('~', 1, 1));
             }
         }
 
-        public static string Test(params string[] args) {
+        public static string Test(params string[] args)
+        {
             string argsStr = args.ToString(',');
             return "response: " + argsStr;
         }
@@ -40,7 +43,7 @@ namespace RTWLib_CLI.cmd
             var type = typeof(Help);
             var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
             int i = -1;
-            foreach ( var method in methods )
+            foreach (var method in methods)
             {
                 i++;
                 if (i == 0)
@@ -48,7 +51,7 @@ namespace RTWLib_CLI.cmd
 
                 string methodName = method.ToString().Split(' ')[1];
 
-                list += string.Format("{0}: {1}{2}", i.ToString(),  methodName, "\n");
+                list += string.Format("{0}: {1}{2}", i.ToString(), methodName, "\n");
             }
             return list;
         }

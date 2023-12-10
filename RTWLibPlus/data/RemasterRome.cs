@@ -1,39 +1,38 @@
-﻿using RTWLibPlus.helpers;
+﻿namespace RTWLibPlus.data;
+using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
-using System;
 using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
 using System.Text.Json;
-using System.Xml.Linq;
 
-namespace RTWLibPlus.data
+public enum Operation
 {
-    public enum Operation
+    Save,
+    Load
+}
+
+public class TWConfig
+{
+    public Dictionary<string, string> Paths { get; set; }
+    public string BaseFolder { get; set; }
+    public string Load { get; set; }
+    public string Save { get; set; }
+
+    public static TWConfig LoadConfig(string path)
     {
-        Save,
-        Load
+        DepthParse dp = new();
+        string json = dp.ReadFileAsString(path);
+        return JsonSerializer.Deserialize<TWConfig>(json);
     }
 
-    public class TWConfig
+    public string GetPath(Operation state, string file)
     {
-        public Dictionary<string, string> Paths { get; set; }
-        public string BaseFolder { get; set; }
-        public string Load { get; set; }
-        public string Save { get; set; }
-
-        public static TWConfig LoadConfig(string path)
+        if (state == Operation.Save)
         {
-            DepthParse dp = new DepthParse();
-            string json = dp.ReadFileAsString(path);
-            return JsonSerializer.Deserialize<TWConfig>(json);
+            return RFH.CurrDirPath(this.BaseFolder, this.Save, this.Paths[file]);
         }
-
-        public string GetPath(Operation state, string file)
+        else
         {
-            if (state == Operation.Save)
-                return RFH.CurrDirPath(BaseFolder, Save, Paths[file]);
-            else return RFH.CurrDirPath(BaseFolder, Load, Paths[file]);
+            return RFH.CurrDirPath(this.BaseFolder, this.Load, this.Paths[file]);
         }
     }
 }

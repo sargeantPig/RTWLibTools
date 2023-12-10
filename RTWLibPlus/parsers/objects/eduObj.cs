@@ -1,73 +1,69 @@
-﻿using RTWLibPlus.helpers;
+﻿namespace RTWLibPlus.parsers.objects;
+using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.configs.whiteSpace;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace RTWLibPlus.parsers.objects
+public class EDUObj : BaseObj, IBaseObj
 {
-    public class EDUObj : BaseObj, IbaseObj
+    public bool EndOfUnit { get; set; }
+
+    public EDUObj(string tag, string value, int depth) :
+        base(tag, value, depth)
     {
-        public bool endOfUnit = false;
-
-        public EDUObj(string tag, string value, int depth) :
-            base(tag, value, depth)
-        {
-            WSConfigFactory factory = new WSConfigFactory();
-            wsConfig = factory.CreateEDUWhiteSpace();
-            Ident = Tag.Split(wsConfig.WhiteChar)[0];
-        }
-
-        public EDUObj() { }
-
-        public override IbaseObj Copy()
-        {
-            EDUObj copy = new EDUObj();
-            copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
-            copy.Depth = Depth;
-            copy.items = items.DeepCopy();
-            copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
-            copy.Tag = Tag;
-            copy.Value = Value;
-            copy.Ident = Ident;
-            copy.NewLinesAfter = NewLinesAfter;
-            copy.endOfUnit = endOfUnit;
-            return copy;
-        }
-
-        public override string Output()
-        {
-            string output = string.Empty;
-
-            if (Tag == "rebalance_statblock")
-                output = FormatLineDropValue();
-            else if(Tag == "is_female")
-                output = FormatLineWithWhitespaceDropValue();
-            else output = FormatLine();
-
-            if (endOfUnit)
-                output += Format.UniversalNewLine();
-
-
-            return output;
-        }
-
-
-        private string FormatLine()
-        {
-            return string.Format("{0}{1}{2}{3}", Tag, Format.GetWhiteSpace(Tag, 20, ' '), Value, Format.UniversalNewLine());
-        }
-
-        private string FormatLineDropValue()
-        {
-            return string.Format("{0} {1}", Tag, Format.UniversalNewLine());
-        }
-
-        private string FormatLineWithWhitespaceDropValue()
-        {
-            return string.Format("{0}{1}{2}", Tag, Format.GetWhiteSpace(Tag, 20, ' '), Format.UniversalNewLine());
-        }
-
+        WSConfigFactory factory = new();
+        this.WhiteSpaceConfig = factory.CreateEDUWhiteSpace();
+        this.Ident = this.Tag.Split(this.WhiteSpaceChar)[0];
     }
+
+    public EDUObj() { }
+
+    public override IBaseObj Copy()
+    {
+        EDUObj copy = new()
+        {
+            WhiteSpaceChar = this.WhiteSpaceChar,
+            Depth = this.Depth,
+            Items = this.Items.DeepCopy(),
+            WhiteSpaceMultiplier = this.WhiteSpaceMultiplier,
+            Tag = this.Tag,
+            Value = this.Value,
+            Ident = this.Ident,
+            NewLinesAfter = this.NewLinesAfter,
+            EndOfUnit = this.EndOfUnit
+        };
+        return copy;
+    }
+
+    public override string Output()
+    {
+        string output = string.Empty;
+
+        if (this.Tag == "rebalance_statblock")
+        {
+            output = this.FormatLineDropValue();
+        }
+        else if (this.Tag == "is_female")
+        {
+            output = this.FormatLineWithWhitespaceDropValue();
+        }
+        else
+        {
+            output = this.FormatLine();
+        }
+
+        if (this.EndOfUnit)
+        {
+            output += Format.UniversalNewLine();
+        }
+
+        return output;
+    }
+
+
+    private string FormatLine() => string.Format("{0}{1}{2}{3}", this.Tag, Format.GetWhiteSpace(this.Tag, 20, ' '), this.Value, Format.UniversalNewLine());
+
+    private string FormatLineDropValue() => string.Format("{0} {1}", this.Tag, Format.UniversalNewLine());
+
+    private string FormatLineWithWhitespaceDropValue() => string.Format("{0}{1}{2}", this.Tag, Format.GetWhiteSpace(this.Tag, 20, ' '), Format.UniversalNewLine());
+
 }

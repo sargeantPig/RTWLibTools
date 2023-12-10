@@ -36,7 +36,7 @@ namespace RTWLib_CLI.draw
                 title += bord + pad + lineSplit[i] + rightPad + right;
             }
 
-            for (int i  = 0; i < borderWidth; i++)
+            for (int i = 0; i < borderWidth; i++)
             {
                 top += Format.GetStringOf(borderChar, borderLength) + Format.UniversalNewLine();
                 bottom += Format.GetStringOf(borderChar, borderLength) + Format.UniversalNewLine();
@@ -47,7 +47,7 @@ namespace RTWLib_CLI.draw
                 top += bord + Format.GetStringOf(' ', wSLength) + bord + Format.UniversalNewLine();
                 bottom = bord + Format.GetStringOf(' ', wSLength) + bord + Format.UniversalNewLine() + bottom;
             }
-                       
+
             return string.Format("{0}{1}{2}", top, title, bottom);
         }
 

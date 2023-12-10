@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace RTWLib_Tests.dummy;
 
-namespace RTWLib_Tests.dummy
+public static class DummyEDB
 {
-    public static class DummyEDB
-    {
-        
 
-    }
+
 }

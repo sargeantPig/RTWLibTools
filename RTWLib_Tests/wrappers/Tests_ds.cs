@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿namespace RTWLib_Tests.wrappers;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
@@ -6,174 +8,171 @@ using RTWLibPlus.parsers;
 using RTWLibPlus.parsers.objects;
 using System.Numerics;
 
-namespace RTWLib_Tests.wrappers
+[TestClass]
+public class Tests_ds
 {
-    [TestClass]
-    public class Tests_ds
+    private readonly DepthParse dp = new();
+    private readonly TWConfig config = TWConfig.LoadConfig(@"resources/remaster.json");
+    [TestMethod]
+    public void DsWholeFile()
     {
-        DepthParse dp = new DepthParse();
-        TWConfig config = TWConfig.LoadConfig(@"resources/remaster.json");
-        [TestMethod]
-        public void dsWholeFile()
-        {
-            
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
 
-            string result = parsedds.Output();
-            
-            var expected = dp.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
 
-            int rl = result.Length;  //123502
-            int el = expected.Length; //127957
+        string result = parsedds.Output();
 
-            Assert.AreEqual(el, rl);
-            Assert.AreEqual(expected, result);
-        }
-        
-        [TestMethod]
-        public void dsGetItemsByIdentSettlements()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
+        string expected = this.dp.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
 
-            var result = parsedds.GetItemsByIdent("settlement");
-            var expected = 96; //number of settlements
+        int rl = result.Length;  //123502
+        int el = expected.Length; //127957
 
-            Assert.AreEqual(expected, result.Count); //check number of returned settlements
-        }
+        Assert.AreEqual(el, rl);
+        Assert.AreEqual(expected, result);
+    }
 
-        [TestMethod]
-        public void dsGetCharacterChangeCoords()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
-            var characters = parsedds.GetItemsByIdent("character");
-            string result = DS.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1 ));
-            var expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
+    [TestMethod]
+    public void DsGetItemsByIdentSettlements()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
 
-            Assert.AreEqual(expected, result); //check number of returned settlements
-        }
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> result = parsedds.GetItemsByIdent("settlement");
+        int expected = 96; //number of settlements
 
-        [TestMethod]
-        public void dsGetItemsByIdentResource()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
+        Assert.AreEqual(expected, result.Count); //check number of returned settlements
+    }
 
-            var result = parsedds.GetItemsByIdent("resource");
-            var expected = 300; //number of resources
+    [TestMethod]
+    public void DsGetCharacterChangeCoords()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> characters = parsedds.GetItemsByIdent("character");
+        string result = DS.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1));
+        string expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
 
-            Assert.AreEqual(expected, result.Count); //check number of returned resources
-        }
-        [TestMethod]
-        public void dsGetItemsByIdentFaction()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
+        Assert.AreEqual(expected, result); //check number of returned settlements
+    }
 
-            var result = parsedds.GetItemsByIdent("faction");
-            var expected = 21; //number of factions
+    [TestMethod]
+    public void DsGetItemsByIdentResource()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
 
-            Assert.AreEqual(expected, result.Count); //check number of returned factions
-        }
-        [TestMethod]
-        public void dsGetItemsByIdentCoreAttitudes()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> result = parsedds.GetItemsByIdent("resource");
+        int expected = 300; //number of resources
 
-            var result = parsedds.GetItemsByIdent("core_attitudes");
-            var expected = 47; //number of ca
+        Assert.AreEqual(expected, result.Count); //check number of returned resources
+    }
+    [TestMethod]
+    public void DsGetItemsByIdentFaction()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
 
-            Assert.AreEqual(expected, result.Count); //check number of returned ca
-        }
-        [TestMethod]
-        public void dsDeleteByIdent()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> result = parsedds.GetItemsByIdent("faction");
+        int expected = 21; //number of factions
 
-            var settlements = parsedds.GetItemsByIdent("settlement");
-            parsedds.DeleteValue(parsedds.data, "settlement");
-            var result = parsedds.GetItemsByIdent("settlement");
-            var expected = 0; //number of ca
+        Assert.AreEqual(expected, result.Count); //check number of returned factions
+    }
+    [TestMethod]
+    public void DsGetItemsByIdentCoreAttitudes()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
 
-            Assert.AreEqual(expected, result.Count); //check number of returned ca
-        }
-        [TestMethod]
-        public void dsAddSettlementToRomansBrutii()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> result = parsedds.GetItemsByIdent("core_attitudes");
+        int expected = 47; //number of ca
 
-            var settlements = parsedds.GetItemsByIdent("settlement");
-            var add = parsedds.InsertNewObjectByCriteria(parsedds.data, settlements[30], "faction\tromans_brutii,", "denari");
-            var result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tromans_brutii,");
-            var expected = 3; //number of ca
-     
-            Assert.AreEqual(expected, result.Count); //check number of returned ca
-        }
-        [TestMethod]
-        public void dsAddSettlementToScythia()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
-             
-            var settlements = parsedds.GetItemsByIdent("settlement");
-            var add = parsedds.InsertNewObjectByCriteria(parsedds.data, settlements[30], "faction\tscythia,", "denari");
-            var result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tscythia,");
-            var expected = 5; //number of ca
-            Assert.AreEqual(expected, result.Count); //check number of returned ca
-        }
-        [TestMethod]
-        public void dsAddUnitToFlavius()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
-            var units = parsedds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
-            var add = parsedds.InsertNewObjectByCriteria(parsedds.data, units[1] , "faction\tromans_julii,", "character\tFlavius", "unit");
-            var result = parsedds.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
-            var expected = 6; //number of ca
-            Assert.AreEqual(expected, result.Count); //check number of returned ca
-        }
+        Assert.AreEqual(expected, result.Count); //check number of returned ca
+    }
+    [TestMethod]
+    public void DsDeleteByIdent()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
 
-        [TestMethod]
-        public void GetRegions()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
-            var regions = parsedds.GetItemsByCriteriaDepth(parsedds.data, "core_attitudes", "region", "settlement");
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
+        parsedds.DeleteValue(parsedds.Data, "settlement");
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> result = parsedds.GetItemsByIdent("settlement");
+        int expected = 0; //number of ca
 
-            var result = regions.Count;
-            var expected = 96; //number of ca
+        Assert.AreEqual(expected, result.Count); //check number of returned ca
+    }
+    [TestMethod]
+    public void DsAddSettlementToRomansBrutii()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
 
-            Assert.AreEqual(expected, result); //check number of returned ca
-        }
-        [TestMethod]
-        public void GetFactionByRegion()
-        {
-            var ds = dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-            var dsParse = dp.Parse(ds, Creator.DScreator);
-            var parsedds = new DS(dsParse, config);
-            string region = "Paionia";
-            var faction = parsedds.GetFactionByRegion(region);
-            
-            var result = faction;
-            var expected = "macedon"; //number of ca
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
+        bool add = parsedds.InsertNewObjectByCriteria(parsedds.Data, settlements[30], "faction\tromans_brutii,", "denari");
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tromans_brutii,");
+        int expected = 3; //number of ca
 
-            Assert.AreEqual(expected, result); //check number of returned ca
-        }
+        Assert.AreEqual(expected, result.Count); //check number of returned ca
+    }
+    [TestMethod]
+    public void DsAddSettlementToScythia()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
+        bool add = parsedds.InsertNewObjectByCriteria(parsedds.Data, settlements[30], "faction\tscythia,", "denari");
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tscythia,");
+        int expected = 5; //number of ca
+        Assert.AreEqual(expected, result.Count); //check number of returned ca
+    }
+    [TestMethod]
+    public void DsAddUnitToFlavius()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> units = parsedds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
+        bool add = parsedds.InsertNewObjectByCriteria(parsedds.Data, units[1], "faction\tromans_julii,", "character\tFlavius", "unit");
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> result = parsedds.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
+        int expected = 6; //number of ca
+        Assert.AreEqual(expected, result.Count); //check number of returned ca
+    }
+
+    [TestMethod]
+    public void GetRegions()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> regions = parsedds.GetItemsByCriteriaDepth(parsedds.Data, "core_attitudes", "region", "settlement");
+
+        int result = regions.Count;
+        int expected = 96; //number of ca
+
+        Assert.AreEqual(expected, result); //check number of returned ca
+    }
+    [TestMethod]
+    public void GetFactionByRegion()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+        string region = "Paionia";
+        string faction = parsedds.GetFactionByRegion(region);
+
+        string result = faction;
+        string expected = "macedon"; //number of ca
+
+        Assert.AreEqual(expected, result); //check number of returned ca
     }
 }

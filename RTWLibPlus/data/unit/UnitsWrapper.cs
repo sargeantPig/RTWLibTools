@@ -1,88 +1,89 @@
-﻿using RTWLibPlus.dataWrappers;
-using RTWLibPlus.interfaces;
-using System;
+﻿namespace RTWLibPlus.data.unit;
+using RTWLibPlus.dataWrappers;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using RTWLibPlus.helpers;
-using System.Threading;
 using System.Numerics;
 
-namespace RTWLibPlus.data.unit
+public class UnitsWrapper
 {
-    public class UnitsWrapper
+    private readonly List<Unit> units = new();
+
+    public UnitsWrapper(EDU edu)
     {
-        List<Unit> units = new List<Unit>();
 
-        public UnitsWrapper(EDU edu) {
+        List<interfaces.IBaseObj> dictionarys = edu.GetItemsByIdent("dictionary");
+        List<interfaces.IBaseObj> soldier = edu.GetItemsByIdent("soldier");
+        List<interfaces.IBaseObj> costs = edu.GetItemsByIdent("stat_cost");
+        List<interfaces.IBaseObj> ownership = edu.GetItemsByIdent("ownership");
+        List<interfaces.IBaseObj> weapons = edu.GetItemsByIdent("stat_pri");
+        List<interfaces.IBaseObj> secWep = edu.GetItemsByIdent("stat_sec");
+        List<interfaces.IBaseObj> armour = edu.GetItemsByIdent("stat_pri_armour");
+        List<interfaces.IBaseObj> secArmour = edu.GetItemsByIdent("stat_sec_armour");
+        List<interfaces.IBaseObj> attributes = edu.GetItemsByIdent("attributes");
+        List<interfaces.IBaseObj> mental = edu.GetItemsByIdent("stat_mental");
+        List<interfaces.IBaseObj> health = edu.GetItemsByIdent("stat_health");
+        List<interfaces.IBaseObj> priAtrri = edu.GetItemsByIdent("stat_pri_attr");
+        List<interfaces.IBaseObj> secAttri = edu.GetItemsByIdent("stat_sec_attr");
+        List<interfaces.IBaseObj> formation = edu.GetItemsByIdent("formation");
+        this.units.Init(dictionarys.Count);
+        for (int i = 0; i < dictionarys.Count; i++)
+        {
+            this.units[i].Dic = dictionarys[i].Value;
+            this.units[i].Cost = costs[i].Value.Split(',').TrimAll();
+            this.units[i].Ownership = ownership[i].Value.Split(',').TrimAll();
+            this.units[i].PriWep = weapons[i].Value.Split(',').TrimAll();
+            this.units[i].SecWep = secWep[i].Value.Split(',').TrimAll();
+            this.units[i].PriArm = armour[i].Value.Split(',').TrimAll();
+            this.units[i].SecArmr = secArmour[i].Value.Split(",").TrimAll();
+            this.units[i].Attributes = attributes[i].Value.Split(',').TrimAll();
+            this.units[i].Mental = mental[i].Value.Split(',').TrimAll();
+            this.units[i].Health = health[i].Value.Split(',').TrimAll();
+            this.units[i].PriAttri = priAtrri[i].Value.Split(',').TrimAll();
+            this.units[i].SecAttri = secAttri[i].Value.Split(',').TrimAll();
+            this.units[i].Formation = formation[i].Value.Split(',').TrimAll();
+            this.units[i].Soldier = soldier[i].Value.Split(',').TrimAll();
+        }
+        this.CalculateUnitValueS();
 
-            var dictionarys = edu.GetItemsByIdent("dictionary");
-            var soldier = edu.GetItemsByIdent("soldier");
-            var costs = edu.GetItemsByIdent("stat_cost");
-            var ownership = edu.GetItemsByIdent("ownership");
-            var weapons = edu.GetItemsByIdent("stat_pri");
-            var secWep = edu.GetItemsByIdent("stat_sec");
-            var armour = edu.GetItemsByIdent("stat_pri_armour");
-            var secArmour = edu.GetItemsByIdent("stat_sec_armour");
-            var attributes = edu.GetItemsByIdent("attributes");
-            var mental = edu.GetItemsByIdent("stat_mental");
-            var health = edu.GetItemsByIdent("stat_health");
-            var priAtrri = edu.GetItemsByIdent("stat_pri_attr");
-            var secAttri = edu.GetItemsByIdent("stat_sec_attr");
-            var formation = edu.GetItemsByIdent("formation");
-            units.init(dictionarys.Count);
-            for (int i = 0; i < dictionarys.Count; i++)
-            {
-                units[i].dic = dictionarys[i].Value;
-                units[i].cost = costs[i].Value.Split(',').TrimAll();
-                units[i].ownership = ownership[i].Value.Split(',').TrimAll();
-                units[i].priWep = weapons[i].Value.Split(',').TrimAll();
-                units[i].secWep = secWep[i].Value.Split(',').TrimAll() ;
-                units[i].priArm = armour[i].Value.Split(',').TrimAll();
-                units[i].secArmr = secArmour[i].Value.Split(",").TrimAll();
-                units[i].attributes = attributes[i].Value.Split(',').TrimAll();
-                units[i].mental = mental[i].Value.Split(',').TrimAll();
-                units[i].health = health[i].Value.Split(',').TrimAll();
-                units[i].priAttri = priAtrri[i].Value.Split(',').TrimAll();
-                units[i].secAttri = secAttri[i].Value.Split(',').TrimAll();
-                units[i].formation = formation[i].Value.Split(',').TrimAll();
-                units[i].soldier = soldier[i].Value.Split(',').TrimAll();
-            }
-            CalculateUnitValueS();
+    }
 
+    public void CalculateUnitValueS()
+    {
+        foreach (Unit unit in this.units)
+        {
+            unit.CalculatePointValue();
         }
 
-        public void CalculateUnitValueS()
+        foreach (Unit unit in this.units)
         {
-            foreach (Unit unit in units)
-            {
-                unit.CalculatePointValue();
-            }
+            Vector2 battleScore = Vector2.Zero;
 
-            foreach(Unit unit in units)
+            foreach (Unit opp in this.units)
             {
-                Vector2 battleScore = Vector2.Zero;
-
-                foreach(Unit opp in units)
+                if (unit.Dic == opp.Dic)
                 {
-                    if (unit.dic == opp.dic)
-                        continue;
-
-                    battleScore += unit.BattleSim(opp);
+                    continue;
                 }
 
-                unit.battleSimScore = battleScore;
-                unit.pri_score = battleScore.X;
-                unit.sec_score = battleScore.Y;
+                battleScore += unit.BattleSim(opp);
             }
 
+            unit.BattleSimScore = battleScore;
+            unit.PriScore = battleScore.X;
+            unit.SecScore = battleScore.Y;
         }
 
-        public Unit GetUnit(int index)
+    }
+
+    public Unit GetUnit(int index)
+    {
+        if (index >= 0 && index < this.units.Count)
         {
-            if (index >= 0 && index < units.Count)
-                return units[index];
-            else return null;
+            return this.units[index];
+        }
+        else
+        {
+            return null;
         }
     }
 }

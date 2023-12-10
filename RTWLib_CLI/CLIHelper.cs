@@ -7,7 +7,7 @@ namespace RTWLib_CLI
     public static class CLIHelper
     {
         public static void ScreenChange(string title)
-        { 
+        {
             //Console.Clear();
             Console.WriteLine(title);
             Console.WriteLine();

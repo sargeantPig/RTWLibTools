@@ -1,45 +1,42 @@
-﻿using System;
+﻿namespace RTWLib_Tests;
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using RTWLibPlus.interfaces;
-using RTWLibPlus.parsers.objects;
 using System.Reflection;
 
-namespace RTWLib_Tests
+public static class TestHelper
 {
-    public static class TestHelper
+    public static string[] GetValues(this KeyValuePair<string, string[]> dict) => dict.Value;
+
+    public static void LoopCollectionAssert(Dictionary<string, string[]> expected, Dictionary<string, string[]> result)
     {
-        public static string[] GetValues(this KeyValuePair<string, string[]> dict)
+        List<string> lstKeysExpected = expected.Keys.ToList();
+        List<string> lstKeysResult = result.Keys.ToList();
+        List<string[]> lstValuesExpected = expected.Values.ToList();
+        List<string[]> lstValuesResult = result.Values.ToList();
+
+        for (int i = 0; i < expected.Count; i++)
         {
-            return dict.Value;
+            CollectionAssert.AreEqual(lstValuesExpected[i], lstValuesResult[i]);
         }
 
-        public static void LoopCollectionAssert(Dictionary<string, string[]> expected, Dictionary<string, string[]> result)
+        CollectionAssert.AreEqual(lstKeysExpected.ToArray(), lstKeysResult.ToArray());
+    }
+
+    public static void LoopListAssert(List<IBaseObj> expected, List<IBaseObj> result)
+    {
+        Type t = result[0].GetType();
+
+        for (int i = 0; i < result.Count; i++)
         {
-            var lstKeysExpected = expected.Keys.ToList();
-            var lstKeysResult = result.Keys.ToList();
-            var lstValuesExpected = expected.Values.ToList();
-            var lstValuesResult = result.Values.ToList();
-
-            for (int i = 0; i < expected.Count; i++){
-                CollectionAssert.AreEqual(lstValuesExpected[i], lstValuesResult[i]);
-            }
-
-            CollectionAssert.AreEqual(lstKeysExpected.ToArray(), lstKeysResult.ToArray());
-        }
-
-        public static void LoopListAssert(List<IbaseObj> expected, List<IbaseObj> result)
-        {
-            Type t = result[0].GetType();
-
-            for (int i = 0; i < result.Count; i++)
+            foreach (PropertyInfo property in t.GetProperties())
             {
-                foreach (PropertyInfo property in t.GetProperties())
-                {
-                    Assert.AreEqual(property.GetValue(expected[i]), property.GetValue(result[i]));
-                }
+                var expVal = property.GetValue(expected[i]);
+                var resVal = property.GetValue(result[i]);
+                Assert.AreEqual(property.GetValue(expected[i]), property.GetValue(result[i]));
             }
         }
     }
