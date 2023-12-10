@@ -1,16 +1,12 @@
-﻿using RTWLibPlus.parsers.objects;
+﻿namespace RTWLibPlus.interfaces;
 using System.Collections.Generic;
 
-
-namespace RTWLibPlus.interfaces
+public interface IBaseObj
 {
-    public interface IbaseObj
-    {
-        public string Ident { get; set; }
-        public string Tag { get; set; }
-        public string Value { get; set; }
-        public string Output();
-        public List<IbaseObj> GetItems();
-        public IbaseObj Copy();
-    }
+    public string Ident { get; set; }
+    public string Tag { get; set; }
+    public string Value { get; set; }
+    public string Output();
+    public List<IBaseObj> GetItems();
+    public IBaseObj Copy();
 }

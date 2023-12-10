@@ -1,75 +1,74 @@
-﻿using RTWLibPlus.dataWrappers;
+﻿namespace RTWLibPlus.parsers.objects;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
-using RTWLibPlus.parsers.configs;
 using RTWLibPlus.parsers.configs.whiteSpace;
-using System;
 using System.Collections.Generic;
-using static RTWLibPlus.parsers.DepthParse;
 
-namespace RTWLibPlus.parsers.objects
+public abstract class BaseObj : IBaseObj
 {
-    public abstract class BaseObj : IbaseObj
+    private WhiteSpaceConfig whiteSpaceConfig;
+    private ObjRecord record;
+
+    public BaseObj() { }
+
+    public BaseObj(string tag, string value, int depth) => this.record = new ObjRecord(tag, tag.Split(this.WhiteSpaceConfig.WhiteChar)[0], value, depth);
+
+    public abstract IBaseObj Copy();
+    public abstract string Output();
+    public List<IBaseObj> GetItems() => this.Items;
+    public string NormalFormat(char whiteSpace, int end) => string.Format("{0}{1} {2}{3}",
+            Format.GetWhiteSpace("", end, whiteSpace),
+            this.record.Tag, this.record.Value,
+            Format.UniversalNewLine());
+    public string IgnoreValue(char whiteSpace, int end) => string.Format("{0}{1}{2}",
+            Format.GetWhiteSpace("", end, whiteSpace),
+            this.record.Tag,
+            Format.UniversalNewLine());
+
+    public string Tag
     {
-        public WhiteSpaceConfig wsConfig;
-
-        public List<IbaseObj> items = new List<IbaseObj>();
-
-        private ObjRecord Record;
-   
-        public BaseObj() { }
-
-        public BaseObj(string tag, string value, int depth)
-        {
-            Record = new ObjRecord(tag, tag.Split(wsConfig.WhiteChar)[0], value, depth);
-        }
-
-        public abstract IbaseObj Copy();
-        public abstract string Output();
-        public List<IbaseObj> GetItems()
-        {
-            return items;
-        }
-        public string NormalFormat(char whiteSpace, int end)
-        {
-            return String.Format("{0}{1} {2}{3}",
-                Format.GetWhiteSpace("", end, whiteSpace),
-                Record.Tag, Record.Value,
-                Format.UniversalNewLine());
-        }
-        public string IgnoreValue(char whiteSpace, int end)
-        {
-            return String.Format("{0}{1}{2}",
-                Format.GetWhiteSpace("", end, whiteSpace),
-                Record.Tag,
-                Format.UniversalNewLine());
-        }
-
-        public string Tag
-        {
-            get { return Record.Tag; }
-            set { Record.Tag = value; }
-        }
-        public string Ident
-        {
-            get { return Record.Ident; }
-            set { Record.Ident = value; }
-        }
-        public string Value
-        {
-            get { return Record.Value; }
-            set { Record.Value = value; }
-        }
-        public int NewLinesAfter
-        {
-            get { return Record.NewLinesAfter; }
-            set { Record.NewLinesAfter = value; }
-        }
-        public int Depth
-        {
-            get { return Record.Depth; }
-            set { Record.Depth = value; }
-        }
-
+        get => this.record.Tag;
+        set => this.record.Tag = value;
     }
+    public string Ident
+    {
+        get => this.record.Ident;
+        set => this.record.Ident = value;
+    }
+    public string Value
+    {
+        get => this.record.Value;
+        set => this.record.Value = value;
+    }
+    public int NewLinesAfter
+    {
+        get => this.record.NewLinesAfter;
+        set => this.record.NewLinesAfter = value;
+    }
+    public int Depth
+    {
+        get => this.record.Depth;
+        set => this.record.Depth = value;
+    }
+    public WhiteSpaceConfig WhiteSpaceConfig
+    {
+        get => this.whiteSpaceConfig;
+        set => this.whiteSpaceConfig = value;
+    }
+
+    public char WhiteSpaceChar
+    {
+        get => this.whiteSpaceConfig.WhiteChar;
+        set => this.whiteSpaceConfig.WhiteChar = value;
+    }
+
+    public int WhiteSpaceMultiplier
+    {
+        get => this.whiteSpaceConfig.WhiteDepthMultiplier;
+        set => this.whiteSpaceConfig.WhiteDepthMultiplier = value;
+    }
+
+    public List<IBaseObj> Items { get; set; } = new();
+
+
 }

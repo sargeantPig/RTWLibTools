@@ -17,7 +17,7 @@ namespace RTWLib_CLI.cmd.modules
             config = twConfig;
         }
         /// <summary>
-        /// -id file acronym, -m -v (mod or vanilla), -w find what (can be multiple values separate by comma),  
+        /// -id file acronym, -m -v (mod or vanilla), -w find what (can be multiple values separate by comma),
         /// </summary>
         /// <param name="args"></param>
         public void Find(params string[] args)
@@ -41,19 +41,19 @@ namespace RTWLib_CLI.cmd.modules
 
             wrapper.Parse();
 
-            List<List<IbaseObj>> results = new List<List<IbaseObj>>();
+            List<List<IBaseObj>> results = new List<List<IBaseObj>>();
 
-            for(int i = 3; i < args.Length; i++)
+            for (int i = 3; i < args.Length; i++)
             {
                 ((BaseWrapper)wrapper).GetItemsByIdent(args[i]);
             }
-            
-            
+
+
 
             foreach (string arg in args)
-            { 
-                
-            
+            {
+
+
             }
         }
 

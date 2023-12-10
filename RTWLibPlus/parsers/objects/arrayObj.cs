@@ -1,31 +1,20 @@
-﻿using RTWLibPlus.helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace RTWLibPlus.parsers.objects;
+using RTWLibPlus.helpers;
 
-namespace RTWLibPlus.parsers.objects
+public abstract class ArrayObj : BaseObj
 {
-    public abstract class ArrayObj : BaseObj
+    public ArrayObj() { }
+    public ArrayObj(string tag, string value, int depth) : base(tag, value, depth)
     {
-        public ArrayObj() { }
-        public ArrayObj(string tag, string value, int depth) : base(tag, value, depth)
-        {
-
-        }
-
-        public string CloseBrackets()
-        {
-            return String.Format("{0}}}{1}",
-                Format.GetWhiteSpace("", wsConfig.WhiteDepthMultiplier * Depth,wsConfig.WhiteChar),
-                Format.UniversalNewLine());
-        }
-
-        public string OpenBrackets()
-        {
-            return String.Format("{0}{{{1}",
-                Format.GetWhiteSpace("", wsConfig.WhiteDepthMultiplier * Depth, wsConfig.WhiteChar),
-                Format.UniversalNewLine());
-        }
 
     }
+
+    public string CloseBrackets() => string.Format("{0}}}{1}",
+            Format.GetWhiteSpace("", this.WhiteSpaceMultiplier * this.Depth, this.WhiteSpaceChar),
+            Format.UniversalNewLine());
+
+    public string OpenBrackets() => string.Format("{0}{{{1}",
+            Format.GetWhiteSpace("", this.WhiteSpaceMultiplier * this.Depth, this.WhiteSpaceChar),
+            Format.UniversalNewLine());
+
 }

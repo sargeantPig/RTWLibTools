@@ -1,216 +1,254 @@
-﻿using RTWLibPlus.helpers;
+﻿namespace RTWLibPlus.parsers.objects;
+using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.configs.whiteSpace;
 using System;
 using System.Linq;
 
-using static RTWLibPlus.parsers.DepthParse;
-
-namespace RTWLibPlus.parsers.objects
+public class DSObj : ArrayObj, IBaseObj
 {
-    public class DSObj : ArrayObj, IbaseObj
+    private static readonly string[] ApplyDepthToNonArrayAt = new string[3] { "playable", "unlockable", "nonplayable" };
+    private static readonly string TerminateNonArrayDepthAt = "end";
+
+    private static bool applyNonArrayDepth;
+
+    public DSObj(string tag, string value, int depth) :
+        base(tag, value, depth)
     {
-        private static string[] applyDepthToNonArrayAt = new string[3] { "playable", "unlockable", "nonplayable" };
-        private static string terminateNonArrayDepthAt = "end";
-
-        private static bool applyNonArrayDepth = false;
-        public bool lastOfGroup = false;
-        public DSObj(string tag, string value, int depth) :
-            base(tag, value, depth)
-        {
-            WSConfigFactory factory = new WSConfigFactory();
-            wsConfig = factory.Create_DR_DS_SMF_WhiteSpace();
-            var tagS = tag.Split(wsConfig.WhiteChar);
-            Ident = tagS[0];
-        }
-
-        public DSObj() { }
-
-        public override IbaseObj Copy()
-        {
-            DSObj copy = new DSObj();
-            copy.wsConfig.WhiteChar = wsConfig.WhiteChar;
-            copy.Depth = Depth;
-            copy.items = items.DeepCopy();
-            copy.wsConfig.WhiteDepthMultiplier = wsConfig.WhiteDepthMultiplier;
-            copy.Tag = Tag;
-            copy.Value = Value;
-            copy.Ident = Ident;
-            copy.NewLinesAfter = NewLinesAfter;
-            copy.lastOfGroup = lastOfGroup;
-            return copy;
-        }
-        public override string Output()
-        {
-            string output = string.Empty;
-            int wDepth = Depth;
-            CheckForNonArrayTerminate();
-            output = GetTagValue(wDepth);
-            output = ChildOutput(output);
-            CheckForNonArray();
-
-            output = IfResource(output);
-            output = IfRelative(output);
-            output = IfCharacterRecord(output);
-            output += GetNewLine(NewLinesAfter);
-            return output;
-        }
-
-        new private string ChildOutput(string output)
-        {
-            if (GetItems().Count > 0)
-            {
-                output += OpenBrackets();
-                foreach (DSObj item in GetItems())
-                {
-                    output += item.Output();
-                }
-                output += CloseBrackets();
-            }
-
-            return output;
-        }
-        //'           '
-        /// <summary>
-        /// /private string IfLastInGroup
-        /// </summary>                                 
-
-        private string IfResource(string output)
-        {
-
-            if (Ident == "resource")
-            {
-                string[] splitData = Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                splitData = splitData.TrimAll();
-                string resource = string.Format("{0}{1}{2},{3}{4},{5}{6}{7}",
-                    Tag,
-                    Format.GetWhiteSpace(Tag, 25, ' '),
-                    splitData[0],
-                    Format.GetWhiteSpace("", 9, ' '),
-                    splitData[1],
-                    Format.GetWhiteSpace(splitData[1], 5, ' '),
-                    splitData[2],
-                    Format.UniversalNewLine());
-                return resource;
-            }
-            else return output;
-        }
-
-        private string IfRelative(string output)
-        {
-            if (Ident == "relative")
-            {
-                string[] splitData = Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                splitData = splitData.TrimAll();
-                int i = 0;
-                string formatted = string.Empty;
-                foreach (string str in splitData)
-                {
-                    if (i == splitData.Count() - 1 && i == 2)
-                        formatted += string.Format("{0}{1}{2}", Format.GetWhiteSpace("", 2, '\t'), str, Format.UniversalNewLine());
-                    else if (i == 0)
-                        formatted += string.Format("{0} \t{1},", Tag, str);
-                    else if (i == 1)
-                        formatted += string.Format(" \t{0},", str);
-                    else if (i == 2)
-                        formatted += string.Format("\t\t{0},", str);
-                    else if (i == splitData.Count() - 1)
-                        formatted += string.Format("\t{0}{1}", str, Format.UniversalNewLine());
-                    else
-                        formatted += string.Format("\t{0},", str);
-                    i++;
-                }
-
-                return formatted;
-            }
-            else return output;
-        }
-
-        private string IfCharacterRecord(string output)
-        {
-            if (Ident == "character_record")
-            {
-                string[] splitData = Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
-                splitData = splitData.TrimAll();
-                int i = 0;
-                string formatted = string.Empty;
-                foreach (string str in splitData)
-                {
-                    if (i == 0 && str == "female")
-                        formatted += string.Format("{0} \t{1},", Tag, str);
-                    else if (i == 0 && str == "male")
-                        formatted += string.Format("{0} \t{1},", Tag, str);
-                    else if (i == 0)
-                        formatted += string.Format("{0} {1},", Tag, str);
-                    else if (i == 1 && splitData[i - 1] != "female" && splitData[i - 1] != "male")
-                        formatted += string.Format(" \t{0},", str);
-                    else if (i == splitData.Count() - 1)
-                        formatted += string.Format(" {0}{1}", str, Format.UniversalNewLine());
-                    else
-                        formatted += string.Format(" {0},", str);
-                    i++;
-                }
-
-                return formatted;
-            }
-            else return output;
-        }
-
-
-        private void CheckForNonArray()
-        {
-            if (applyDepthToNonArrayAt.Contains(Tag))
-                applyNonArrayDepth = true;
-        }
-
-        private void CheckForNonArrayTerminate()
-        {
-            if (Tag == terminateNonArrayDepthAt)
-                applyNonArrayDepth = false;
-        }
-
-        private string GetTagValue(int wDepth)
-        {
-            string output;
-            output = GetCorrectFormat(wDepth);
-            return output;
-        }
-
-        private string GetCorrectFormat(int wDepth)
-        {
-            string output;
-
-            output = NormalFormat(wsConfig.WhiteChar, wDepth);
-            output = IfTagIsValue(output, wDepth);
-            output = IfApplyingNonArrayDepth(output, wDepth);
-            return output;
-        }
-
-        private string IfApplyingNonArrayDepth(string output, int wDepth)
-        {
-            if (applyNonArrayDepth)
-                return GetTabbedLine(1) + output;
-            else return output;
-        }
-
-        private string IfTagIsValue(string output, int wDepth)
-        {
-            if (Tag == Value)
-            {
-                output = IgnoreValue(wsConfig.WhiteChar, wDepth);
-            }
-            return output;
-        }
-
-        private string GetTabbedLine(int end)
-        {
-            return Format.GetWhiteSpace("", end, wsConfig.WhiteChar);
-        }
-
-        private string GetNewLine(int end)
-        {
-            return Format.GetWhiteSpace("", end, Format.UniversalNewLine());
-        }
-
+        WSConfigFactory factory = new();
+        this.WhiteSpaceConfig = factory.Create_DR_DS_SMF_WhiteSpace();
+        string[] tagS = tag.Split(this.WhiteSpaceConfig.WhiteChar);
+        this.Ident = tagS[0];
     }
+
+    public DSObj() { }
+
+    public override IBaseObj Copy()
+    {
+        DSObj copy = new()
+        {
+            WhiteSpaceChar = this.WhiteSpaceConfig.WhiteChar,
+            Depth = this.Depth,
+            Items = this.Items.DeepCopy(),
+            WhiteSpaceMultiplier = this.WhiteSpaceConfig.WhiteDepthMultiplier,
+            Tag = this.Tag,
+            Value = this.Value,
+            Ident = this.Ident,
+            NewLinesAfter = this.NewLinesAfter,
+            LastOfGroup = this.LastOfGroup
+        };
+        return copy;
+    }
+    public override string Output()
+    {
+        string output = string.Empty;
+        int wDepth = this.Depth;
+        this.CheckForNonArrayTerminate();
+        output = this.GetTagValue(wDepth);
+        output = this.ChildOutput(output);
+        this.CheckForNonArray();
+
+        output = this.IfResource(output);
+        output = this.IfRelative(output);
+        output = this.IfCharacterRecord(output);
+        output += this.GetNewLine(this.NewLinesAfter);
+        return output;
+    }
+
+    private string ChildOutput(string output)
+    {
+        if (this.GetItems().Count > 0)
+        {
+            output += this.OpenBrackets();
+            foreach (DSObj item in this.GetItems())
+            {
+                output += item.Output();
+            }
+            output += this.CloseBrackets();
+        }
+
+        return output;
+    }
+    //'           '
+    /// <summary>
+    /// /private string IfLastInGroup
+    /// </summary>
+
+    private string IfResource(string output)
+    {
+
+        if (this.Ident == "resource")
+        {
+            string[] splitData = this.Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            splitData = splitData.TrimAll();
+            string resource = string.Format("{0}{1}{2},{3}{4},{5}{6}{7}",
+                this.Tag,
+                Format.GetWhiteSpace(this.Tag, 25, ' '),
+                splitData[0],
+                Format.GetWhiteSpace("", 9, ' '),
+                splitData[1],
+                Format.GetWhiteSpace(splitData[1], 5, ' '),
+                splitData[2],
+                Format.UniversalNewLine());
+            return resource;
+        }
+        else
+        {
+            return output;
+        }
+    }
+
+    private string IfRelative(string output)
+    {
+        if (this.Ident == "relative")
+        {
+            string[] splitData = this.Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            splitData = splitData.TrimAll();
+            int i = 0;
+            string formatted = string.Empty;
+            foreach (string str in splitData)
+            {
+                if (i == splitData.Length - 1 && i == 2)
+                {
+                    formatted += string.Format("{0}{1}{2}", Format.GetWhiteSpace("", 2, '\t'), str, Format.UniversalNewLine());
+                }
+                else if (i == 0)
+                {
+                    formatted += string.Format("{0} \t{1},", this.Tag, str);
+                }
+                else if (i == 1)
+                {
+                    formatted += string.Format(" \t{0},", str);
+                }
+                else if (i == 2)
+                {
+                    formatted += string.Format("\t\t{0},", str);
+                }
+                else if (i == splitData.Length - 1)
+                {
+                    formatted += string.Format("\t{0}{1}", str, Format.UniversalNewLine());
+                }
+                else
+                {
+                    formatted += string.Format("\t{0},", str);
+                }
+
+                i++;
+            }
+
+            return formatted;
+        }
+        else
+        {
+            return output;
+        }
+    }
+
+    private string IfCharacterRecord(string output)
+    {
+        if (this.Ident == "character_record")
+        {
+            string[] splitData = this.Value.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            splitData = splitData.TrimAll();
+            int i = 0;
+            string formatted = string.Empty;
+            foreach (string str in splitData)
+            {
+                if (i == 0 && str == "female")
+                {
+                    formatted += string.Format("{0} \t{1},", this.Tag, str);
+                }
+                else if (i == 0 && str == "male")
+                {
+                    formatted += string.Format("{0} \t{1},", this.Tag, str);
+                }
+                else if (i == 0)
+                {
+                    formatted += string.Format("{0} {1},", this.Tag, str);
+                }
+                else if (i == 1 && splitData[i - 1] != "female" && splitData[i - 1] != "male")
+                {
+                    formatted += string.Format(" \t{0},", str);
+                }
+                else if (i == splitData.Length - 1)
+                {
+                    formatted += string.Format(" {0}{1}", str, Format.UniversalNewLine());
+                }
+                else
+                {
+                    formatted += string.Format(" {0},", str);
+                }
+
+                i++;
+            }
+
+            return formatted;
+        }
+        else
+        {
+            return output;
+        }
+    }
+
+
+    private void CheckForNonArray()
+    {
+        if (ApplyDepthToNonArrayAt.Contains(this.Tag))
+        {
+            applyNonArrayDepth = true;
+        }
+    }
+
+    private void CheckForNonArrayTerminate()
+    {
+        if (this.Tag == TerminateNonArrayDepthAt)
+        {
+            applyNonArrayDepth = false;
+        }
+    }
+
+    private string GetTagValue(int wDepth)
+    {
+        string output;
+        output = this.GetCorrectFormat(wDepth);
+        return output;
+    }
+
+    private string GetCorrectFormat(int wDepth)
+    {
+        string output;
+
+        output = this.NormalFormat(this.WhiteSpaceChar, wDepth);
+        output = this.IfTagIsValue(output, wDepth);
+        output = this.IfApplyingNonArrayDepth(output);
+        return output;
+    }
+
+    private string IfApplyingNonArrayDepth(string output)
+    {
+        if (applyNonArrayDepth)
+        {
+            return this.GetTabbedLine(1) + output;
+        }
+        else
+        {
+            return output;
+        }
+    }
+
+    private string IfTagIsValue(string output, int wDepth)
+    {
+        if (this.Tag == this.Value)
+        {
+            output = this.IgnoreValue(this.WhiteSpaceChar, wDepth);
+        }
+        return output;
+    }
+
+    private string GetTabbedLine(int end) => Format.GetWhiteSpace("", end, this.WhiteSpaceChar);
+
+    private string GetNewLine(int end) => Format.GetWhiteSpace("", end, Format.UniversalNewLine());
+
+    public bool LastOfGroup { get; set; }
+
 }

@@ -11,7 +11,7 @@ namespace RTWLib_CLI.input
         {
             InputDialog id = new InputDialog(message);
             return id.GetIntInput(conditional);
-        } 
+        }
 
     }
 }
