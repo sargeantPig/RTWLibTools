@@ -8,7 +8,6 @@ using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.map;
 using RTWLibPlus.randomiser;
-using System;
 using System.Collections.Generic;
 
 public class RandCMD
@@ -28,7 +27,7 @@ public class RandCMD
     {
         this.config = config;
         this.edb = new EDB(config.GetPath(Operation.Save, "edb"), config.GetPath(Operation.Load, "edb"));
-        this.edu = new EDU(@config.GetPath(Operation.Save, "edu"), @config.GetPath(Operation.Load, "edu"));
+        this.edu = new EDU(config.GetPath(Operation.Save, "edu"), config.GetPath(Operation.Load, "edu"));
         this.ds = new DS(config.GetPath(Operation.Save, "ds"), config.GetPath(Operation.Load, "ds"));
         this.dr = new DR(config.GetPath(Operation.Save, "dr"), config.GetPath(Operation.Load, "dr"));
         this.smf = new SMF(config.GetPath(Operation.Save, "smf"), config.GetPath(Operation.Load, "smf"));
@@ -90,8 +89,7 @@ public class RandCMD
         {
 
             list[i].Clear();
-
-            p.Message("Loading: " + list[i].LoadPath);
+            p.Message("Loading: " + RFH.GetPartOfPath(list[i].LoadPath, "randomiser"));
             list[i].Parse();
             p.Update("Complete");
         }
