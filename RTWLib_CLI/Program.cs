@@ -20,11 +20,8 @@ namespace RTWLIB_CLI
 
         static void Main(string[] args)
         {
-            Console.WriteLine(Directory.GetCurrentDirectory());
             string wdir = AppDomain.CurrentDomain.BaseDirectory;
             Directory.SetCurrentDirectory(wdir);
-
-            Console.WriteLine(Directory.GetCurrentDirectory());
 
             Console.WriteLine(CMDProcess.LoadTemplates());
             Console.WriteLine(CMDProcess.LoadConfigs());
