@@ -1,128 +1,141 @@
-﻿using System;
+﻿namespace RTWLib_CLI.cmd;
+
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
 using RTWLibPlus.helpers;
-using System.Linq;
-using RTWLIB_CLI;
 using System.IO;
 using RTWLibPlus.parsers;
 using RTWLib_CLI.draw;
-using System.Security;
 
-namespace RTWLib_CLI.cmd
+
+public static class CMDProcess
 {
-    public static class CMDProcess
+    public static Dictionary<string, string[]> templates = new();
+    public static Dictionary<int, string> configs = new();
+
+    public static ModuleRegister modules = new();
+
+    public static string ReadCMD(string cmd, Type type = null)
     {
-        public static Dictionary<string, string[]> templates = new Dictionary<string, string[]>();
-        public static Dictionary<int, string> configs = new Dictionary<int, string>();
+        if (cmd == KW.back)
+        { return KW.back; }
+        if (cmd == KW.help)
+        { return Help.help(); }
+        if (cmd == string.Empty)
+        { return "no command"; }
+        if (templates.ContainsKey(cmd))
+        { return ProcessTemplate(cmd); }
 
-        public static ModuleRegister modules = new ModuleRegister();
+        int invokeInd = 0;
 
-        public static string ReadCMD(string cmd, Type type = null)
+        string[] cmdSplit = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        if (type == null)
         {
-            if (cmd == KW.back) { return KW.back; }
-            if (cmd == KW.help) { return Help.help(); }
-            if (cmd == string.Empty) { return "no command"; }
-            if (templates.ContainsKey(cmd))
-                return ProcessTemplate(cmd);
-            int invokeInd = 0;
+            type = Type.GetType("RTWLib_CLI.cmd.modules." + cmdSplit[0], false, true);//   Type.GetType(cmdSplit[0], true, true);
+            invokeInd = 1;
+        }
+        if (type == null)
+        {
+            return KW.error + ": Type not found";
+        }
 
-            string[] cmdSplit = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        object invokableObject = modules.GetModule(type.Name);
 
-            if (type == null)
+
+        foreach (MethodInfo t in type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
+        {
+            if (t.Name.ToLower(System.Globalization.CultureInfo.CurrentCulture) != cmdSplit[invokeInd].ToLower(System.Globalization.CultureInfo.CurrentCulture))
             {
-                type = Type.GetType("RTWLib_CLI.cmd.modules." + cmdSplit[0], false, true);//   Type.GetType(cmdSplit[0], true, true);
-                invokeInd = 1;
+                continue;
             }
-            if (type == null)
-                return KW.error + ": Type not found";
 
-            var invokableObject = modules.GetModule(type.Name);
+            string[] args = cmdSplit.GetItemsFrom(invokeInd + 1);
+            ParameterInfo[] par = t.GetParameters();
 
-
-            foreach (MethodInfo t in type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
+            if (par.Length > args.Length)
             {
-                if (t.Name.ToLower() != cmdSplit[invokeInd].ToLower()) continue;
+                return string.Format("{0}: Incorrect args, expected: {1}", KW.error, par.ToString(','));
+            }
 
-                string[] args = cmdSplit.GetItemsFrom(invokeInd + 1);
-                var par = t.GetParameters();
+            object[] newArg = new object[par.Length];
 
-                if (par.Length > args.Length)
+            for (int i = 0; i < par.Length; i++)
+            {
+                type = par[i].ParameterType;
+
+                if (type == typeof(int))
                 {
-                    return string.Format("{0}: Incorrect args, expected: {1}", KW.error, par.ToString(','));
+                    newArg[i] = Convert.ToInt32(args[i]);
                 }
-
-                object[] newArg = new object[par.Length];
-
-                for (int i = 0; i < par.Length; i++)
+                else if (type == typeof(string[]))
                 {
-                    type = par[i].ParameterType;
-
-                    if (type == typeof(Int32))
-                        newArg[i] = Convert.ToInt32(args[i]);
-                    else if (type == typeof(string[]))
-                    {
-                        newArg[i] = args.GetItemsFrom(i);
-                    }
-                    else newArg[i] = args[i];
-
+                    newArg[i] = args.GetItemsFrom(i);
                 }
-
-
-                return (string)t.Invoke(invokableObject, newArg);
+                else
+                {
+                    newArg[i] = args[i];
+                }
             }
-            return KW.error + ": Command not found, are the arguments correct?";
-        }
 
-        public static string ProcessTemplate(string template)
+
+            return (string)t.Invoke(invokableObject, newArg);
+        }
+        return KW.error + ": Command not found, are the arguments correct?";
+    }
+
+    public static string ProcessTemplate(string template)
+    {
+        string[] cmds = templates[template];
+        Progress p = new(1f / cmds.Length, "Running: " + template);
+        foreach (string cmd in cmds)
         {
-            var cmds = templates[template];
-            Progress p = new Progress(1f / (cmds.Count()), "Running: " + template);
-            foreach (var cmd in cmds)
-            {
-                p.Message("Doing: " + cmd);
-                ReadCMD(cmd);
-                p.Update("Complete");
-            }
-            return "template finished processing";
+            p.Message("Doing: " + cmd);
+            ReadCMD(cmd);
+            p.Update("Complete");
         }
+        return "template finished processing";
+    }
 
-        public static string LoadTemplates()
+    public static string LoadTemplates()
+    {
+        if (!Directory.Exists("randomiser_templates"))
         {
-            if (!Directory.Exists("randomiser_templates"))
-                return "Template folder does not exist. Skipping template loading";
-
-            var files = Directory.GetFiles("randomiser_templates");
-
-            DepthParse dp = new DepthParse();
-
-            foreach (var file in files)
-            {
-                string name = Path.GetFileName(file);
-                var parse = dp.ReadFile(file);
-                templates.Add(name, parse);
-            }
-            return "Templates Loaded";
+            return "Template folder does not exist. Skipping template loading";
         }
 
-        public static string LoadConfigs()
+        string[] files = Directory.GetFiles("randomiser_templates");
+
+        DepthParse dp = new();
+
+        foreach (string file in files)
         {
-            if (!Directory.Exists("randomiser_config"))
-                return "Config folder does not exist.\nERROR config required. Exiting Program";
-
-            var files = Directory.GetFiles("randomiser_config");
-
-            DepthParse dp = new DepthParse();
-
-            for (int i = 0; i < files.Length; i++)
-            {
-                string file = files[i];
-                string name = Path.GetFileName(file);
-                var parse = file;
-                configs.Add(i, parse);
-            }
-            return "Configs Loaded";
+            string name = Path.GetFileName(file);
+            string[] parse = dp.ReadFile(file);
+            templates.Add(name, parse);
         }
+        return "Templates Loaded";
+    }
+
+    public static string LoadConfigs()
+    {
+        if (!Directory.Exists("randomiser_config"))
+        {
+            return "Config folder does not exist.\nERROR config required. Exiting Program";
+        }
+
+        string[] files = Directory.GetFiles("randomiser_config");
+
+        DepthParse dp = new();
+
+        for (int i = 0; i < files.Length; i++)
+        {
+            string file = files[i];
+            string name = Path.GetFileName(file);
+            string parse = file;
+            configs.Add(i, parse);
+        }
+        return "Configs Loaded";
     }
 }

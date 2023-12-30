@@ -1,74 +1,73 @@
-﻿using RTWLibPlus.data;
+﻿namespace RTWLib_CLI.cmd.modules;
+
+using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.interfaces;
-using System;
+using RTWLibPlus.parsers.objects;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
-namespace RTWLib_CLI.cmd.modules
+public class Search
 {
-    public class Search
+    TWConfig config;
+
+    public Search(TWConfig twConfig) => this.config = twConfig;
+    /// <summary>
+    /// -id file acronym, -m -v (mod or vanilla), -w find what (can be multiple values separate by comma),
+    /// </summary>
+    /// <param name="args"></param>
+    public void Find(params string[] args)
     {
-        TWConfig config;
+        IWrapper wrapper = null;
 
-        public Search(TWConfig twConfig)
+        switch (args[0])
         {
-            config = twConfig;
-        }
-        /// <summary>
-        /// -id file acronym, -m -v (mod or vanilla), -w find what (can be multiple values separate by comma),
-        /// </summary>
-        /// <param name="args"></param>
-        public void Find(params string[] args)
-        {
-            IWrapper wrapper = null;
-
-            switch (args[0])
-            {
-                case "edu":
-                    wrapper = new EDU(SetFilePath(args[0], args[1]), SetFilePath(args[0], args[1]));
-                    break;
-                case "edb":
-                    break;
-                case "ds":
-                    break;
-                case "smf":
-                    break;
-                case "dr":
-                    break;
-            }
-
-            wrapper.Parse();
-
-            List<List<IBaseObj>> results = new List<List<IBaseObj>>();
-
-            for (int i = 3; i < args.Length; i++)
-            {
-                ((BaseWrapper)wrapper).GetItemsByIdent(args[i]);
-            }
-
-
-
-            foreach (string arg in args)
-            {
-
-
-            }
+            case "edu":
+                wrapper = new EDU(this.SetFilePath(args[0], args[1]), this.SetFilePath(args[0], args[1]));
+                break;
+            case "edb":
+                break;
+            case "ds":
+                break;
+            case "smf":
+                break;
+            case "dr":
+                break;
+            default:
+                break;
         }
 
-        private string SetFilePath(string file, string vanOrMod)
+        wrapper.Parse();
+
+        List<List<BaseObj>> results = new();
+
+        for (int i = 3; i < args.Length; i++)
         {
-            Operation operation = Operation.Load;
-
-            if (vanOrMod == "-m")
-                operation = Operation.Save;
-            else if (vanOrMod == "-v")
-                operation = Operation.Load;
-
-
-            return config.GetPath(operation, file);
+            ((BaseWrapper)wrapper).GetItemsByIdent(args[i]);
         }
 
+
+
+        foreach (string arg in args)
+        {
+
+
+        }
     }
+
+    private string SetFilePath(string file, string vanOrMod)
+    {
+        Operation operation = Operation.Load;
+
+        if (vanOrMod == "-m")
+        {
+            operation = Operation.Save;
+        }
+        else if (vanOrMod == "-v")
+        {
+            operation = Operation.Load;
+        }
+
+        return this.config.GetPath(operation, file);
+    }
+
 }
