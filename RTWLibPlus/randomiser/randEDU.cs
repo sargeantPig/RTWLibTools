@@ -28,34 +28,37 @@ public static class RandEDU
     {
         rnd.RefreshRndSeed();
 
-
+        List<IBaseObj> attributes = edu.GetItemsByIdent("attributes");
         List<IBaseObj> ownerships = edu.GetItemsByIdent("ownership");
         List<string> factionList = smf.GetFactions();
         factionList.Shuffle(rnd.RND);
 
-
-        foreach (EDUObj ownership in ownerships)
+        for (int io = 0; io < ownerships.Count; io++)
         {
-
+            EDUObj ownership = (EDUObj)ownerships[io];
             if (factionList.Count < maxPerUnit)
             {
                 factionList = smf.GetFactions();
                 factionList.Shuffle(rnd.RND);
             }
 
-            string[] newFactions = new string[maxPerUnit + 1];
+            if (attributes[io].Value.Contains("general"))
+            {
+                continue;
+            }
+
+            string[] newFactions = new string[maxPerUnit];
             for (int i = 0; i < maxPerUnit; i++)
             {
                 newFactions[i] = factionList.GetRandom(out int index, rnd.RND);
                 factionList.RemoveAt(index);
             }
-            newFactions[^1] = "slave";
 
-            ownership.Value = newFactions.ToString(',', ' ');
+            ownership.Value = newFactions.ToString(',', ' ') + ", slave";
         }
 
         AddAttributeAll(edu, "mercenary_unit");
-        SetGeneralUnits(edu, smf, rnd, 700, 950);
+        //SetGeneralUnits(edu, smf, rnd, 700, 950);
         return "Random ownership complete";
     }
     public static string SetGeneralUnits(EDU edu, SMF smf, RandWrap rnd, int minPriceEarly, int minPriceLate)

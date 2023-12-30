@@ -6,6 +6,7 @@ using RTWLib_CLI.input;
 using RTWLibPlus.data;
 using RTWLibPlus.helpers;
 using System;
+using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -19,6 +20,12 @@ namespace RTWLIB_CLI
 
         static void Main(string[] args)
         {
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            string wdir = AppDomain.CurrentDomain.BaseDirectory;
+            Directory.SetCurrentDirectory(wdir);
+
+            Console.WriteLine(Directory.GetCurrentDirectory());
+
             Console.WriteLine(CMDProcess.LoadTemplates());
             Console.WriteLine(CMDProcess.LoadConfigs());
 

@@ -59,5 +59,18 @@ public class Tests_smf
         Assert.AreEqual(expected, result);
 
     }
+    [TestMethod]
+    public void SMFGetFactions()
+    {
+        string[] smf = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_sm_factions.txt"), false);
+        List<RTWLibPlus.interfaces.IBaseObj> smfParse = this.dp.Parse(smf, Creator.SMFcreator, ':');
+        SMF parsedsmf = new(smfParse, this.config);
+
+        int result = parsedsmf.GetFactions().Count;
+        int expected = 21;
+
+        Assert.AreEqual(expected, result);
+
+    }
 
 }
