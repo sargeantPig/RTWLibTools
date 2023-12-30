@@ -17,7 +17,7 @@ public static class RFH
 
     public static string CurrDirPath(params string[] path)
     {
-        string finpath = string.Empty;//Directory.GetCurrentDirectory();
+        string finpath = Directory.GetCurrentDirectory();
         foreach (string s in path)
         {
             finpath = Path.Combine(finpath, s);
