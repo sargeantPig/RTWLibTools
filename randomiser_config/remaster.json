@@ -42,11 +42,11 @@
     "roman"
 	],
   "FactionCultures": [
-	 "roman", 
-	 "greek", 
-	 "carthaginian", 
-	 "eastern", 
-	 "egyptian", 
+	 "roman",
+	 "greek",
+	 "carthaginian",
+	 "eastern",
+	 "egyptian",
 	 "barbarian"
 	 ],
   "Paths": {
