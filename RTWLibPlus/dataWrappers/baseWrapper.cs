@@ -75,7 +75,6 @@ public abstract class BaseWrapper
             }
         }
     }
-
     public void DeleteChunks(string stopAt, string ident)
     {
         bool identFound = false;
@@ -106,7 +105,6 @@ public abstract class BaseWrapper
             }
         }
     }
-
     public bool AddObjToList(List<IBaseObj> items, IBaseObj obj, int locInd = 0, bool done = false, params string[] location)
     {
         foreach (BaseObj item in items)
@@ -387,6 +385,27 @@ public abstract class BaseWrapper
         }
         return null;
     }
+    public int GetIndexByCriteria(List<IBaseObj> items, params string[] criteria)
+    {
+        int critIndex = 0;
+        for (int i = 0; i < items.Count; i++)
+        {
+            BaseObj item = (BaseObj)items[i];
+            if (criteria[critIndex] == item.Tag || criteria[critIndex] == item.Ident || criteria[critIndex] == item.Value)
+            {
+                if (critIndex == criteria.Length - 1)
+                {
+                    return i;
+                }
+                else
+                {
+                    critIndex += 1;
+                }
+            }
+        }
+        return -1;
+    }
+    public void InsertAt(int index, IBaseObj objToAdd) => this.Data.Insert(index, objToAdd);
     private bool CheckForValue(List<IBaseObj> items, string lookFor)
     {
         foreach (BaseObj item in items)
@@ -404,3 +423,4 @@ public abstract class BaseWrapper
         return false;
     }
 }
+

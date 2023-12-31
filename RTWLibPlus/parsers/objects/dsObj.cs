@@ -190,7 +190,6 @@ public class DSObj : ArrayObj, IBaseObj
         }
     }
 
-
     private void CheckForNonArray()
     {
         if (ApplyDepthToNonArrayAt.Contains(this.Tag))

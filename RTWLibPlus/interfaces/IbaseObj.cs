@@ -11,4 +11,8 @@ public interface IBaseObj
     public IBaseObj Copy();
     public bool FindAndModify(string find, string modto);
     public string Find(string find);
+    public void AddToItems(IBaseObj objToAdd);
+    public int FirstOfIndex(string find);
+    public void InsertToItems(IBaseObj objToAdd, int index);
+    public IBaseObj GetObject(string find);
 }
