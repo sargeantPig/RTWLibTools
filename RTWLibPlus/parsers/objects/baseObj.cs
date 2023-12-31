@@ -3,6 +3,8 @@ using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.configs.whiteSpace;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 public abstract class BaseObj : IBaseObj
 {
@@ -16,6 +18,45 @@ public abstract class BaseObj : IBaseObj
     public abstract IBaseObj Copy();
     public abstract string Output();
     public List<IBaseObj> GetItems() => this.Items;
+
+    public bool FindAndModify(string find, string modto)
+    {
+        foreach (IBaseObj item in this.Items)
+        {
+            if (item.Ident == find)
+            {
+                item.Value = modto;
+                return true;
+            }
+
+            else if (item.GetItems().Count > 0)
+            {
+                if (item.FindAndModify(find, modto))
+                { return true; }
+            }
+        }
+        return false;
+    }
+
+    public string Find(string find)
+    {
+        foreach (IBaseObj item in this.Items)
+        {
+            if (item.Ident == find)
+            {
+                return item.Value;
+            }
+
+            else if (item.GetItems().Count > 0)
+            {
+                string result = item.Find(find);
+                if (result != "null")
+                { return result; }
+            }
+        }
+        return "null";
+    }
+
     public string NormalFormat(char whiteSpace, int end) => string.Format("{0}{1} {2}{3}",
             Format.GetWhiteSpace("", end, whiteSpace),
             this.record.Tag, this.record.Value,

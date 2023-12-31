@@ -9,4 +9,6 @@ public interface IBaseObj
     public string Output();
     public List<IBaseObj> GetItems();
     public IBaseObj Copy();
+    public bool FindAndModify(string find, string modto);
+    public string Find(string find);
 }
