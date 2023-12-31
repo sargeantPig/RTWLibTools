@@ -1,4 +1,4 @@
-randcmd setseed yeet yes
+randcmd setseed testseed
 randcmd initialsetup
 randcmd citiesvoronoi
 randcmd ownership 3 1
