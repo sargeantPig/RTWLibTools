@@ -53,7 +53,7 @@ public class RandCMD
             return "DS not loaded - run 'rand initialsetup'";
         }
 
-        return RandDS.RandCitiesBasic(this.smf, this.rnd, this.ds, this.cm);
+        return RandDS.RandCitiesBasic(this.smf, this.rnd, this.ds, this.dr, this.cm);
     }
 
     public string CitiesVoronoi()
@@ -63,7 +63,7 @@ public class RandCMD
             return "DS not loaded - run 'rand initialsetup'";
         }
 
-        return RandDS.RandCitiesVoronoi(this.smf, this.rnd, this.ds, this.cm);
+        return RandDS.RandCitiesVoronoi(this.smf, this.rnd, this.ds, this.dr, this.cm);
     }
 
     public string PaintFactionMap()
