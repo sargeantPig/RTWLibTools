@@ -13,6 +13,7 @@ public class DR : BaseWrapper, IWrapper
     public string GetName() => this.name;
 
     private readonly Dictionary<string, string> regionsByColour = new();
+    public List<string> Regions { get; set; }
 
     public DR(string outputPath, string loadPath)
     {
@@ -68,11 +69,10 @@ public class DR : BaseWrapper, IWrapper
             if (pos == 8)
             {
                 this.regionsByColour.Add(this.Data[i - 4].Value, this.Data[i - pos].Value);
+                this.Regions.Add(this.Data[i - pos].Value);
                 pos = 0;
             }
             pos++;
         }
     }
-
-
 }
