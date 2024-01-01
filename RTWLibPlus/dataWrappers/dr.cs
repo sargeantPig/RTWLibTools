@@ -13,7 +13,7 @@ public class DR : BaseWrapper, IWrapper
     public string GetName() => this.name;
 
     private readonly Dictionary<string, string> regionsByColour = new();
-    public List<string> Regions { get; set; }
+    public List<string> Regions { get; set; } = new();
 
     public DR(string outputPath, string loadPath)
     {
