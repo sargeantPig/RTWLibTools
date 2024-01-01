@@ -3,20 +3,22 @@ using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.map;
+using RTWLibPlus.Modifiers;
 using RTWLibPlus.parsers.objects;
 using System.Collections.Generic;
 using System.Numerics;
 
 public static class RandDS
 {
-    public static string RandCitiesBasic(SMF smf, RandWrap rnd, DS ds = null, CityMap cm = null)
+    public static string RandCitiesBasic(SMF smf, RandWrap rnd, DS ds = null, DR dr = null, CityMap cm = null)
     {
         rnd.RefreshRndSeed();
 
         List<IBaseObj> settlements = ds.GetItemsByIdent("settlement").DeepCopy();
         ds.DeleteValue(ds.Data, "settlement");
         List<string> factionList = smf.GetFactions();
-
+        List<string> missingRegions = DRModifier.GetMissingRegionNames(settlements, dr);
+        settlements.AddRange(StratModifier.CreateSettlements(settlements[1], missingRegions));
         factionList.Shuffle(rnd.RND);
         string[] factions = factionList.ToArray();
         int settlementsPerFaction = settlements.Count / factions.Length;
@@ -40,11 +42,12 @@ public static class RandDS
         return "Random city allocation complete";
     }
 
-    public static string RandCitiesVoronoi(SMF smf, RandWrap rnd, DS ds = null, CityMap cm = null)
+    public static string RandCitiesVoronoi(SMF smf, RandWrap rnd, DS ds = null, DR dr = null, CityMap cm = null)
     {
         rnd.RefreshRndSeed();
-
         List<IBaseObj> settlements = ds.GetItemsByIdent("settlement").DeepCopy();
+        List<string> missingRegions = DRModifier.GetMissingRegionNames(settlements, dr);
+        settlements.AddRange(StratModifier.CreateSettlements(settlements[1], missingRegions));
         ds.DeleteValue(ds.Data, "settlement");
         List<string> factions = smf.GetFactions();
         Vector2[] vp = Voronoi.GetVoronoiPoints(factions.Count, cm.Width, cm.Height, rnd);

@@ -1,5 +1,6 @@
 namespace RTWLibPlus.Modifiers;
 
+using System.Collections.Generic;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 
@@ -18,6 +19,16 @@ public class StratModifier
         dummy.FindAndModify("region", regionName);
 
         return dummy;
+    }
+
+    public static List<IBaseObj> CreateSettlements(IBaseObj dummySettlement, List<string> regionNames)
+    {
+        List<IBaseObj> settlements = new();
+        foreach (string region in regionNames)
+        {
+            settlements.Add(CreateSettlement(dummySettlement, region));
+        }
+        return settlements;
     }
 
     public static void AddSettlementToFaction(IBaseObj faction, IBaseObj settlement)
