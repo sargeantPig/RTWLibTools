@@ -281,7 +281,6 @@ public class TGA : IWrapper
     }
 
     public string GetName() => Path.GetFileName(this.LoadPath);
-
     public string OutputPath { get; set; }
     public string LoadPath { get; set; }
 

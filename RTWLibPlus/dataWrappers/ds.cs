@@ -4,6 +4,7 @@ using RTWLibPlus.data;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -63,15 +64,9 @@ public class DS : BaseWrapper, IWrapper
         }
     }
 
-    public static string ChangeCharacterCoordinates(string character, Vector2 coords, Vector2 closeWater)
+    public static string ChangeCharacterCoordinates(string character, Vector2 coords)
     {
         string[] split = character.Split(',').TrimAll();
-
-        if (split[1].Contains("admiral"))
-        {
-            coords = closeWater;
-        }
-
         string x = string.Format("x {0}", (int)coords.X);
         string y = string.Format("y {0}", (int)coords.Y);
         split[^1] = y;
