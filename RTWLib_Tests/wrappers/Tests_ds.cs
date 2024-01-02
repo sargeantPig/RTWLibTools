@@ -1,6 +1,7 @@
 ﻿namespace RTWLib_Tests.wrappers;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RTWLib_CLI.cmd;
 using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
@@ -52,7 +53,7 @@ public class Tests_ds
         System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
         DS parsedds = new(dsParse, this.config);
         System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> characters = parsedds.GetItemsByIdent("character");
-        string result = DS.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1));
+        string result = DS.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1), new Vector2(0, 0));
         string expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
 
         Assert.AreEqual(expected, result); //check number of returned settlements
