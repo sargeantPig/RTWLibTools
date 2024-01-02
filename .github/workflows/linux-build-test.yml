@@ -10,33 +10,33 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
- 
+
 jobs:
 
     build-linux:
      runs-on: ubuntu-latest
-     
+
      env:
       Solution_Name: '${{github.workspace}}/RTWLib_CLI/RTWLib_Solution.sln'                      # Replace with your solution name, i.e. MyWpfApp.sln.
       Test_Project_Path: '${{github.workspace}}/RTWLib_Tests/RTWLib_Tests.csproj'
-      
+
      steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-        
+
       - name: Install .NET Core Runtime
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '7.0.x'
-          
+          dotnet-version: '8.0.x'
+
       - name: Create Output Directory
-        run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp7.0/resources'
-  
+        run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp8.0/resources'
+
       - name: Copy Resources
-        run: cp -r ./RTWLib_Tests/resources/. ${{ github.workspace }}/RTWLib_Tests/bin/Debug/netcoreapp7.0/resources/
+        run: cp -r ./RTWLib_Tests/resources/. ${{ github.workspace }}/RTWLib_Tests/bin/Debug/netcoreapp8.0/resources/
 
       - name: List build output
-        run: ls -R '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp7.0'
+        run: ls -R '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp8.0'
 
       - name: Log files
         run: ls
