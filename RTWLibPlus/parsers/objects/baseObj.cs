@@ -16,6 +16,87 @@ public abstract class BaseObj : IBaseObj
     public abstract IBaseObj Copy();
     public abstract string Output();
     public List<IBaseObj> GetItems() => this.Items;
+
+    public int FirstOfIndex(string find)
+    {
+        for (int i = 0; i < this.Items.Count; i++)
+        {
+            IBaseObj item = this.Items[i];
+            if (item.Ident == find)
+            {
+                return i;
+            }
+
+            else if (item.GetItems().Count > 0)
+            {
+                int result = item.FirstOfIndex(find);
+                if (result != -1)
+                { return result; }
+            }
+        }
+        return -1;
+    }
+
+    public void AddToItems(IBaseObj objToAdd) => this.Items.Add(objToAdd);
+
+    public void InsertToItems(IBaseObj objToAdd, int index) => this.Items.Insert(index + 1, objToAdd);
+
+    public bool FindAndModify(string find, string modto)
+    {
+        foreach (IBaseObj item in this.Items)
+        {
+            if (item.Ident == find)
+            {
+                item.Value = modto;
+                return true;
+            }
+
+            else if (item.GetItems().Count > 0)
+            {
+                if (item.FindAndModify(find, modto))
+                { return true; }
+            }
+        }
+        return false;
+    }
+
+    public string Find(string find)
+    {
+        foreach (IBaseObj item in this.Items)
+        {
+            if (item.Ident == find)
+            {
+                return item.Value;
+            }
+
+            else if (item.GetItems().Count > 0)
+            {
+                string result = item.Find(find);
+                if (result != "null")
+                { return result; }
+            }
+        }
+        return "null";
+    }
+
+    public IBaseObj GetObject(string find)
+    {
+        foreach (IBaseObj item in this.Items)
+        {
+            if (item.Ident == find)
+            {
+                return item;
+            }
+
+            else if (item.GetItems().Count > 0)
+            {
+                IBaseObj result = item.GetObject(find);
+                if (result != null)
+                { return result; }
+            }
+        }
+        return null;
+    }
     public string NormalFormat(char whiteSpace, int end) => string.Format("{0}{1} {2}{3}",
             Format.GetWhiteSpace("", end, whiteSpace),
             this.record.Tag, this.record.Value,
