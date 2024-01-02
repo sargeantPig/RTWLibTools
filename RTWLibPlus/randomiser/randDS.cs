@@ -106,7 +106,8 @@ public static class RandDS
             }
 
             Vector2 coord = cm.CityCoordinates[regions[ri].Value];
-            c.Value = DS.ChangeCharacterCoordinates(c.Value, coord);
+
+            c.Value = DS.ChangeCharacterCoordinates(c.Value, coord, cm.GetClosestWater(coord));
             ri++;
         }
 

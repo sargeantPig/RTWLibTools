@@ -63,9 +63,15 @@ public class DS : BaseWrapper, IWrapper
         }
     }
 
-    public static string ChangeCharacterCoordinates(string character, Vector2 coords)
+    public static string ChangeCharacterCoordinates(string character, Vector2 coords, Vector2 closeWater)
     {
         string[] split = character.Split(',').TrimAll();
+
+        if (split[1].Contains("admiral"))
+        {
+            coords = closeWater;
+        }
+
         string x = string.Format("x {0}", (int)coords.X);
         string y = string.Format("y {0}", (int)coords.Y);
         split[^1] = y;
