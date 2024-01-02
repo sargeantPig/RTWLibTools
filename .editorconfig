@@ -81,6 +81,8 @@ dotnet_diagnostic.CA1310.severity = suggestion
 # IDE0220: Add explicit cast in foreach
 dotnet_diagnostic.IDE0220.severity = suggestion
 
+csharp_style_prefer_top_level_statements = false
+
 ##########################################
 # Language Rules
 # https://docs.microsoft.com/dotnet/fundamentals/code-analysis/style-rules/language-rules
