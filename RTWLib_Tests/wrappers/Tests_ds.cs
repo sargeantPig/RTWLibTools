@@ -1,6 +1,7 @@
 ﻿namespace RTWLib_Tests.wrappers;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using RTWLib_CLI.cmd;
 using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;

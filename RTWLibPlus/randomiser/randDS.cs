@@ -5,6 +5,7 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.map;
 using RTWLibPlus.Modifiers;
 using RTWLibPlus.parsers.objects;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -106,6 +107,13 @@ public static class RandDS
             }
 
             Vector2 coord = cm.CityCoordinates[regions[ri].Value];
+            Vector2 waterCoord = coord;
+            if (c.Value.Contains("admiral"))
+            {
+                waterCoord = cm.GetClosestWater(coord);
+                coord = waterCoord;
+            }
+
             c.Value = DS.ChangeCharacterCoordinates(c.Value, coord);
             ri++;
         }
