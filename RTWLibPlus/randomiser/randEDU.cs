@@ -30,6 +30,7 @@ public static class RandEDU
 
         List<IBaseObj> attributes = edu.GetItemsByIdent("attributes");
         List<IBaseObj> ownerships = edu.GetItemsByIdent("ownership");
+        List<IBaseObj> category = edu.GetItemsByIdent("category");
         List<string> factionList = smf.GetFactions();
         factionList.Shuffle(rnd.RND);
 
@@ -42,7 +43,7 @@ public static class RandEDU
                 factionList.Shuffle(rnd.RND);
             }
 
-            if (attributes[io].Value.Contains("general"))
+            if (attributes[io].Value.Contains("general") || category[io].Value.Contains("ship"))
             {
                 continue;
             }
