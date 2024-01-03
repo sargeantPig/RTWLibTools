@@ -54,11 +54,13 @@ public static class RandDS
         Vector2[] vp = Voronoi.GetVoronoiPoints(factions.Count, cm.Width, cm.Height, rnd);
         List<string[]> gh = Voronoi.GetVoronoiGroups(cm.CityCoordinates, vp);
 
-        // gh.Shuffle(TWRand.rnd);
-        // factions.Shuffle(TWRand.rnd);
-        // function to get missing settlements and add them to the pool
         for (int i = 0; i < factions.Count; i++)
         {
+            if (gh[i].Length == 0)
+            {
+                Console.WriteLine("no settlements in group");
+            }
+
             foreach (string region in gh[i])
             {
                 IBaseObj city = ds.GetItemByValue(settlements, region);

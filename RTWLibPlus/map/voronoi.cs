@@ -1,6 +1,7 @@
 ﻿namespace RTWLibPlus.map;
 using RTWLibPlus.helpers;
 using RTWLibPlus.randomiser;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -30,8 +31,37 @@ public static class Voronoi
             groups[closest] = groups[closest].Add(c.Key);
         }
 
-        return groups;
+        CheckGroupsNotEmpty(groups);
 
+        return groups;
+    }
+
+    private static void CheckGroupsNotEmpty(List<string[]> groups)
+    {
+        for (int i = 0; i < groups.Count; i++)
+        {
+            string[] arr = groups[i];
+            if (groups[i].Length == 0)
+            {
+                StealSettlement(groups, i);
+            }
+        }
+    }
+
+    private static void StealSettlement(List<string[]> groups, int emptyGroupInd)
+    {
+        for (int i = 0; i < groups.Count; i++)
+        {
+            if (groups[i].Length > 2)
+            {
+                string temp = groups[i][^1];
+                Console.WriteLine("city to add " + temp);
+                groups[emptyGroupInd] = groups[emptyGroupInd].Add(temp);
+                Console.WriteLine(groups[emptyGroupInd][0]);
+                groups[i] = groups[i].Remove(groups[i].Length - 1);
+                break;
+            }
+        }
     }
 
     public static int GetClosestPoint(Vector2[] points, Vector2 coord)
