@@ -55,9 +55,7 @@ public static class Voronoi
             if (groups[i].Length > 2)
             {
                 string temp = groups[i][^1];
-                Console.WriteLine("city to add " + temp);
                 groups[emptyGroupInd] = groups[emptyGroupInd].Add(temp);
-                Console.WriteLine(groups[emptyGroupInd][0]);
                 groups[i] = groups[i].Remove(groups[i].Length - 1);
                 break;
             }
