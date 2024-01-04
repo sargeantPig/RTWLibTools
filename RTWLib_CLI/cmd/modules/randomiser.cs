@@ -8,6 +8,7 @@ using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.map;
 using RTWLibPlus.randomiser;
+using System;
 using System.Collections.Generic;
 
 public class RandCMD
@@ -84,19 +85,22 @@ public class RandCMD
     {
 
         List<IWrapper> list = new() { this.edu, this.edb, this.ds, this.dr, this.smf, this.mr, this.bm };
-        Progress p = new(1f / (list.Count + 1), "Setting up");
+        Console.WriteLine("Setting up");
+        //Progress p = new(1f / (list.Count + 1), "Setting up");
         for (int i = 0; i < list.Count; i++)
         {
 
             list[i].Clear();
-            p.Message("Loading: " + RFH.GetPartOfPath(list[i].LoadPath, "randomiser"));
+            Console.WriteLine("Loading: " + RFH.GetPartOfPath(list[i].LoadPath, "randomiser"));
+            //p.Message("Loading: " + RFH.GetPartOfPath(list[i].LoadPath, "randomiser"));
             list[i].Parse();
-            p.Update("Complete");
+            //p.Update("Complete");
         }
         this.edu.PrepareEDU();
         this.cm = new CityMap(this.mr, this.dr);
-        p.Message("Forming: City Map");
-        p.Update("Complete");
+        Console.WriteLine("Forming: City Map");
+        //p.Message("Forming: City Map");
+        //p.Update("Complete");
 
         return "Files Loaded";
     }
@@ -106,11 +110,12 @@ public class RandCMD
         string path = string.Empty;
 
         List<IWrapper> list = new() { this.edu, this.ds };
-        Progress p = new(0.50f, "Writing Files");
+        Console.WriteLine("Writing Files...");
+        //Progress p = new(0.50f, "Writing Files");
         for (int i = 0; i < list.Count; i++)
         {
             list[i].Output();
-            p.Update();
+            //p.Update();
         }
 
         if (this.edu != null)

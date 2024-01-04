@@ -88,12 +88,14 @@ public static class CMDProcess
     public static string ProcessTemplate(string template)
     {
         string[] cmds = templates[template];
-        Progress p = new(1f / cmds.Length, "Running: " + template);
+        Console.WriteLine("Running: " + template);
+        //Progress p = new(1f / cmds.Length, "Running: " + template);
         foreach (string cmd in cmds)
         {
-            p.Message("Doing: " + cmd);
+            Console.WriteLine("Doing: " + cmd);
+            //p.Message("Doing: " + cmd);
             ReadCMD(cmd);
-            p.Update("Complete");
+            //p.Update("Complete");
         }
         return "template finished processing";
     }

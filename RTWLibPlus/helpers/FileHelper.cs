@@ -51,12 +51,12 @@ public static class RFH
             return "";
         }
 
-        string[] split = path.Split('\\');
+        string[] split = path.Split('\\', '/');
 
         string[] arr = split.GetItemsFromFirstOf(from.GetHashCode());
 
         string str = ConstructPath(arr);
-        return string.Format("..\\{0}", str);
+        return string.Format("../{0}", str);
 
 
     }

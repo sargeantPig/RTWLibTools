@@ -1,5 +1,6 @@
 ﻿namespace RTWLib_Tests.helper;
 
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLibPlus.helpers;
 
@@ -23,5 +24,14 @@ public class Tests_String
         string expected = "wool field farm";
         Assert.AreEqual(expected, result);
     }
+
+    // [TestMethod]
+    // public void PartOfPath()
+    // {
+    //     string test2 = Environment.CurrentDirectory;
+    //     string test = "drive\\path\\long\\this\\something\\randomiser\\files\\somefile.txt";
+    //     string result = RFH.GetPartOfPath(test, "randomiser");
+    //     Assert.AreEqual("../randomiser/files/somefile.txt", result);
+    // }
 
 }
