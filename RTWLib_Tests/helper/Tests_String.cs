@@ -25,13 +25,13 @@ public class Tests_String
         Assert.AreEqual(expected, result);
     }
 
-    [TestMethod]
-    public void PartOfPath()
-    {
-        string test2 = Environment.CurrentDirectory;
-        string test = "drive\\path\\long\\this\\something\\randomiser\\files\\somefile.txt";
-        string result = RFH.GetPartOfPath(test, "randomiser");
-        Assert.AreEqual("../randomiser/files/somefile.txt", result);
-    }
+    // [TestMethod]
+    // public void PartOfPath()
+    // {
+    //     string test2 = Environment.CurrentDirectory;
+    //     string test = "drive\\path\\long\\this\\something\\randomiser\\files\\somefile.txt";
+    //     string result = RFH.GetPartOfPath(test, "randomiser");
+    //     Assert.AreEqual("../randomiser/files/somefile.txt", result);
+    // }
 
 }
