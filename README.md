@@ -22,7 +22,9 @@ Contained in the release assets found on the aforementioned release page should 
   - windows: C:\Users\YOURNAME\AppData\Local\Feral Interactive\Total War ROME REMASTERED\
   - mac: /Users/YOURNAME/Library/Application Support/Feral Interactive/Total War Rome REMASTERED/
   - linux: ~/.local/share/feral-interactive/Total War ROME REMASTERED/ ( this could be incorrect, will be similar to this though )
+    
   2: Extract the mod_files.zip to the same folder. This should merge with the Mod folder already located there.
+  
   3: Extract the settings.zip to the same folder.
 
 After these steps have been completed the Randomiser will be ready to use.
