@@ -5,6 +5,7 @@ using RTWLib_CLI.cmd;
 using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
+using RTWLibPlus.Modifiers;
 using RTWLibPlus.parsers;
 using RTWLibPlus.parsers.objects;
 using System.Numerics;
@@ -53,7 +54,7 @@ public class Tests_ds
         System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
         DS parsedds = new(dsParse, this.config);
         System.Collections.Generic.List<RTWLibPlus.interfaces.IBaseObj> characters = parsedds.GetItemsByIdent("character");
-        string result = DS.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1));
+        string result = StratModifier.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1));
         string expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
 
         Assert.AreEqual(expected, result); //check number of returned settlements

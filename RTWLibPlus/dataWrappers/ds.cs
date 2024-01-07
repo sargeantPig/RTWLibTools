@@ -64,16 +64,6 @@ public class DS : BaseWrapper, IWrapper
         }
     }
 
-    public static string ChangeCharacterCoordinates(string character, Vector2 coords)
-    {
-        string[] split = character.Split(',').TrimAll();
-        string x = string.Format("x {0}", (int)coords.X);
-        string y = string.Format("y {0}", (int)coords.Y);
-        split[^1] = y;
-        split[^2] = x;
-        return split.ToString(',', ' ');
-    }
-
     public Dictionary<string, List<IBaseObj>> GetSettlementsByFaction(SMF smf)
     {
         Dictionary<string, List<IBaseObj>> settlementsByFaction = new();

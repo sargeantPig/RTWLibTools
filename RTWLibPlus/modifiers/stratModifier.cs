@@ -1,6 +1,8 @@
 namespace RTWLibPlus.Modifiers;
 
 using System.Collections.Generic;
+using System.Numerics;
+using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 
@@ -46,5 +48,14 @@ public class StratModifier
 
     public static void AddBuildingToSettlement(IBaseObj settlement, IBaseObj building) => settlement.AddToItems(building);
 
+    public static string ChangeCharacterCoordinates(string character, Vector2 coords)
+    {
+        string[] split = character.Split(',').TrimAll();
+        string x = string.Format("x {0}", (int)coords.X);
+        string y = string.Format("y {0}", (int)coords.Y);
+        split[^1] = y;
+        split[^2] = x;
+        return split.ToString(',', ' ');
+    }
 }
 

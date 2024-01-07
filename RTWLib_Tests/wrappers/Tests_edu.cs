@@ -106,6 +106,15 @@ public class Tests_edu
 
         Assert.AreEqual(expected, result.Count);
     }
+    [TestMethod]
+    public void EduGetUnitsFromFaction()
+    {
+        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+        EDU parsedds = new(parse, this.config);
+        List<string> units = parsedds.GetUnitsFromFaction("romans_julii");
+        Assert.AreEqual(27, units.Count);
+
+    }
 
     // [TestMethod]
     // public void eduUnitWrapper()

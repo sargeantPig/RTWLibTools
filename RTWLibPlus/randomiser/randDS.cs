@@ -116,7 +116,7 @@ public static class RandDS
                 coord = waterCoord;
             }
 
-            c.Value = DS.ChangeCharacterCoordinates(c.Value, coord);
+            c.Value = StratModifier.ChangeCharacterCoordinates(c.Value, coord);
             ri++;
         }
 

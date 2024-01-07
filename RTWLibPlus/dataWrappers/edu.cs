@@ -68,6 +68,26 @@ public class EDU : BaseWrapper, IWrapper
         }
     }
 
+    public List<string> GetUnitsFromFaction(string faction)
+    {
+        List<IBaseObj> ownerships = this.GetItemsByIdent("ownership");
+        List<IBaseObj> dict = this.GetItemsByIdent("dictionary");
+
+        List<string> units = new();
+
+        for (int i = 0; i < ownerships.Count; i++)
+        {
+            IBaseObj obj = ownerships[i];
+            IBaseObj unit = dict[i];
+
+            if (obj.Value.Contains(faction))
+            {
+                units.Add(unit.Value);
+            }
+        }
+        return units;
+    }
+
     public void RemoveAttributesAll(params string[] attriToRemove)
     {
         List<IBaseObj> attri = this.GetItemsByIdent("attributes");
