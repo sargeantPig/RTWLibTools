@@ -71,14 +71,14 @@ public class EDU : BaseWrapper, IWrapper
     public List<string> GetUnitsFromFaction(string faction)
     {
         List<IBaseObj> ownerships = this.GetItemsByIdent("ownership");
-        List<IBaseObj> dict = this.GetItemsByIdent("dictionary");
+        List<IBaseObj> type = this.GetItemsByIdent("type");
 
         List<string> units = new();
 
         for (int i = 0; i < ownerships.Count; i++)
         {
             IBaseObj obj = ownerships[i];
-            IBaseObj unit = dict[i];
+            IBaseObj unit = type[i];
 
             if (obj.Value.Contains(faction))
             {

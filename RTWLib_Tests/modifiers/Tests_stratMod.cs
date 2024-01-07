@@ -69,4 +69,17 @@ public class TestsStrat
         Assert.AreEqual(5, result.Count);
         Assert.AreEqual("test_name", result[1].Find("region"));
     }
+
+    [TestMethod]
+    public void CreateUnit()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+        List<IBaseObj> units = parsedds.GetItemsByIdent("unit").DeepCopy();
+        IBaseObj result = StratModifier.CreateUnit(units[0], "town watch");
+        Assert.AreEqual("unit", result.Ident);
+        Assert.AreEqual("unit\t\t\ttown", result.Tag);
+        Assert.AreEqual("watch\t\t\t\texp 1 armour 0 weapon_lvl 0", result.Value);
+    }
 }
