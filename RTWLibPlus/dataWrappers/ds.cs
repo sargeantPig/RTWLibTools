@@ -76,6 +76,12 @@ public class DS : BaseWrapper, IWrapper
         return settlementsByFaction;
     }
 
+    public void AddUnitToArmy(IBaseObj faction, IBaseObj character, IBaseObj unit)
+    {
+        bool add = this.InsertNewObjectByCriteria(this.Data, unit, faction.Tag, character.Tag, "unit");
+    }
+
+
     public string GetFactionByRegion(string region)
     {
         string s = this.GetTagByContentsValue(this.Data, "faction", region);

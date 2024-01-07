@@ -60,6 +60,7 @@ public class StratModifier
         return dummy;
     }
 
+
     public static string ChangeCharacterCoordinates(string character, Vector2 coords)
     {
         string[] split = character.Split(',').TrimAll();
