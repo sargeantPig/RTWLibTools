@@ -279,4 +279,118 @@ public static class ExArray
         }
         return newString;
     }
+
+    public static string ArrayToString(this float[] array, bool idx = false, bool insertNewlines = false, bool removeTrailingComma = false, int newLineCount = 1, string extension = "")
+    {
+        string value = "";
+        int i = 0;
+        foreach (float str in array)
+        {
+            if (idx)
+            {
+                value += i.ToString() + ": ";
+            }
+
+            value += str.ToString() + extension;
+
+            if (insertNewlines)
+            {
+                for (int nl = 0; nl < newLineCount; nl++)
+                {
+                    value += "\r\n";
+                }
+            }
+            else
+            {
+                value += ", ";
+            }
+
+            i++;
+        }
+
+        if (removeTrailingComma)
+        {
+            value = value.Trim().TrimEnd(',');
+        }
+
+        return value;
+    }
+    public static string ArrayToString(this int[] array, bool idx = false, bool insertNewlines = false, bool removeTrailingComma = false, int newLineCount = 1)
+    {
+        string value = "";
+        int i = 0;
+        foreach (int str in array)
+        {
+            if (idx)
+            {
+                value += i.ToString() + ": ";
+            }
+
+            value += str.ToString();
+
+            if (insertNewlines)
+            {
+                for (int nl = 0; nl < newLineCount; nl++)
+                {
+                    value += "\r\n";
+                }
+            }
+            else
+            {
+                value += ", ";
+            }
+
+            i++;
+        }
+
+        if (removeTrailingComma)
+        {
+            value = value.Trim().TrimEnd(',');
+        }
+
+        return value;
+    }
+
+    public static string ArrayToString(this string[] array, bool idx = false, bool insertNewlines = false, bool removeTrailingComma = false, int newLineCount = 1, bool insertSeperator = true, bool quote = false)
+    {
+        string value = "";
+        int i = 0;
+        foreach (string str in array)
+        {
+            if (idx)
+            {
+                value += i.ToString() + ": ";
+            }
+
+            if (quote)
+            {
+                value += string.Format("\"{0}\"", str);
+            }
+            else
+            {
+                value += str;
+            }
+
+            if (insertNewlines)
+            {
+                for (int nl = 0; nl < newLineCount; nl++)
+                {
+                    value += "\r\n";
+                }
+            }
+            else if (insertSeperator)
+            {
+                value += ", ";
+            }
+
+            i++;
+        }
+
+        if (removeTrailingComma)
+        {
+            value = value.Trim().TrimEnd(',');
+        }
+
+        return value;
+    }
 }

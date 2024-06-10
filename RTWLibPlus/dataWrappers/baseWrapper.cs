@@ -4,30 +4,30 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.IO;
 using System.Linq;
 
 public abstract class BaseWrapper
 {
-    private string outputPath;
 
-    public string OutputPath
-    {
-        get
-        {
-            string path = ExString.CrossPlatPath(this.outputPath);
-            string dir = Path.GetDirectoryName(path);
-            if (Directory.Exists(dir))
-            { return path; }
+    public string OutputPath { get; set; }
+    // {
+    //     get
+    //     {
+    //         string path = ExString.CrossPlatPath(this.outputPath);
+    //         string dir = Path.GetDirectoryName(path);
+    //         if (Directory.Exists(dir))
+    //         { return path; }
 
-            return path.Split('/').Last();
-        }
+    //         return path.Split('/').Last();
+    //     }
 
-        set => this.outputPath = value;
-    }
+    //     set => this.outputPath = value;
+    // }
     public string LoadPath { get; set; }
 
-    public List<IBaseObj> Data { get; set; } = new();
+    public List<IBaseObj> Data { get; set; } = [];
     /// <summary>
     /// Location is a collection of strings that represent the tags. Once the final string is found it will return the corresponding kv
     /// </summary>
@@ -105,6 +105,91 @@ public abstract class BaseWrapper
             }
         }
     }
+
+    public Dictionary<int, List<IBaseObj>> GetChunks(string stopAt, string ident)
+    {
+        Dictionary<int, List<IBaseObj>> chunks = [];
+        int ready = 0;
+        bool identFound = false;
+        int startI = -1;
+        int count = 0;
+        for (int i = 0; i < this.Data.Count; i++)
+        {
+            IBaseObj item = this.Data[i];
+            if (identFound && ready == 2)
+            {
+                chunks.Add(i, this.Data.GetRange(startI, count));
+                count = 0;
+                identFound = false;
+                ready = 0;
+                i -= 2;
+            }
+
+            if (stopAt == item.Ident && ready == 1)
+            {
+                ready += 1;
+            }
+
+            if (ready == 1)
+            {
+                count++;
+            }
+
+            if (ident == item.Ident && ready == 0)
+            {
+                identFound = true;
+                ready += 1;
+                startI = i;
+                count++;
+            }
+
+        }
+
+        return chunks;
+    }
+
+    public Dictionary<int, int> GetChunkIndexes(string stopAt, string ident)
+    {
+        Dictionary<int, int> chunks = [];
+        int ready = 0;
+        bool identFound = false;
+        int startI = -1;
+        int count = 0;
+        for (int i = 0; i < this.Data.Count; i++)
+        {
+            IBaseObj item = this.Data[i];
+            if (identFound && ready == 2)
+            {
+                chunks.Add(startI, count);
+                count = 0;
+                identFound = false;
+                ready = 0;
+                i -= 2;
+            }
+
+            if (stopAt == item.Ident && ready == 1)
+            {
+                ready += 1;
+            }
+
+            if (ready == 1)
+            {
+                count++;
+            }
+
+            if (ident == item.Ident && ready == 0)
+            {
+                identFound = true;
+                ready += 1;
+                startI = i;
+                count++;
+            }
+
+        }
+
+        return chunks;
+    }
+
     public bool AddObjToList(List<IBaseObj> items, IBaseObj obj, int locInd = 0, bool done = false, params string[] location)
     {
         foreach (BaseObj item in items)
@@ -167,10 +252,10 @@ public abstract class BaseWrapper
                 found.Push(item);
             }
         });*/
-
-
         return found;
     }
+
+
     public List<IBaseObj> GetItemsByCriteria(string stopAt, string lookFor, params string[] criteriaTags)
     {
         bool[] criteria = new bool[criteriaTags.Length];

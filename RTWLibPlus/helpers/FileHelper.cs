@@ -9,7 +9,7 @@ public static class RFH
 {
     public static void Write(string path, string content)
     {
-        StreamWriter sw = new(path);
+        StreamWriter sw = new(@path);
         sw.Write(content);
         sw.Flush();
         sw.Close();

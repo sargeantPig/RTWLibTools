@@ -13,13 +13,13 @@ public class RandWrap
     {
         this.seed = seed;
         int hash = BitConverter.ToInt32(SHA1.HashData(Encoding.UTF8.GetBytes(seed)));
-        this.RND = new Random(hash);
+        RND = new Random(hash);
     }
 
     public void RefreshRndSeed() => this.RefreshRndSeed(this.seed);
 
-    public int Rint(int min, int max) => this.RND.Next(min, max);
+    public int Rint(int min, int max) => RND.Next(min, max);
 
-    public Random RND { get; private set; } = new();
+    public static Random RND { get; private set; } = new();
 
 }

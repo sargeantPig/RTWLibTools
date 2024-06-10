@@ -34,4 +34,28 @@ public static class Format
         }
     }
 
+    public static string GetTabSpacing(string ident, int maxtabs, int lettersPerTab = 4)
+    {
+        int tabs = maxtabs - (ident.Length / lettersPerTab);
+        return IdentSpacing(tabs, '\t');
+    }
+    public static string GetNewWhiteSpace(string ident, int def = 20)
+    {
+        int il = IdentifierLength(ident, def);
+        return IdentSpacing(il);
+    }
+    public static string Tab(int depth) => IdentSpacing(depth, '\t');
+    public static int IdentifierLength(string ident, int def = 20) => def - ident.Length;
+    public static string IdentSpacing(int identifierLength, char spacingChar = ' ')
+    {
+        string spaces = "";
+
+        for (int i = 0; i < identifierLength; i++)
+        {
+            spaces += spacingChar;
+        }
+
+        return spaces;
+    }
+
 }

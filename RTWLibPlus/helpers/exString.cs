@@ -43,4 +43,13 @@ public static class ExString
 
         return newString;
     }
+
+    public static string CRL(this string str, int amount = 1)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            str += "\r\n";
+        }
+        return str;
+    }
 }

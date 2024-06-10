@@ -1,4 +1,6 @@
 ﻿namespace RTWLibPlus.randomiser;
+
+using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
@@ -20,7 +22,7 @@ public static class RandDS
         List<string> factionList = smf.GetFactions();
         List<string> missingRegions = DRModifier.GetMissingRegionNames(settlements, dr);
         settlements.AddRange(StratModifier.CreateSettlements(settlements[1], missingRegions));
-        factionList.Shuffle(rnd.RND);
+        factionList.Shuffle(RandWrap.RND);
         string[] factions = factionList.ToArray();
         int settlementsPerFaction = settlements.Count / factions.Length;
 
@@ -33,7 +35,7 @@ public static class RandDS
                     break;
                 }
 
-                ds.InsertNewObjectByCriteria(ds.Data, settlements.GetRandom(out int index, rnd.RND), string.Format("faction\t{0},", faction), "denari");
+                ds.InsertNewObjectByCriteria(ds.Data, settlements.GetRandom(out int index, RandWrap.RND), string.Format("faction\t{0},", faction), "denari");
                 settlements.RemoveAt(index);
             }
         }
@@ -75,6 +77,34 @@ public static class RandDS
         MatchCharacterCoordsToCities(factions.ToArray(), rnd, ds, cm);
 
         return "Rand cities voronoi complete";
+    }
+
+    public static string SwitchUnitsToRecruitable(EDU edu, DS ds)
+    {
+        List<IBaseObj> factions = ds.GetItemsByIdent("faction");
+
+        foreach (IBaseObj faction in factions)
+        {
+            string name = faction.Tag.RemoveFirstWord('\t').Trim(',');
+            List<string> units = edu.GetUnitsFromFaction(name);
+            List<IBaseObj> dsunits = ds.GetItemsByCriteria("character_record", "unit", faction.Tag, "character", "army");
+
+            for (int i = 0; i < dsunits.Count; i++)
+            {
+                if (i == 0)
+                {
+                    continue;
+                }
+                IBaseObj dsunit = dsunits[i];
+                string randUnit = units.GetRandom(out int index, RandWrap.RND);
+                IBaseObj newunit = StratModifier.CreateUnit(dsunit, randUnit);
+                dsunit.Value = newunit.Value;
+                dsunit.Tag = newunit.Tag;
+                dsunits[i] = dsunit;
+            }
+        }
+
+        return "Units switched to units in a given factions recruitment pool";
     }
 
     private static void MatchCharacterCoordsToCities(string[] factionList, RandWrap rnd, DS ds, CityMap cm)

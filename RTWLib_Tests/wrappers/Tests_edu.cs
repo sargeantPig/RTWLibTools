@@ -116,6 +116,27 @@ public class Tests_edu
 
     }
 
+    [TestMethod]
+    public void EduValuesInCorrectOrder()
+    {
+        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+        EDU edu = new(parse, this.config);
+        List<IBaseObj> names = edu.GetItemsByIdent("type");
+        List<IBaseObj> attributes = edu.GetItemsByIdent("attributes");
+        List<IBaseObj> ownerships = edu.GetItemsByIdent("ownership");
+        List<IBaseObj> category = edu.GetItemsByIdent("category");
+
+        Assert.AreEqual(names[0].Value, "barb peasant briton");
+        Assert.AreEqual(attributes[0].Value, "sea_faring, hide_improved_forest");
+        Assert.AreEqual(ownerships[0].Value, "britons");
+        Assert.AreEqual(category[0].Value, "infantry");
+
+        Assert.AreEqual(names[^1].Value, "egyptian female peasant");
+        Assert.AreEqual(attributes[^1].Value, "sea_faring, hide_forest, can_sap, no_custom");
+        Assert.AreEqual(ownerships[^1].Value, "egyptian");
+        Assert.AreEqual(category[^1].Value, "non_combatant");
+    }
+
     // [TestMethod]
     // public void eduUnitWrapper()
     // {

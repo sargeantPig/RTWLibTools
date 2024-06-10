@@ -15,6 +15,7 @@ public class RandCMD
 {
     TWConfig config;
     RandWrap rnd;
+    DMB dmb;
     EDB edb;
     EDU edu;
     DS ds;
@@ -32,6 +33,7 @@ public class RandCMD
         this.ds = new DS(config.GetPath(Operation.Save, "ds"), config.GetPath(Operation.Load, "ds"));
         this.dr = new DR(config.GetPath(Operation.Save, "dr"), config.GetPath(Operation.Load, "dr"));
         this.smf = new SMF(config.GetPath(Operation.Save, "smf"), config.GetPath(Operation.Load, "smf"));
+        this.dmb = new DMB(config.GetPath(Operation.Save, "dmb"), config.GetPath(Operation.Load, "dmb"));
         this.mr = new TGA(config.GetPath(Operation.Load, "mr"), "");
         this.bm = new TGA(config.GetPath(Operation.Load, "bm"), "");
         this.rnd = new RandWrap("0");
@@ -67,6 +69,20 @@ public class RandCMD
         return RandDS.RandCitiesVoronoi(this.smf, this.rnd, this.ds, this.dr, this.cm);
     }
 
+    public string StratArmiesUseOwnedUnits()
+    {
+        if (this.ds == null)
+        {
+            return "DS not loaded - run 'rand initialsetup'";
+        }
+        else if (this.edu == null)
+        {
+            return "EDU not loaded - run 'rand initialsetup'";
+        }
+
+        return RandDS.SwitchUnitsToRecruitable(this.edu, this.ds);
+    }
+
     public string PaintFactionMap()
     {
         FactionMap factionMap = new();
@@ -84,7 +100,7 @@ public class RandCMD
     public string InitialSetup()
     {
 
-        List<IWrapper> list = new() { this.edu, this.edb, this.ds, this.dr, this.smf, this.mr, this.bm };
+        List<IWrapper> list = [this.edu, this.edb, this.ds, this.dr, this.smf, this.mr, this.bm, this.dmb];
         Console.WriteLine("Setting up");
         //Progress p = new(1f / (list.Count + 1), "Setting up");
         for (int i = 0; i < list.Count; i++)
@@ -97,6 +113,7 @@ public class RandCMD
             //p.Update("Complete");
         }
         this.edu.PrepareEDU();
+        this.dmb.AddFallBacksForAllTypes();
         this.cm = new CityMap(this.mr, this.dr);
         Console.WriteLine("Forming: City Map");
         //p.Message("Forming: City Map");
@@ -109,24 +126,16 @@ public class RandCMD
     {
         string path = string.Empty;
 
-        List<IWrapper> list = new() { this.edu, this.ds };
+        List<IWrapper> list = [this.edu, this.ds, this.dmb];
         Console.WriteLine("Writing Files...");
-        //Progress p = new(0.50f, "Writing Files");
+
         for (int i = 0; i < list.Count; i++)
         {
-            list[i].Output();
-            //p.Update();
-        }
-
-        if (this.edu != null)
-        {
-            path = this.config.GetPath(Operation.Save, "edu");
-            RFH.Write(path, this.edu.Output());
-        }
-        if (this.ds != null)
-        {
-            path = this.config.GetPath(Operation.Save, "ds");
-            RFH.Write(path, this.ds.Output());
+            if (list[i] != null)
+            {
+                Console.WriteLine("Writing... " + RFH.GetPartOfPath(list[i].OutputPath, "randomiser"));
+                RFH.Write(list[i].OutputPath, list[i].Output());
+            }
         }
         return "output complete";
     }

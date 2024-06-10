@@ -27,23 +27,27 @@ public static class RandEDU
     public static string RandomiseOwnership(EDU edu, RandWrap rnd, SMF smf, int maxPerUnit = 3, int minimumPerUnit = 1)
     {
         rnd.RefreshRndSeed();
-
+        List<IBaseObj> names = edu.GetItemsByIdent("type");
         List<IBaseObj> attributes = edu.GetItemsByIdent("attributes");
         List<IBaseObj> ownerships = edu.GetItemsByIdent("ownership");
         List<IBaseObj> category = edu.GetItemsByIdent("category");
         List<string> factionList = smf.GetFactions();
-        factionList.Shuffle(rnd.RND);
+        factionList.Shuffle(RandWrap.RND);
 
         for (int io = 0; io < ownerships.Count; io++)
         {
+            EDUObj name = (EDUObj)names[io];
             EDUObj ownership = (EDUObj)ownerships[io];
+            EDUObj attribute = (EDUObj)attributes[io];
+            EDUObj cate = (EDUObj)category[io];
+
             if (factionList.Count < maxPerUnit)
             {
                 factionList = smf.GetFactions();
-                factionList.Shuffle(rnd.RND);
+                factionList.Shuffle(RandWrap.RND);
             }
 
-            if (attributes[io].Value.Contains("general") || category[io].Value.Contains("ship"))
+            if (attribute.Value.Contains("general_unit") || cate.Value.Contains("ship"))
             {
                 continue;
             }
@@ -51,7 +55,7 @@ public static class RandEDU
             string[] newFactions = new string[maxPerUnit];
             for (int i = 0; i < maxPerUnit; i++)
             {
-                newFactions[i] = factionList.GetRandom(out int index, rnd.RND);
+                newFactions[i] = factionList.GetRandom(out int index, RandWrap.RND);
                 factionList.RemoveAt(index);
             }
 
@@ -107,7 +111,7 @@ public static class RandEDU
         // marian reform general random top half
 
 
-        new List<IBaseObj>[3] { ownerships, attr, costs }.ShuffleMany(rnd.RND);
+        new List<IBaseObj>[3] { ownerships, attr, costs }.ShuffleMany(RandWrap.RND);
 
         for (int i = 0; i < ownerships.Count; i++)
         {

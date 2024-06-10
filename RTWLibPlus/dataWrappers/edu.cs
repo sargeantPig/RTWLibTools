@@ -22,6 +22,7 @@ public class EDU : BaseWrapper, IWrapper
     {
         this.Data = data;
         this.SetEndOfUnits();
+        //this.PrepareEDU();
         this.LoadPath = config.GetPath(Operation.Load, "edu");
         this.OutputPath = config.GetPath(Operation.Save, "edu");
     }
@@ -79,6 +80,11 @@ public class EDU : BaseWrapper, IWrapper
         {
             IBaseObj obj = ownerships[i];
             IBaseObj unit = type[i];
+
+            if (unit.Value.Contains("roman general"))
+            {
+                int b = 0;
+            }
 
             if (obj.Value.Contains(faction))
             {

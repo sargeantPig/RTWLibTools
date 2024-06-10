@@ -6,7 +6,6 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 
 public class DS : BaseWrapper, IWrapper
 {
@@ -82,6 +81,7 @@ public class DS : BaseWrapper, IWrapper
     }
 
 
+
     public string GetFactionByRegion(string region)
     {
         string s = this.GetTagByContentsValue(this.Data, "faction", region);
@@ -94,5 +94,9 @@ public class DS : BaseWrapper, IWrapper
         return s.Split('\t')[1].Trim(',');
     }
 
-
+    public static string GetUnitName(IBaseObj unit)
+    {
+        string name = string.Format("{0} {1}", unit.Tag.Split('\t', StringSplitOptions.RemoveEmptyEntries)[1], unit.Value.GetFirstWord('\t'));
+        return name;
+    }
 }
