@@ -80,8 +80,8 @@ public static class RandEDU
 
         foreach (string f in factions)
         {
-            List<int> unitOwned = new();
-            List<int> shortlist = new();
+            List<int> unitOwned = [];
+            List<int> shortlist = [];
 
             for (int i = 0; i < ownerships.Count; i++)
             {
@@ -129,9 +129,9 @@ public static class RandEDU
 
                 foreach (string faction in bsplit)
                 {
-                    if (fHasGenerals.ContainsKey(faction))
+                    if (fHasGenerals.TryGetValue(faction, out bool[] value))
                     {
-                        fHasGenerals[faction][0] = true;
+                        value[0] = true;
                     }
                 }
 
@@ -143,9 +143,9 @@ public static class RandEDU
                 ((EDUObj)attr[i]).Value = asplit.ToString(',', ' ');
                 foreach (string faction in bsplit)
                 {
-                    if (fHasGenerals.ContainsKey(faction))
+                    if (fHasGenerals.TryGetValue(faction, out bool[] value))
                     {
-                        fHasGenerals[faction][1] = true;
+                        value[1] = true;
                     }
                 }
             }

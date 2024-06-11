@@ -65,7 +65,7 @@ public class DS : BaseWrapper, IWrapper
 
     public Dictionary<string, List<IBaseObj>> GetSettlementsByFaction(SMF smf)
     {
-        Dictionary<string, List<IBaseObj>> settlementsByFaction = new();
+        Dictionary<string, List<IBaseObj>> settlementsByFaction = [];
         foreach (string f in smf.GetFactions())
         {
             List<IBaseObj> settlements = this.GetItemsByCriteria("character", "settlement", string.Format("faction\t{0},", f));
@@ -77,7 +77,7 @@ public class DS : BaseWrapper, IWrapper
 
     public void AddUnitToArmy(IBaseObj faction, IBaseObj character, IBaseObj unit)
     {
-        bool add = this.InsertNewObjectByCriteria(this.Data, unit, faction.Tag, character.Tag, "unit");
+        bool add = InsertNewObjectByCriteria(this.Data, unit, faction.Tag, character.Tag, "unit");
     }
 
 

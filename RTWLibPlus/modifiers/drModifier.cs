@@ -1,10 +1,8 @@
 namespace RTWLibPlus.Modifiers;
 
-using System;
 using System.Collections.Generic;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.interfaces;
-using RTWLibPlus.parsers.objects;
 
 public class DRModifier
 {
@@ -19,7 +17,7 @@ public class DRModifier
     public static List<string> GetMissingRegionNames(List<IBaseObj> currentSettlements, DR dr)
     {
         List<string> regions = dr.Regions;
-        List<string> missingRegions = new();
+        List<string> missingRegions = [];
 
         foreach (string region in regions)
         {

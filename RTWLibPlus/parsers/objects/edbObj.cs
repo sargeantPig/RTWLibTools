@@ -17,7 +17,7 @@ public class EDBObj : ArrayObj, IBaseObj
         base(tag, value, depth)
     {
         WSConfigFactory factory = new();
-        this.WhiteSpaceConfig = factory.CreateEDBWhiteSpace();
+        this.WhiteSpaceConfig = WSConfigFactory.CreateEDBWhiteSpace();
         this.Ident = this.Tag.Split(this.WhiteSpaceChar)[0];
     }
 

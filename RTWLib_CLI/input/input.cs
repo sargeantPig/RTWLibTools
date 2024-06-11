@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace RTWLib_CLI.input;
 
-namespace RTWLib_CLI.input
+using System;
+
+public static class Input
 {
-    public static class Input
+
+    public static int GetIntInput(string message, Func<int, bool> conditional)
     {
-
-        public static int GetIntInput(string message, Func<int, bool> conditional)
-        {
-            InputDialog id = new InputDialog(message);
-            return id.GetIntInput(conditional);
-        }
-
+        InputDialog id = new InputDialog(message);
+        return id.GetIntInput(conditional);
     }
+
 }

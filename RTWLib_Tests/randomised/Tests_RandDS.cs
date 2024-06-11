@@ -6,14 +6,12 @@ using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
-using RTWLibPlus.parsers;
 using RTWLibPlus.parsers.objects;
 using RTWLibPlus.randomiser;
 
 [TestClass]
 public class Tests_RandDS
 {
-    private readonly DepthParse dp = new();
     private readonly TWConfig config = TWConfig.LoadConfig(@"resources/remaster.json");
     private readonly RandWrap rand = new("test");
     [TestMethod]

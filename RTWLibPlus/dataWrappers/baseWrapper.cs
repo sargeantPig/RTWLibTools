@@ -1,11 +1,8 @@
 ﻿namespace RTWLibPlus.dataWrappers;
-using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
-using System.IO;
 using System.Linq;
 
 public abstract class BaseWrapper
@@ -32,7 +29,7 @@ public abstract class BaseWrapper
     /// Location is a collection of strings that represent the tags. Once the final string is found it will return the corresponding kv
     /// </summary>
     /// <param name="location"></param>
-    public bool ModifyValue(List<IBaseObj> items, string newValue, int locInd = 0, bool done = false, params string[] location)
+    public static bool ModifyValue(List<IBaseObj> items, string newValue, int locInd = 0, bool done = false, params string[] location)
     {
         foreach (BaseObj item in items)
         {
@@ -45,7 +42,7 @@ public abstract class BaseWrapper
                 }
                 else if (item.GetItems().Count > 0)
                 {
-                    done = this.ModifyValue(item.GetItems(), newValue, ++locInd, done, location);
+                    done = ModifyValue(item.GetItems(), newValue, ++locInd, done, location);
                 }
                 else
                 {
@@ -56,7 +53,7 @@ public abstract class BaseWrapper
 
         return done;
     }
-    public void DeleteValue(List<IBaseObj> items, string ident, int locInd = 0)
+    public static void DeleteValue(List<IBaseObj> items, string ident, int locInd = 0)
     {
         for (int i = 0; i < items.Count; i++)
         {
@@ -71,7 +68,7 @@ public abstract class BaseWrapper
 
             if (item.GetItems().Count > 0)
             {
-                this.DeleteValue(item.GetItems(), ident, ++locInd);
+                DeleteValue(item.GetItems(), ident, ++locInd);
             }
         }
     }
@@ -190,7 +187,7 @@ public abstract class BaseWrapper
         return chunks;
     }
 
-    public bool AddObjToList(List<IBaseObj> items, IBaseObj obj, int locInd = 0, bool done = false, params string[] location)
+    public static bool AddObjToList(List<IBaseObj> items, IBaseObj obj, int locInd = 0, bool done = false, params string[] location)
     {
         foreach (BaseObj item in items)
         {
@@ -203,13 +200,13 @@ public abstract class BaseWrapper
                 }
                 else
                 {
-                    done = this.AddObjToList(item.GetItems(), obj, ++locInd, done, location);
+                    done = AddObjToList(item.GetItems(), obj, ++locInd, done, location);
                 }
             }
         }
         return done;
     }
-    public bool InsertNewObjectByCriteria(List<IBaseObj> items, IBaseObj obj, params string[] criteriaTags)
+    public static bool InsertNewObjectByCriteria(List<IBaseObj> items, IBaseObj obj, params string[] criteriaTags)
     {
         bool[] criteria = new bool[criteriaTags.Length];
         int currCrit = 0;
@@ -237,7 +234,7 @@ public abstract class BaseWrapper
     }
     public List<IBaseObj> GetItemsByIdent(string ident)
     {
-        List<IBaseObj> found = new();
+        List<IBaseObj> found = [];
         foreach (BaseObj item in this.Data)
         {
             if (item.Ident == ident)
@@ -260,7 +257,7 @@ public abstract class BaseWrapper
     {
         bool[] criteria = new bool[criteriaTags.Length];
         int currCrit = 0;
-        List<IBaseObj> found = new();
+        List<IBaseObj> found = [];
 
 
         foreach (BaseObj item in this.Data)
@@ -289,7 +286,7 @@ public abstract class BaseWrapper
     {
         bool[] criteria = new bool[criteriaTags.Length];
         int currCrit = 0;
-        List<IBaseObj> found = new();
+        List<IBaseObj> found = [];
         foreach (BaseObj item in list)
         {
             if (item.Ident == criteriaTags[currCrit] || item.Tag == criteriaTags[currCrit])
@@ -303,7 +300,7 @@ public abstract class BaseWrapper
 
             if (criteria.All((x) => x))
             {
-                found.Add(this.GetItemAtLocation(item.GetItems(), 0, lookFor));
+                found.Add(GetItemAtLocation(item.GetItems(), 0, lookFor));
                 currCrit = 0;
                 criteria = new bool[criteriaTags.Length];
             }
@@ -318,7 +315,7 @@ public abstract class BaseWrapper
     {
         bool[] criteria = new bool[criteriaTags.Length];
         int currCrit = 0;
-        List<IBaseObj> found = new();
+        List<IBaseObj> found = [];
         foreach (BaseObj item in this.Data)
         {
             if (item.Ident == criteriaTags[currCrit] || item.Tag == criteriaTags[currCrit])
@@ -345,7 +342,7 @@ public abstract class BaseWrapper
     {
         bool[] criteria = new bool[criteriaTags.Length];
         int currCrit = 0;
-        List<IBaseObj> found = new();
+        List<IBaseObj> found = [];
         foreach (BaseObj item in this.Data)
         {
             if (item.Ident == criteriaTags[currCrit] || item.Tag == criteriaTags[currCrit])
@@ -368,7 +365,7 @@ public abstract class BaseWrapper
         }
         return found;
     }
-    public List<IBaseObj> GetItemList(List<IBaseObj> items, int locInd = 0, params string[] location)
+    public static List<IBaseObj> GetItemList(List<IBaseObj> items, int locInd = 0, params string[] location)
     {
         foreach (BaseObj item in items)
         {
@@ -381,13 +378,13 @@ public abstract class BaseWrapper
                 }
                 else
                 {
-                    return this.GetItemList(item.GetItems(), ++locInd, location);
+                    return GetItemList(item.GetItems(), ++locInd, location);
                 }
             }
         }
         return null;
     }
-    public IBaseObj GetItemAtLocation(List<IBaseObj> items, int locInd = 0, params string[] location)
+    public static IBaseObj GetItemAtLocation(List<IBaseObj> items, int locInd = 0, params string[] location)
     {
         foreach (BaseObj item in items)
         {
@@ -399,7 +396,7 @@ public abstract class BaseWrapper
                 }
                 else if (item.GetItems().Count > 0)
                 {
-                    return this.GetItemAtLocation(item.GetItems(), ++locInd, location);
+                    return GetItemAtLocation(item.GetItems(), ++locInd, location);
                 }
                 else
                 {
@@ -409,7 +406,7 @@ public abstract class BaseWrapper
         }
         return null;
     }
-    public KeyValuePair<string, string> GetKeyValueAtLocation(List<IBaseObj> items, int locInd = 0, params string[] location)
+    public static KeyValuePair<string, string> GetKeyValueAtLocation(List<IBaseObj> items, int locInd = 0, params string[] location)
     {
         foreach (BaseObj item in items)
         {
@@ -421,7 +418,7 @@ public abstract class BaseWrapper
                 }
                 else if (item.GetItems().Count > 0)
                 {
-                    return this.GetKeyValueAtLocation(item.GetItems(), ++locInd, location);
+                    return GetKeyValueAtLocation(item.GetItems(), ++locInd, location);
                 }
                 else
                 {
@@ -440,7 +437,7 @@ public abstract class BaseWrapper
                 continue;
             }
 
-            if (this.CheckForValue(item.GetItems(), lookFor))
+            if (CheckForValue(item.GetItems(), lookFor))
             {
                 return item;
             }
@@ -463,14 +460,14 @@ public abstract class BaseWrapper
                 continue;
             }
 
-            if (this.CheckForValue(item.GetItems(), contentsValue))
+            if (CheckForValue(item.GetItems(), contentsValue))
             {
                 return atLook;
             }
         }
         return null;
     }
-    public int GetIndexByCriteria(List<IBaseObj> items, params string[] criteria)
+    public static int GetIndexByCriteria(List<IBaseObj> items, params string[] criteria)
     {
         int critIndex = 0;
         for (int i = 0; i < items.Count; i++)
@@ -491,7 +488,7 @@ public abstract class BaseWrapper
         return -1;
     }
     public void InsertAt(int index, IBaseObj objToAdd) => this.Data.Insert(index, objToAdd);
-    private bool CheckForValue(List<IBaseObj> items, string lookFor)
+    private static bool CheckForValue(List<IBaseObj> items, string lookFor)
     {
         foreach (BaseObj item in items)
         {
@@ -502,7 +499,7 @@ public abstract class BaseWrapper
 
             if (item.GetItems().Count > 0)
             {
-                return this.CheckForValue(item.GetItems(), lookFor);
+                return CheckForValue(item.GetItems(), lookFor);
             }
         }
         return false;

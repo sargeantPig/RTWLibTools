@@ -9,7 +9,7 @@ using System.Text;
 
 public class DepthParse
 {
-    private readonly List<IBaseObj> list = new();
+    private readonly List<IBaseObj> list = [];
 
     public delegate IBaseObj ObjectCreator(string value, string tag, int depth);
     public List<IBaseObj> Parse(string[] lines, ObjectCreator creator, char splitter = ' ')
@@ -69,14 +69,14 @@ public class DepthParse
 
         if (removeEmptyLines)
         {
-            return this.GetLinesRemoveEmpty(text);
+            return GetLinesRemoveEmpty(text);
         }
         else
         {
-            return this.GetLines(text);
+            return GetLines(text);
         }
     }
-    public string ReadFileAsString(string path)
+    public static string ReadFileAsString(string path)
     {
         StreamReader streamReader = new(path, Encoding.UTF8);
         string text = streamReader.ReadToEnd();
@@ -92,15 +92,15 @@ public class DepthParse
         }
         else if (depth > 0)
         {
-            this.AddWithDepth(creator, this.list, depth, 0, tag, value);
+            AddWithDepth(creator, this.list, depth, 0, tag, value);
         }
     }
-    private void AddWithDepth(ObjectCreator creator, List<IBaseObj> objs, int depth, int currentDepth, string tag, string value)
+    private static void AddWithDepth(ObjectCreator creator, List<IBaseObj> objs, int depth, int currentDepth, string tag, string value)
     {
         int item = objs.Count - 1;
         if (depth != currentDepth)
         {
-            this.AddWithDepth(creator, objs[item].GetItems(), depth, ++currentDepth, tag, value);
+            AddWithDepth(creator, objs[item].GetItems(), depth, ++currentDepth, tag, value);
         }
         else
         {
@@ -116,10 +116,10 @@ public class DepthParse
         }
         else if (depth > 0)
         {
-            this.SetNLWithDepth(this.list, depth, value, 0);
+            SetNLWithDepth(this.list, depth, value, 0);
         }
     }
-    private void SetNLWithDepth(List<IBaseObj> objs, int depth, int value, int currentDepth)
+    private static void SetNLWithDepth(List<IBaseObj> objs, int depth, int value, int currentDepth)
     {
         int item = objs.Count - 1;
         List<IBaseObj> itesm = objs[item].GetItems();
@@ -129,13 +129,13 @@ public class DepthParse
         }
         else if (depth != currentDepth)
         {
-            this.SetNLWithDepth(objs[item].GetItems(), depth, value, ++currentDepth);
+            SetNLWithDepth(objs[item].GetItems(), depth, value, ++currentDepth);
         }
         else
         {
             ((BaseObj)objs[item]).NewLinesAfter = value;
         }
     }
-    private string[] GetLinesRemoveEmpty(string text) => text.Split(Format.UniversalNewLine(), StringSplitOptions.RemoveEmptyEntries);
-    private string[] GetLines(string text) => text.Split(Format.UniversalNewLine());
+    private static string[] GetLinesRemoveEmpty(string text) => text.Split(Format.UniversalNewLine(), StringSplitOptions.RemoveEmptyEntries);
+    private static string[] GetLines(string text) => text.Split(Format.UniversalNewLine());
 }

@@ -58,9 +58,9 @@ public class CityMap
     {
         for (int i = 0; i < image.Pixels.Length; i++)
         {
-            Vector2 coord = this.ConvertIndexToCoordinates(i, image.RefHeader.Width);
+            Vector2 coord = ConvertIndexToCoordinates(i, image.RefHeader.Width);
             Vector2 upCoord = new(coord.X, coord.Y + 1);
-            int upInd = this.ConvertCoordinatesToIndex(upCoord, image.RefHeader.Width, image.RefHeader.Height);
+            int upInd = ConvertCoordinatesToIndex(upCoord, image.RefHeader.Width, image.RefHeader.Height);
 
             PIXEL pixel = image.Pixels[i];
             PIXEL upPixel = image.Pixels[upInd];
@@ -81,7 +81,7 @@ public class CityMap
     {
         for (int i = 0; i < image.Pixels.Length; i++)
         {
-            Vector2 coord = this.ConvertIndexToCoordinates(i, image.RefHeader.Width);
+            Vector2 coord = ConvertIndexToCoordinates(i, image.RefHeader.Width);
             Vector2 upCoord = new(coord.X, coord.Y + 1);
             Vector2 rightCoord = new(coord.X + 1, coord.Y);
             Vector2 leftCoord = new(coord.X - 1, coord.Y);
@@ -91,10 +91,10 @@ public class CityMap
             coord.Y = Math.Clamp(coord.Y, 0, this.Height - 1);
             PIXEL pixel = image.Pixels[i];
             PIXEL up, left, right, down;
-            int iup = this.ConvertCoordinatesToIndex(upCoord, image.RefHeader.Width, image.RefHeader.Height);
-            int ileft = this.ConvertCoordinatesToIndex(leftCoord, image.RefHeader.Width, image.RefHeader.Height);
-            int iright = this.ConvertCoordinatesToIndex(rightCoord, image.RefHeader.Width, image.RefHeader.Height);
-            int idown = this.ConvertCoordinatesToIndex(downCoord, image.RefHeader.Width, image.RefHeader.Height);
+            int iup = ConvertCoordinatesToIndex(upCoord, image.RefHeader.Width, image.RefHeader.Height);
+            int ileft = ConvertCoordinatesToIndex(leftCoord, image.RefHeader.Width, image.RefHeader.Height);
+            int iright = ConvertCoordinatesToIndex(rightCoord, image.RefHeader.Width, image.RefHeader.Height);
+            int idown = ConvertCoordinatesToIndex(downCoord, image.RefHeader.Width, image.RefHeader.Height);
             up = image.Pixels[iup];
             left = image.Pixels[ileft];
             down = image.Pixels[idown];
@@ -114,9 +114,9 @@ public class CityMap
         }
     }
 
-    private Vector2 ConvertIndexToCoordinates(int i, int width) => new(i % width, i / width);
+    private static Vector2 ConvertIndexToCoordinates(int i, int width) => new(i % width, i / width);
 
-    private int ConvertCoordinatesToIndex(Vector2 coord, int width, int height)
+    private static int ConvertCoordinatesToIndex(Vector2 coord, int width, int height)
     {
         if (coord.X < 0 || coord.Y < 0 || coord.Y >= height || coord.X >= width)
         {

@@ -1,7 +1,6 @@
 ﻿namespace RTWLib_Tests.wrappers;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RTWLib_CLI.cmd;
 using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
@@ -27,7 +26,7 @@ public class Tests_ds
 
         string result = parsedds.Output();
 
-        string expected = this.dp.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
+        string expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
 
         int rl = result.Length;  //123502
         int el = expected.Length; //127957
@@ -106,7 +105,7 @@ public class Tests_ds
         DS parsedds = new(dsParse, this.config);
 
         List<IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
-        parsedds.DeleteValue(parsedds.Data, "settlement");
+        BaseWrapper.DeleteValue(parsedds.Data, "settlement");
         List<IBaseObj> result = parsedds.GetItemsByIdent("settlement");
         int expected = 0; //number of ca
 
@@ -120,7 +119,7 @@ public class Tests_ds
         DS parsedds = new(dsParse, this.config);
 
         List<IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
-        bool add = parsedds.InsertNewObjectByCriteria(parsedds.Data, settlements[30], "faction\tromans_brutii,", "denari");
+        bool add = BaseWrapper.InsertNewObjectByCriteria(parsedds.Data, settlements[30], "faction\tromans_brutii,", "denari");
         List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tromans_brutii,");
         int expected = 3; //number of ca
 
@@ -134,7 +133,7 @@ public class Tests_ds
         DS parsedds = new(dsParse, this.config);
 
         List<IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
-        bool add = parsedds.InsertNewObjectByCriteria(parsedds.Data, settlements[30], "faction\tscythia,", "denari");
+        bool add = BaseWrapper.InsertNewObjectByCriteria(parsedds.Data, settlements[30], "faction\tscythia,", "denari");
         List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tscythia,");
         int expected = 5; //number of ca
         Assert.AreEqual(expected, result.Count); //check number of returned ca
@@ -172,7 +171,7 @@ public class Tests_ds
         List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
         DS parsedds = new(dsParse, this.config);
         List<IBaseObj> units = parsedds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
-        bool add = parsedds.InsertNewObjectByCriteria(parsedds.Data, units[1], "faction\tromans_julii,", "character\tFlavius", "unit");
+        bool add = BaseWrapper.InsertNewObjectByCriteria(parsedds.Data, units[1], "faction\tromans_julii,", "character\tFlavius", "unit");
         List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
         int expected = 6; //number of ca
         Assert.AreEqual(expected, result.Count); //check number of returned ca

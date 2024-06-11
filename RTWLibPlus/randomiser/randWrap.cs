@@ -18,7 +18,7 @@ public class RandWrap
 
     public void RefreshRndSeed() => this.RefreshRndSeed(this.seed);
 
-    public int Rint(int min, int max) => RND.Next(min, max);
+    public static int Rint(int min, int max) => RND.Next(min, max);
 
     public static Random RND { get; private set; } = new();
 

@@ -1,6 +1,5 @@
 ﻿namespace RTWLib_Tests.helper;
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLibPlus.helpers;
 

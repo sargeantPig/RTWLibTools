@@ -2,7 +2,6 @@ namespace RTWLibPlus.Modifiers;
 
 using System.Collections.Generic;
 using System.Numerics;
-using System.Runtime.CompilerServices;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
@@ -26,7 +25,7 @@ public class StratModifier
 
     public static List<IBaseObj> CreateSettlements(IBaseObj dummySettlement, List<string> regionNames)
     {
-        List<IBaseObj> settlements = new();
+        List<IBaseObj> settlements = [];
         foreach (string region in regionNames)
         {
             settlements.Add(CreateSettlement(dummySettlement, region));

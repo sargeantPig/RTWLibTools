@@ -9,7 +9,7 @@ public class DRObj : BaseObj, IBaseObj
         base(tag, value, depth)
     {
         WSConfigFactory factory = new();
-        this.WhiteSpaceConfig = factory.Create_DR_DS_SMF_WhiteSpace();
+        this.WhiteSpaceConfig = WSConfigFactory.Create_DR_DS_SMF_WhiteSpace();
         this.Ident = this.Tag.Split(this.WhiteSpaceChar)[0];
     }
 

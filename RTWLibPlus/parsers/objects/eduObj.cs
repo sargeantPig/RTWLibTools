@@ -11,7 +11,7 @@ public class EDUObj : BaseObj, IBaseObj
         base(tag, value, depth)
     {
         WSConfigFactory factory = new();
-        this.WhiteSpaceConfig = factory.Create_EDU_DMB_WhiteSpace();
+        this.WhiteSpaceConfig = WSConfigFactory.Create_EDU_DMB_WhiteSpace();
         this.Ident = this.Tag.Split(this.WhiteSpaceChar)[0];
     }
 

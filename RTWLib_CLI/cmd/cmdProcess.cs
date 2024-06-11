@@ -6,13 +6,12 @@ using System.Reflection;
 using RTWLibPlus.helpers;
 using System.IO;
 using RTWLibPlus.parsers;
-using RTWLib_CLI.draw;
 
 
 public static class CMDProcess
 {
-    public static Dictionary<string, string[]> templates = new();
-    public static Dictionary<int, string> configs = new();
+    public static Dictionary<string, string[]> templates = [];
+    public static Dictionary<int, string> configs = [];
 
     public static ModuleRegister modules = new();
 

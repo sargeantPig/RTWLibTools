@@ -14,7 +14,7 @@ public class MountEffect
 
     public MountEffect()
     {
-        this.mountType = new List<string>();
-        this.modifier = new List<int>();
+        this.mountType = [];
+        this.modifier = [];
     }
 }

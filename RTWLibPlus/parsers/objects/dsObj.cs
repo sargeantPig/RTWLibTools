@@ -16,7 +16,7 @@ public class DSObj : ArrayObj, IBaseObj
         base(tag, value, depth)
     {
         WSConfigFactory factory = new();
-        this.WhiteSpaceConfig = factory.Create_DR_DS_SMF_WhiteSpace();
+        this.WhiteSpaceConfig = WSConfigFactory.Create_DR_DS_SMF_WhiteSpace();
         string[] tagS = tag.Split(this.WhiteSpaceConfig.WhiteChar);
         this.Ident = tagS[0];
     }
@@ -51,7 +51,7 @@ public class DSObj : ArrayObj, IBaseObj
         output = this.IfResource(output);
         output = this.IfRelative(output);
         output = this.IfCharacterRecord(output);
-        output += this.GetNewLine(this.NewLinesAfter);
+        output += GetNewLine(this.NewLinesAfter);
         return output;
     }
 
@@ -246,7 +246,7 @@ public class DSObj : ArrayObj, IBaseObj
 
     private string GetTabbedLine(int end) => Format.GetWhiteSpace("", end, this.WhiteSpaceChar);
 
-    private string GetNewLine(int end) => Format.GetWhiteSpace("", end, Format.UniversalNewLine());
+    private static string GetNewLine(int end) => Format.GetWhiteSpace("", end, Format.UniversalNewLine());
 
     public bool LastOfGroup { get; set; }
 

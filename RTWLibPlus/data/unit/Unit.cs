@@ -341,7 +341,7 @@ public class Unit : IComparable<Unit>
 
         float[] values = new float[] { attk, charg, secAttk, secCharge };
 
-        this.AdjustFinalMod(ref finalmod, values, 0.05f);
+        AdjustFinalMod(ref finalmod, values, 0.05f);
 
         return attk + charg + secAttk + secCharge;
     }
@@ -433,7 +433,7 @@ public class Unit : IComparable<Unit>
 
         float[] values = new float[] { priap, pribp, area, secap, secbp, longPike, launch };
 
-        this.AdjustFinalMod(ref finalmod, values, 0.3f);
+        AdjustFinalMod(ref finalmod, values, 0.3f);
 
 
         return priap + pribp + area + secap + secbp + longPike + launch;
@@ -473,7 +473,7 @@ public class Unit : IComparable<Unit>
 
         float[] values = new float[] { frightenFoot, frightenMounted, command };
 
-        this.AdjustFinalMod(ref finalmod, values, 0.2f);
+        AdjustFinalMod(ref finalmod, values, 0.2f);
 
         return frightenFoot + frightenMounted + command;
     }
@@ -534,12 +534,12 @@ public class Unit : IComparable<Unit>
 
         float[] values = new float[] { armourF, armourD, armourS };
 
-        this.AdjustFinalMod(ref finalmod, values, 0.05f);
+        AdjustFinalMod(ref finalmod, values, 0.05f);
 
         return armourF + armourD + armourS;
     }
 
-    private void AdjustFinalMod(ref float finalmod, float[] values, float scale = 0.1f)
+    private static void AdjustFinalMod(ref float finalmod, float[] values, float scale = 0.1f)
     {
         foreach (float val in values)
         {

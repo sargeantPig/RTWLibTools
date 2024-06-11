@@ -12,7 +12,7 @@ public class FactionMap
 
     public void PaintRegionMap(TGA regions, TGA baseMap, DS ds, DR dr, SMF smf, string mapDir)
     {
-        Dictionary<string, TGA> factionMaps = this.InitialiseMaps(baseMap, mapDir, smf.GetFactions().ToArray());
+        Dictionary<string, TGA> factionMaps = InitialiseMaps(baseMap, mapDir, smf.GetFactions().ToArray());
         TGA complete = baseMap.Copy("", "fullMap.tga");
         Dictionary<string, List<IBaseObj>> settlementsByFaction = ds.GetSettlementsByFaction(smf);
         //loop Pixels
@@ -54,12 +54,12 @@ public class FactionMap
             //get which faction has the region
             string faction = ds.GetFactionByRegion(region);
             //get faction colours
-            string pri = smf.GetKeyValueAtLocation(smf.Data, 0, faction, "colours", "primary").Value;
-            string sec = smf.GetKeyValueAtLocation(smf.Data, 0, faction, "colours", "secondary").Value;
+            string pri = BaseWrapper.GetKeyValueAtLocation(smf.Data, 0, faction, "colours", "primary").Value;
+            string sec = BaseWrapper.GetKeyValueAtLocation(smf.Data, 0, faction, "colours", "secondary").Value;
             PIXEL primaryCol = pri.ColourToPixel();
             PIXEL secondaryCol = sec.ColourToPixel();
             //check for border
-            int bc = this.BorderCheck(i, regions, regions.Pixels[i]);
+            int bc = BorderCheck(i, regions, regions.Pixels[i]);
             if (bc is >= 1 and < 4)
             {
                 //paint border
@@ -81,9 +81,9 @@ public class FactionMap
         complete.Output();
     }
 
-    private Dictionary<string, TGA> InitialiseMaps(TGA baseMap, string mapDir, string[] factionList)
+    private static Dictionary<string, TGA> InitialiseMaps(TGA baseMap, string mapDir, string[] factionList)
     {
-        Dictionary<string, TGA> factionMaps = new();
+        Dictionary<string, TGA> factionMaps = [];
 
         foreach (string f in factionList)
         {
@@ -94,7 +94,7 @@ public class FactionMap
         return factionMaps;
     }
 
-    private int BorderCheck(int index, TGA rm, PIXEL mc)
+    private static int BorderCheck(int index, TGA rm, PIXEL mc)
     {
         int bcount = 0;
         Vector2 coord = rm.ConvertIndexToCoordinates(index);

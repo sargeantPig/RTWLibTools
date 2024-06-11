@@ -65,29 +65,29 @@ public class TGA : IWrapper
         }
 
         // Display the Header fields
-        RefHeader.Idlength = (char)fptr.ReadByte();
+        this.RefHeader.Idlength = (char)fptr.ReadByte();
         //Console.Error.WriteLine("ID length:         {0}", Header.idlength);
-        RefHeader.Colourmaptype = (char)fptr.ReadByte();
+        this.RefHeader.Colourmaptype = (char)fptr.ReadByte();
         //Console.Error.WriteLine("Colourmap type:    {0}", Header.colourmaptype);
-        RefHeader.Datatypecode = (char)fptr.ReadByte();
+        this.RefHeader.Datatypecode = (char)fptr.ReadByte();
         //Console.Error.WriteLine("Image type:        {0}", Header.datatypecode);
-        RefHeader.Colourmaporigin = this.ReadShort(fptr);
+        this.RefHeader.Colourmaporigin = ReadShort(fptr);
         // Console.Error.WriteLine("Colour map offset: {0}", Header.colourmaporigin);
-        RefHeader.Colourmaplength = this.ReadShort(fptr);
+        this.RefHeader.Colourmaplength = ReadShort(fptr);
         //Console.Error.WriteLine("Colour map length: {0}", Header.colourmaplength);
-        RefHeader.Colourmapdepth = (char)fptr.ReadByte();
+        this.RefHeader.Colourmapdepth = (char)fptr.ReadByte();
         //Console.Error.WriteLine("Colour map depth:  {0}", Header.colourmapdepth);
-        RefHeader.Xorigin = this.ReadShort(fptr);
+        this.RefHeader.Xorigin = ReadShort(fptr);
         //Console.Error.WriteLine("X origin:          {0}", Header.x_origin);
-        RefHeader.Yorigin = this.ReadShort(fptr);
+        this.RefHeader.Yorigin = ReadShort(fptr);
         // Console.Error.WriteLine("Y origin:          {0}", Header.y_origin);
-        RefHeader.Width = this.ReadShort(fptr);
+        this.RefHeader.Width = ReadShort(fptr);
         //Console.Error.WriteLine("Width:             {0}", Header.width);
-        RefHeader.Height = this.ReadShort(fptr);
+        this.RefHeader.Height = ReadShort(fptr);
         //Console.Error.WriteLine("Height:            {0}", Header.height);
-        RefHeader.Bitsperpixel = (char)fptr.ReadByte();
+        this.RefHeader.Bitsperpixel = (char)fptr.ReadByte();
         //Console.Error.WriteLine("Bits per pixel:    {0}", Header.bitsperpixel);
-        RefHeader.Imagedescriptor = (char)fptr.ReadByte();
+        this.RefHeader.Imagedescriptor = (char)fptr.ReadByte();
         //Console.Error.WriteLine("Descriptor:        {0}", Header.imagedescriptor);
 
         // Allocate space for the image
@@ -141,13 +141,13 @@ public class TGA : IWrapper
     private int CompressedBlock(int n, out int i, out int j, int bytes2read, byte[] p, FileStream fptr)
     {
         j = p[0] & 0x7f;
-        this.MergeBytes(ref this.Pixels[n], p.AsSpan(1).ToArray(), bytes2read);
+        MergeBytes(ref this.Pixels[n], p.AsSpan(1).ToArray(), bytes2read);
         n++;
         if ((p[0] & 0x80) != 0)
         {         // RLE chunk
             for (i = 0; i < j; i++)
             {
-                this.MergeBytes(ref this.Pixels[n], p.AsSpan(1).ToArray(), bytes2read);
+                MergeBytes(ref this.Pixels[n], p.AsSpan(1).ToArray(), bytes2read);
                 n++;
             }
         }
@@ -166,7 +166,7 @@ public class TGA : IWrapper
     private void UncompressedBlock(int n, int i, int bytes2read, byte[] p, FileStream fptr)
     {
         CheckEoF(i, bytes2read, 0, p, fptr);
-        this.MergeBytes(ref this.Pixels[n], p, bytes2read);
+        MergeBytes(ref this.Pixels[n], p, bytes2read);
     }
 
     private static void CheckEoF(int i, int bytes2read, int offset, byte[] p, FileStream fptr)
@@ -221,7 +221,7 @@ public class TGA : IWrapper
         return "TGA Written to " + this.OutputPath;
     }
 
-    public void MergeBytes(ref PIXEL pixel, byte[] p, int bytes)
+    public static void MergeBytes(ref PIXEL pixel, byte[] p, int bytes)
     {
         if (bytes == 4)
         {
@@ -246,7 +246,7 @@ public class TGA : IWrapper
         }
     }
 
-    private short ReadShort(FileStream fptr)
+    private static short ReadShort(FileStream fptr)
     {
         byte[] buffer = new byte[2];
         fptr.Read(buffer, 0, 2);

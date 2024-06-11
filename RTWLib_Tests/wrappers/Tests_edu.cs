@@ -23,7 +23,7 @@ public class Tests_edu
         EDU parsedds = new(eduParse, this.config);
 
         string result = parsedds.Output();
-        string expected = this.dp.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_unit.txt"));
+        string expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_unit.txt"));
 
         int rl = result.Length;
         int el = expected.Length;
@@ -38,7 +38,7 @@ public class Tests_edu
         string[] edu = this.dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
         List<IBaseObj> eduParse = this.dp.Parse(edu, Creator.EDUcreator);
         EDU parsedds = new(eduParse, this.config);
-        KeyValuePair<string, string> result = parsedds.GetKeyValueAtLocation(parsedds.Data, 0, "roman_hastati", "ownership");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedds.Data, 0, "roman_hastati", "ownership");
         KeyValuePair<string, string> expected = new("ownership", "roman"); //number of ca
 
         Assert.AreEqual(expected, result); //check number of returned ca
@@ -50,8 +50,8 @@ public class Tests_edu
         List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
         EDU parsedds = new(parse, this.config);
 
-        bool change = parsedds.ModifyValue(parsedds.Data, "roman", 0, false, "carthaginian_generals_cavalry_early", "ownership");
-        KeyValuePair<string, string> result = parsedds.GetKeyValueAtLocation(parsedds.Data, 0, "carthaginian_generals_cavalry_early", "ownership");
+        bool change = BaseWrapper.ModifyValue(parsedds.Data, "roman", 0, false, "carthaginian_generals_cavalry_early", "ownership");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedds.Data, 0, "carthaginian_generals_cavalry_early", "ownership");
         KeyValuePair<string, string> expected = new("ownership", "roman");
 
         Assert.AreEqual(expected, result);
@@ -70,10 +70,10 @@ public class Tests_edu
             o.Value = "roman";
         }
 
-        KeyValuePair<string, string> result1 = edu.GetKeyValueAtLocation(edu.Data, 0, "carthaginian_generals_cavalry_early", "ownership");
+        KeyValuePair<string, string> result1 = BaseWrapper.GetKeyValueAtLocation(edu.Data, 0, "carthaginian_generals_cavalry_early", "ownership");
         KeyValuePair<string, string> expected1 = new("ownership", "roman");
 
-        KeyValuePair<string, string> result2 = edu.GetKeyValueAtLocation(edu.Data, 0, "roman_arcani", "ownership");
+        KeyValuePair<string, string> result2 = BaseWrapper.GetKeyValueAtLocation(edu.Data, 0, "roman_arcani", "ownership");
         KeyValuePair<string, string> expected2 = new("ownership", "roman");
 
         Assert.AreEqual(expected1, result1);
@@ -86,7 +86,7 @@ public class Tests_edu
         List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
         EDU parsedds = new(parse, this.config);
         parsedds.RemoveAttributesAll("general_unit", "general_unit_upgrade \"marian_reforms\"");
-        KeyValuePair<string, string> result = parsedds.GetKeyValueAtLocation(parsedds.Data, 0, "barb_chieftain_cavalry_german", "attributes");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedds.Data, 0, "barb_chieftain_cavalry_german", "attributes");
         KeyValuePair<string, string> expected = new("attributes", "sea_faring, hide_forest, hardy");
         List<IBaseObj> attr = parsedds.GetItemsByIdent("attributes");
 

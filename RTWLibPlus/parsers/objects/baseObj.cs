@@ -149,7 +149,7 @@ public abstract class BaseObj : IBaseObj
         set => this.whiteSpaceConfig.WhiteDepthMultiplier = value;
     }
 
-    public List<IBaseObj> Items { get; set; } = new();
+    public List<IBaseObj> Items { get; set; } = [];
 
 
 }

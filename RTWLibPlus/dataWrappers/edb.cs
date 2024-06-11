@@ -39,12 +39,12 @@ public class EDB : BaseWrapper, IWrapper
         {
             if (obj.Tag == "building" || obj.Value == "building")
             {
-                this.Swap(obj);
+                Swap(obj);
             }
         }
     }
 
-    private void Swap(BaseObj obj) => (obj.Value, obj.Tag) = (obj.Tag, obj.Value);
+    private static void Swap(BaseObj obj) => (obj.Value, obj.Tag) = (obj.Tag, obj.Value);
 
     public string Output()
     {

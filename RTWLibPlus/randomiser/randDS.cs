@@ -1,6 +1,5 @@
 ﻿namespace RTWLibPlus.randomiser;
 
-using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
@@ -18,7 +17,7 @@ public static class RandDS
         rnd.RefreshRndSeed();
 
         List<IBaseObj> settlements = ds.GetItemsByIdent("settlement").DeepCopy();
-        ds.DeleteValue(ds.Data, "settlement");
+        BaseWrapper.DeleteValue(ds.Data, "settlement");
         List<string> factionList = smf.GetFactions();
         List<string> missingRegions = DRModifier.GetMissingRegionNames(settlements, dr);
         settlements.AddRange(StratModifier.CreateSettlements(settlements[1], missingRegions));
@@ -35,7 +34,7 @@ public static class RandDS
                     break;
                 }
 
-                ds.InsertNewObjectByCriteria(ds.Data, settlements.GetRandom(out int index, RandWrap.RND), string.Format("faction\t{0},", faction), "denari");
+                BaseWrapper.InsertNewObjectByCriteria(ds.Data, settlements.GetRandom(out int index, RandWrap.RND), string.Format("faction\t{0},", faction), "denari");
                 settlements.RemoveAt(index);
             }
         }
@@ -51,7 +50,7 @@ public static class RandDS
         List<IBaseObj> settlements = ds.GetItemsByIdent("settlement").DeepCopy();
         List<string> missingRegions = DRModifier.GetMissingRegionNames(settlements, dr);
         settlements.AddRange(StratModifier.CreateSettlements(settlements[1], missingRegions));
-        ds.DeleteValue(ds.Data, "settlement");
+        BaseWrapper.DeleteValue(ds.Data, "settlement");
         List<string> factions = smf.GetFactions();
         Vector2[] vp = Voronoi.GetVoronoiPoints(factions.Count, cm.Width, cm.Height, rnd);
         List<string[]> gh = Voronoi.GetVoronoiGroups(cm.CityCoordinates, vp);
@@ -69,7 +68,7 @@ public static class RandDS
 
                 if (city != null)
                 {
-                    ds.InsertNewObjectByCriteria(ds.Data, city, string.Format("faction\t{0},", factions[i]), "denari");
+                    BaseWrapper.InsertNewObjectByCriteria(ds.Data, city, string.Format("faction\t{0},", factions[i]), "denari");
                 }
             }
         }

@@ -1,6 +1,4 @@
 ﻿namespace RTWLib_CLI.cmd.modules;
-
-using RTWLib_CLI.draw;
 using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.dataWrappers.TGA;
@@ -11,33 +9,19 @@ using RTWLibPlus.randomiser;
 using System;
 using System.Collections.Generic;
 
-public class RandCMD
+public class RandCMD(TWConfig config)
 {
-    TWConfig config;
-    RandWrap rnd;
-    DMB dmb;
-    EDB edb;
-    EDU edu;
-    DS ds;
-    DR dr;
-    SMF smf;
-    TGA mr;
-    TGA bm;
-    CityMap cm = new();
-
-    public RandCMD(TWConfig config)
-    {
-        this.config = config;
-        this.edb = new EDB(config.GetPath(Operation.Save, "edb"), config.GetPath(Operation.Load, "edb"));
-        this.edu = new EDU(config.GetPath(Operation.Save, "edu"), config.GetPath(Operation.Load, "edu"));
-        this.ds = new DS(config.GetPath(Operation.Save, "ds"), config.GetPath(Operation.Load, "ds"));
-        this.dr = new DR(config.GetPath(Operation.Save, "dr"), config.GetPath(Operation.Load, "dr"));
-        this.smf = new SMF(config.GetPath(Operation.Save, "smf"), config.GetPath(Operation.Load, "smf"));
-        this.dmb = new DMB(config.GetPath(Operation.Save, "dmb"), config.GetPath(Operation.Load, "dmb"));
-        this.mr = new TGA(config.GetPath(Operation.Load, "mr"), "");
-        this.bm = new TGA(config.GetPath(Operation.Load, "bm"), "");
-        this.rnd = new RandWrap("0");
-    }
+    private readonly TWConfig config = config;
+    private readonly RandWrap rnd = new("0");
+    private readonly DMB dmb = new(config.GetPath(Operation.Save, "dmb"), config.GetPath(Operation.Load, "dmb"));
+    private readonly EDB edb = new(config.GetPath(Operation.Save, "edb"), config.GetPath(Operation.Load, "edb"));
+    private readonly EDU edu = new(config.GetPath(Operation.Save, "edu"), config.GetPath(Operation.Load, "edu"));
+    private readonly DS ds = new(config.GetPath(Operation.Save, "ds"), config.GetPath(Operation.Load, "ds"));
+    private readonly DR dr = new(config.GetPath(Operation.Save, "dr"), config.GetPath(Operation.Load, "dr"));
+    private readonly SMF smf = new(config.GetPath(Operation.Save, "smf"), config.GetPath(Operation.Load, "smf"));
+    private readonly TGA mr = new(config.GetPath(Operation.Load, "mr"), "");
+    private readonly TGA bm = new(config.GetPath(Operation.Load, "bm"), "");
+    private CityMap cm = new();
 
     public string Ownership(int maxPerUnit = 3, int minimumPerUnit = 1)
     {

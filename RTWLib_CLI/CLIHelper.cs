@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace RTWLib_CLI;
 
-namespace RTWLib_CLI
+using System;
+
+public static class CLIHelper
 {
-    public static class CLIHelper
+    public static void ScreenChange(string title)
     {
-        public static void ScreenChange(string title)
-        {
-            //Console.Clear();
-            Console.WriteLine(title);
-            Console.WriteLine();
-        }
+        //Console.Clear();
+        Console.WriteLine(title);
+        Console.WriteLine();
     }
 }

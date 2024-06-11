@@ -75,7 +75,7 @@ public class EDU : BaseWrapper, IWrapper
         List<IBaseObj> ownerships = this.GetItemsByIdent("ownership");
         List<IBaseObj> type = this.GetItemsByIdent("type");
 
-        List<string> units = new();
+        List<string> units = [];
 
         for (int i = 0; i < ownerships.Count; i++)
         {

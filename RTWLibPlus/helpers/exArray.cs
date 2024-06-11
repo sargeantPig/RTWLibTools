@@ -9,7 +9,7 @@ public static class ExArray
 {
     public static Dictionary<TK, T> InitDictFromList<TK, T>(this TK[] arr, T def)
     {
-        Dictionary<TK, T> keyValuePairs = new();
+        Dictionary<TK, T> keyValuePairs = [];
         foreach (TK o in arr)
         {
             keyValuePairs.Add(o, def);
@@ -35,7 +35,7 @@ public static class ExArray
 
     public static List<IBaseObj> DeepCopy(this List<IBaseObj> list)
     {
-        List<IBaseObj> objs = new();
+        List<IBaseObj> objs = [];
 
         foreach (IBaseObj i in list)
         {
