@@ -35,6 +35,7 @@ public class SMF : BaseWrapper, IWrapper
         this.ExtractFactions();
 
     }
+
     public string Output()
     {
         string output = string.Empty;
@@ -42,7 +43,7 @@ public class SMF : BaseWrapper, IWrapper
         {
             //output += obj.Output();
         }
-        RFH.Write(this.OutputPath, output);
+        //RFH.Write(this.OutputPath, output);
         return output;
     }
 

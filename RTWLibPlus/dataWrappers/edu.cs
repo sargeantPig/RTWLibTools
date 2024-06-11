@@ -42,9 +42,10 @@ public class EDU : BaseWrapper, IWrapper
             output += obj.Output();
         }
 
-        RFH.Write(this.OutputPath, output + Format.UniversalNewLine());
+        //RFH.Write(this.OutputPath, output + Format.UniversalNewLine());
         return output + Format.UniversalNewLine();
     }
+
 
     public void PrepareEDU() => this.DeleteChunks("type", "rebalance_statblock");
 

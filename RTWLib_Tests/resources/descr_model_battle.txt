@@ -949,7 +949,7 @@ no_variation model slave, Mediterranean data/characters/barb_noble_cavalry_slave
 no_variation model thrace, Mediterranean data/characters/barb_noble_cavalry_thrace_Mediterranean_no_variation
 
 type barb_peasant
-skeleton			fs_dagger							
+skeleton			fs_dagger
 male
 body Default
 angry_face no
@@ -1071,7 +1071,7 @@ model Mediterranean data/characters/barb_screeching_woman_Mediterranean
 no_variation model Mediterranean data/characters/barb_screeching_woman_Mediterranean_no_variation
 
 type barb_scythian_lancer
-skeleton			fs_hc_spearman, fs_hc_swordsman					
+skeleton			fs_hc_spearman, fs_hc_swordsman
 male
 body Default
 angry_face no
@@ -1438,7 +1438,7 @@ model Mediterranean data/characters/carthage_numidian_cavalry_merc_Mediterranean
 no_variation model Mediterranean data/characters/carthage_numidian_cavalry_merc_Mediterranean_no_variation
 
 type carthage_numidian_javelinman
-skeleton			fs_semi_fast_javelinman, fs_semi_fast_swordsman										
+skeleton			fs_semi_fast_javelinman, fs_semi_fast_swordsman
 male
 body Default
 angry_face no
@@ -1747,7 +1747,7 @@ no_variation model Mediterranean data/characters/carthaginian_elephant_crew_cart
 
 type carthaginian_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -1918,7 +1918,7 @@ no_variation model spain, Mediterranean data/characters/carthaginian_cavalry_spa
 
 type carthaginian_lesser_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -2344,7 +2344,7 @@ no_variation model Mediterranean data/characters/carthaginian_standard_Mediterra
 
 type celt_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -2386,7 +2386,7 @@ no_variation model gauls, Mediterranean data/characters/celt_general_gauls_Medit
 
 type celt_lesser_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -2443,7 +2443,7 @@ no_variation model gauls, Mediterranean data/characters/celt_lesser_general_gaul
 no_variation model spain, Mediterranean data/characters/celt_lesser_general_spain_Mediterranean_no_variation
 
 type desert_infantry
-skeleton			fs_spearman		
+skeleton			fs_spearman
 male
 body Default
 angry_face no
@@ -2486,7 +2486,7 @@ no_variation model Mediterranean data/characters/desert_infantry_Mediterranean
 no_variation model slave, Mediterranean data/characters/desert_infantry_slave_Mediterranean
 
 type east_bedouin
-skeleton			fs_hc_swordsman		
+skeleton			fs_hc_swordsman
 male
 body Default
 angry_face no
@@ -2750,7 +2750,7 @@ model Mediterranean data/characters/east_elephant_archer_Mediterranean
 no_variation model Mediterranean data/characters/east_elephant_archer_Mediterranean_no_variation
 
 type east_female_peasant
-skeleton			fs_dagger 
+skeleton			fs_dagger
 female
 body Default
 angry_face no
@@ -2776,7 +2776,7 @@ no_variation model Mediterranean data/characters/east_female_peasant_Mediterrane
 
 type east_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -3208,7 +3208,7 @@ no_variation model slave, Mediterranean data/characters/east_horse_archer_armeni
 
 type east_lesser_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -3574,7 +3574,7 @@ model Mediterranean data/characters/egyptian_camel_archer_Mediterranean
 no_variation model Mediterranean data/characters/egyptian_camel_archer_Mediterranean_no_variation
 
 type egyptian_cavalry
-skeleton			fs_hc_swordsman										
+skeleton			fs_hc_swordsman
 male
 body SkinnyAthletic
 angry_face no
@@ -3750,7 +3750,7 @@ no_variation model Mediterranean data/characters/egyptian_elite_guards_new_egypt
 
 type egyptian_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -3804,7 +3804,7 @@ no_variation model Mediterranean data/characters/egyptian_infantry_Mediterranean
 
 type egyptian_lesser_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -4201,7 +4201,7 @@ no_variation model_flexi		data/animals/mount_horse_lod3.cas, max
 
 type german_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -4254,7 +4254,7 @@ no_variation model scythia, Mediterranean data/characters/german_general_scythia
 
 type german_lesser_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -4715,7 +4715,7 @@ no_variation model Mediterranean data/characters/greek_female_peasant_Mediterran
 
 type greek_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -5171,7 +5171,7 @@ no_variation model Mediterranean data/characters/carthage_numidian_cavalry_slave
 
 type greek_lesser_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -5949,7 +5949,7 @@ no_variation model_flexi		data/animals/mount_horse_lod3.cas, max
 
 
 type numidian_camel_rider
-skeleton			fs_hc_spearman		
+skeleton			fs_hc_spearman
 male
 body Default
 angry_face no
@@ -6724,7 +6724,7 @@ no_variation model Mediterranean data/characters/barb_female_peasant_Mediterrane
 
 type roman_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -7137,7 +7137,7 @@ no_variation model seleucid, Mediterranean data/characters/roman_legionary_cohor
 
 type roman_lesser_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -7803,7 +7803,7 @@ no_variation model Mediterranean data/characters/roman_velite_gladiator_Mediterr
 
 type slave_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman
@@ -7832,7 +7832,7 @@ no_variation model Mediterranean data/characters/slave_general_slave_Mediterrane
 
 type slave_lesser_general
 skeleton			fs_dagger
-skeleton_horse		fs_hc_swordsman	
+skeleton_horse		fs_hc_swordsman
 skeleton_elephant	fs_forest_elephant_rider
 skeleton_chariot	fs_chariot_sword
 skeleton_camel		fs_hc_swordsman

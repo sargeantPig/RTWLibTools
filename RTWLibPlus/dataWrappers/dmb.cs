@@ -5,11 +5,12 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 public class DMB : BaseWrapper, IWrapper
 {
     private readonly string name = "dmb";
+    public int DefaultNeeded { get; set; }
+    public int NoDefaultNeeded { get; set; }
 
     public string GetName() => this.name;
     public DMB(string outputPath, string loadPath)
@@ -50,11 +51,6 @@ public class DMB : BaseWrapper, IWrapper
             }
         }
 
-        // if (Directory.Exists(this.OutputPath))
-        // {
-        //     RFH.Write(this.OutputPath, output + Format.UniversalNewLine());
-        // }
-
         return output + Format.UniversalNewLine();
     }
 
@@ -62,7 +58,7 @@ public class DMB : BaseWrapper, IWrapper
     {
         Dictionary<int, int> chunks = this.GetChunkIndexes("type", "type");
         int modifier = 0;
-        int errors = 0;
+        int placement = 0;
         foreach (KeyValuePair<int, int> pair in chunks)
         {
             bool hasDefault = false;
@@ -71,6 +67,7 @@ public class DMB : BaseWrapper, IWrapper
             for (int i = pair.Key + modifier; i < pair.Key + pair.Value + modifier; i++)
             {
                 string line = this.Data[i].Output();
+
                 if (!line.StartsWith(';') && line.Contains("texture ") && line.Contains("Default "))
                 {
                     hasDefault = true;
@@ -79,10 +76,12 @@ public class DMB : BaseWrapper, IWrapper
                 if (!line.StartsWith(';') && (line.Contains("texture ") || line.Contains("texture\t")) && !line.Contains("pbr_"))
                 {
                     insertion = this.Data[i];
+                    placement = i + 1;
                 }
 
                 if (hasDefault)
                 {
+                    this.NoDefaultNeeded += 1;
                     break;
                 }
             }
@@ -93,24 +92,17 @@ public class DMB : BaseWrapper, IWrapper
 
                 if (insertion != null)
                 {
-                    this.Data.Insert(pair.Key + pair.Value + modifier, insertion);
+                    this.DefaultNeeded += 1;
+                    this.Data.Insert(placement, insertion);
                     modifier += 1;
                 }
 
+                else
+                {
+                    this.NoDefaultNeeded += 1;
+                }
+
                 continue;
-            }
-
-            else if (insertion == null)
-            {
-                errors += 1;
-                string str = this.Data[pair.Key + modifier].Value;
-                Console.WriteLine("Error no texture for: " + str + "\n");
-            }
-
-            else
-            {
-                string str = this.Data[pair.Key + modifier].Value;
-                Console.WriteLine("Error no texture for: " + str + "\n");
             }
         }
 
@@ -121,15 +113,27 @@ public class DMB : BaseWrapper, IWrapper
 
         IBaseObj copy = obj.Copy();
         string[] split = copy.Value.Split(",");
+        // handles cases where a tab is the delim
+        string[] tagSplit = copy.Tag.Split("\t");
 
-        if (split.Length == 1)
+        if (split.Length == 1 && tagSplit.Length == 1)
         {
             return null;
         }
 
-        split[0] = "Default";
-        string val = split.ToString(',');
-        copy.Value = val;
+        if (tagSplit.Length > split.Length)
+        {
+            tagSplit[1] = "Default,";
+            string val = tagSplit.ToString('\t');
+            copy.Tag = val;
+        }
+
+        else
+        {
+            split[0] = "Default";
+            string val = split.ToString(',');
+            copy.Value = val;
+        }
 
         return copy;
     }

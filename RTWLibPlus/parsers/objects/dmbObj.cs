@@ -34,6 +34,12 @@ public class DMBObj : BaseObj, IBaseObj
     public override string Output()
     {
         string output = "";
+
+        if (this.Tag == this.Value)
+        {
+            this.Value = "";
+        }
+
         output = string.Format("{0} {1}", this.Tag, this.Value);
 
         return output + Format.UniversalNewLine();

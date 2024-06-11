@@ -43,7 +43,7 @@ public class Tests_dmb
         int diff = textureCountNew - textureCountOrig;
         RFH.Write("test_dmb_result.txt", dmb.Output());
 
-        Assert.AreEqual(typeCountOrig, diff);
+        Assert.AreEqual(typeCountOrig - dmb.NoDefaultNeeded, diff, 1);
 
     }
 

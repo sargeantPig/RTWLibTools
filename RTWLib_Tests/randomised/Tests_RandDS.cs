@@ -31,7 +31,7 @@ public class Tests_RandDS
         RandDS.SwitchUnitsToRecruitable(edu, ds);
         List<IBaseObj> units = ds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
         List<string> eduUnits = edu.GetUnitsFromFaction("romans_julii");
-        RFH.Write("eddu-test.txt", edu.Output());
+        //RFH.Write("eddu-test.txt", edu.Output());
         foreach (IBaseObj unit in units)
         {
             string name = DS.GetUnitName(unit);

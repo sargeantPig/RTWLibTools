@@ -54,7 +54,7 @@ public class EDB : BaseWrapper, IWrapper
         {
             output += obj.Output();
         }
-        RFH.Write(this.OutputPath, output);
+        //RFH.Write(this.OutputPath, output);
         return output;
     }
 }
