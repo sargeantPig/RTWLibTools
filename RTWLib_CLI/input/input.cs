@@ -11,4 +11,10 @@ public static class Input
         return id.GetIntInput(conditional);
     }
 
+    public static string GetStringInput(string message, Func<string, bool> conditional)
+    {
+        InputDialog id = new InputDialog(message);
+        return id.GetStringInput(conditional);
+    }
+
 }

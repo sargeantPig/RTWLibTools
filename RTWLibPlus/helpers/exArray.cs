@@ -375,7 +375,7 @@ public static class ExArray
             {
                 for (int nl = 0; nl < newLineCount; nl++)
                 {
-                    value += "\r\n";
+                    value += "\n";
                 }
             }
             else if (insertSeperator)

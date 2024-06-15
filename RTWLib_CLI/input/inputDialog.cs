@@ -39,5 +39,23 @@ public class InputDialog
         return num;
     }
 
+    public string GetStringInput(Func<string, bool> conditional)
+    {
+        this.Display();
+        string input;
+        string num = "";
+
+        while (!conditional(num))
+        {
+            input = Console.ReadLine();
+            num = input.Trim();
+            if (!conditional(num))
+            {
+                Console.WriteLine("invalid input");
+            }
+        }
+        return num;
+    }
+
 
 }

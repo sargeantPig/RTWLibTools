@@ -1,0 +1,12 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command": "dotnet build /Users/aaron/Repositories/RTWLibTools/RTWLib_CLI/RTWLib_CLI.csproj --output \"/Users/aaron/Library/Application Support/Feral Interactive/Total War ROME REMASTERED/\" /property:GenerateFullPaths=true /consoleloggerparameters:NoSummary /p:Configuration=Debug /p:Platform=\"AnyCPU\"",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "dotnet: build"
+		}
+	]
+}
