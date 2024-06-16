@@ -11,7 +11,7 @@ using RTWLibPlus.parsers;
 
 public class Templates
 {
-    private static readonly CompositeFormat TemplatesTitle = CompositeFormat.Parse("Please select a template from below by typing the following 'run template_name.txt': {0}{1}");
+    private static readonly CompositeFormat TemplatesTitle = CompositeFormat.Parse("Please select a template from below\nby typing the following 'run template_name.txt': {0}{1}");
 
     private readonly Dictionary<string, string[]> templates = [];
 

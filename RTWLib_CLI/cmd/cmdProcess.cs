@@ -7,8 +7,7 @@ using RTWLibPlus.helpers;
 using System.IO;
 using RTWLibPlus.parsers;
 using RTWLib_CLI.cmd.screens;
-using RTWLib_CLI.draw;
-using System.Data;
+using RTWLib_CLI.cmd.modules;
 
 public static class CMDProcess
 {
@@ -46,6 +45,7 @@ public static class CMDProcess
             {
                 continue;
             }
+
 
             string[] args = cmdSplit.GetItemsFrom(invokeInd + 1);
             ParameterInfo[] par = t.GetParameters();
@@ -91,6 +91,11 @@ public static class CMDProcess
         { return TemplatesManager.View_Templates(); }
         if (cmd.Split(" ")[0] == "run")
         { return TemplatesManager.Action(cmd); }
+        if (cmd == KW.help)
+        {
+            var obj = (Help)modules.GetModule(nameof(Help));
+            return obj.help();
+        }
 
         return ReadCMD(cmd, type);
 

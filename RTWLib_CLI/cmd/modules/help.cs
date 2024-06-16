@@ -11,7 +11,7 @@ public class Help
     public string help()
     {
         string methods = CLIHelper.GetMethodList(typeof(Help));
-        title = string.Format("RTWLib CLI\nHelp\n---\nTry the following commands in\nformat [name] [arg1] [arg2] etc\n---\n{0}", methods).ApplyBorder('#', 2);
+        title = string.Format("RTWLib CLI\nHelp\n---\nTry the following commands in\nformat [name] [arg1] [arg2] etc\n---\n{0}", methods);
 
         return CLIHelper.ScreenChangeRTN(title);
 

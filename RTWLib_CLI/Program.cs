@@ -18,7 +18,6 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        Console.WindowWidth = 100;
         string wdir = AppDomain.CurrentDomain.BaseDirectory;
         Directory.SetCurrentDirectory(wdir);
 
