@@ -85,16 +85,17 @@ public static class RandDS
         foreach (IBaseObj faction in factions)
         {
             string name = faction.Tag.RemoveFirstWord('\t').Trim(',');
-            List<string> units = edu.GetUnitsFromFaction(name);
+            List<string> units = edu.GetUnitsFromFaction(name, ["civ", "female"]);
             List<IBaseObj> dsunits = ds.GetItemsByCriteria("character_record", "unit", faction.Tag, "character", "army");
 
             for (int i = 0; i < dsunits.Count; i++)
             {
-                if (i == 0)
+                if (i == 0 || dsunits[i].Tag.Contains("naval"))
                 {
                     continue;
                 }
                 IBaseObj dsunit = dsunits[i];
+
                 string randUnit = units.GetRandom(out int index, RandWrap.RND);
                 IBaseObj newunit = StratModifier.CreateUnit(dsunit, randUnit);
                 dsunit.Value = newunit.Value;

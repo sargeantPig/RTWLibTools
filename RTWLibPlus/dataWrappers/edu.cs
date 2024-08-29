@@ -70,10 +70,10 @@ public class EDU : BaseWrapper, IWrapper
         }
     }
 
-    public List<string> GetUnitsFromFaction(string faction)
+    public List<string> GetUnitsFromFaction(string faction, string[] filterOut, string entryKey = "type")
     {
         List<IBaseObj> ownerships = this.GetItemsByIdent("ownership");
-        List<IBaseObj> type = this.GetItemsByIdent("type");
+        List<IBaseObj> type = this.GetItemsByIdent(entryKey);
 
         List<string> units = [];
 
@@ -82,9 +82,11 @@ public class EDU : BaseWrapper, IWrapper
             IBaseObj obj = ownerships[i];
             IBaseObj unit = type[i];
 
-            if (unit.Value.Contains("roman general"))
+            bool isFiltered = filterOut.Any(sub => unit.Tag.Contains(sub) || unit.Value.Contains(sub));
+
+            if (isFiltered)
             {
-                int b = 0;
+                continue;
             }
 
             if (obj.Value.Contains(faction))
