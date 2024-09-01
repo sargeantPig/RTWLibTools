@@ -52,7 +52,7 @@ public class Templates
         {
             Console.WriteLine("Doing: " + cmd);
             //p.Message("Doing: " + cmd);
-            CMDProcess.CMDScreener(cmd);
+            Console.WriteLine(CMDProcess.CMDScreener(cmd));
             //p.Update("Complete");
         }
         return "template finished processing";

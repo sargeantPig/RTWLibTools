@@ -78,14 +78,14 @@ public static class RandDS
         return "Rand cities voronoi complete";
     }
 
-    public static string SwitchUnitsToRecruitable(EDU edu, DS ds)
+    public static string SwitchUnitsToRecruitable(EDU edu, DS ds, RandWrap rnd)
     {
+        rnd.RefreshRndSeed();
         List<IBaseObj> factions = ds.GetItemsByIdent("faction");
-
         foreach (IBaseObj faction in factions)
         {
             string name = faction.Tag.RemoveFirstWord('\t').Trim(',');
-            List<string> units = edu.GetUnitsFromFaction(name, ["civ", "female"]);
+            List<string> units = edu.GetUnitsFromFaction(name, ["civ", "female", "naval"]);
             List<IBaseObj> dsunits = ds.GetItemsByCriteria("character_record", "unit", faction.Tag, "character", "army");
 
             for (int i = 0; i < dsunits.Count; i++)
@@ -125,7 +125,6 @@ public static class RandDS
             List<IBaseObj> characters = ds.GetItemsByCriteria("character_record", "character", string.Format("faction\t{0},", f));
             ChangeCharacterCoords(regions, characters, cm);
         }
-
     }
 
     private static void ChangeCharacterCoords(List<IBaseObj> regions, List<IBaseObj> characters, CityMap cm)
@@ -149,7 +148,5 @@ public static class RandDS
             c.Value = StratModifier.ChangeCharacterCoordinates(c.Value, coord);
             ri++;
         }
-
-
     }
 }

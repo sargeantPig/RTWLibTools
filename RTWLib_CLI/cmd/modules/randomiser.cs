@@ -64,7 +64,7 @@ public class RandCMD(TWConfig config)
             return "EDU not loaded - run 'rand initialsetup'";
         }
 
-        return RandDS.SwitchUnitsToRecruitable(this.edu, this.ds);
+        return RandDS.SwitchUnitsToRecruitable(this.edu, this.ds, this.rnd);
     }
 
     public string PaintFactionMap()
@@ -76,8 +76,12 @@ public class RandCMD(TWConfig config)
 
     public string SetSeed(string seed)
     {
-        this.rnd.RefreshRndSeed(seed);
-        return "Seed set to: " + seed;
+        this.rnd.SetRndSeed(seed);
+        if (seed == "-")
+        {
+            this.rnd.RefreshRndSeed();
+        }
+        return "Seed set to: " + rnd.GetSeed;
     }
 
 
