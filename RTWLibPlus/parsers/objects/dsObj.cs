@@ -7,7 +7,7 @@ using System.Linq;
 
 public class DSObj : ArrayObj, IBaseObj
 {
-    private static readonly string[] ApplyDepthToNonArrayAt = new string[3] { "playable", "unlockable", "nonplayable" };
+    private static readonly string[] ApplyDepthToNonArrayAt = ["playable", "unlockable", "nonplayable"];
     private static readonly string TerminateNonArrayDepthAt = "end";
 
     private static bool applyNonArrayDepth;

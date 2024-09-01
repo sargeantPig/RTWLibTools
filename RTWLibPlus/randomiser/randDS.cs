@@ -8,6 +8,7 @@ using RTWLibPlus.Modifiers;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 public static class RandDS
@@ -87,10 +88,12 @@ public static class RandDS
             string name = faction.Tag.RemoveFirstWord('\t').Trim(',');
             List<string> units = edu.GetUnitsFromFaction(name, ["civ", "female", "naval"]);
             List<IBaseObj> dsunits = ds.GetItemsByCriteria("character_record", "unit", faction.Tag, "character", "army");
-
+            string[] generalFilter = ["general", "generals", "general's", "chieftain", "bodyguard"];
             for (int i = 0; i < dsunits.Count; i++)
             {
-                if (i == 0 || dsunits[i].Tag.Contains("naval"))
+                bool skip = generalFilter.Any(sub => dsunits[i].Tag.Contains(sub) || dsunits[i].Value.Contains(sub));
+
+                if (i == 0 || dsunits[i].Tag.Contains("naval") || skip)
                 {
                     continue;
                 }

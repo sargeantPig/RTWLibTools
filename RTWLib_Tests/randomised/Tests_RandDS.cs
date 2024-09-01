@@ -24,11 +24,11 @@ public class Tests_RandDS
         edu.PrepareEDU();
         List<IBaseObj> smfParse = RFH.ParseFile(Creator.SMFcreator, ':', false, "resources", "descr_sm_factions.txt");
         SMF smf = new(smfParse, this.config);
-        List<string> beforeUnits = edu.GetUnitsFromFaction("romans_julii");
+        List<string> beforeUnits = edu.GetUnitsFromFaction("romans_julii", []);
         RandEDU.RandomiseOwnership(edu, this.rand, smf);
-        RandDS.SwitchUnitsToRecruitable(edu, ds);
+        RandDS.SwitchUnitsToRecruitable(edu, ds, rand);
         List<IBaseObj> units = ds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
-        List<string> eduUnits = edu.GetUnitsFromFaction("romans_julii");
+        List<string> eduUnits = edu.GetUnitsFromFaction("romans_julii", []);
         //RFH.Write("eddu-test.txt", edu.Output());
         foreach (IBaseObj unit in units)
         {

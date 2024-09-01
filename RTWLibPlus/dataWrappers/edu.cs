@@ -104,7 +104,7 @@ public class EDU : BaseWrapper, IWrapper
         foreach (EDUObj a in attri)
         {
             string[] values = a.Value.Split(',').TrimAll();
-            string[] newVals = Array.Empty<string>();
+            string[] newVals = [];
             foreach (string val in values)
             {
                 if (!attriToRemove.Contains(val))

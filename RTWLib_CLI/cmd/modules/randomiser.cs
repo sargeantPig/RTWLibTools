@@ -81,7 +81,7 @@ public class RandCMD(TWConfig config)
         {
             this.rnd.RefreshRndSeed();
         }
-        return "Seed set to: " + rnd.GetSeed;
+        return "Seed set to: " + this.rnd.GetSeed;
     }
 
 

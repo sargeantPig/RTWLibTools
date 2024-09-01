@@ -339,7 +339,7 @@ public class Unit : IComparable<Unit>
 
 
 
-        float[] values = new float[] { attk, charg, secAttk, secCharge };
+        float[] values = [attk, charg, secAttk, secCharge];
 
         AdjustFinalMod(ref finalmod, values, 0.05f);
 
@@ -431,7 +431,7 @@ public class Unit : IComparable<Unit>
             longPike = 0f;
         }
 
-        float[] values = new float[] { priap, pribp, area, secap, secbp, longPike, launch };
+        float[] values = [priap, pribp, area, secap, secbp, longPike, launch];
 
         AdjustFinalMod(ref finalmod, values, 0.3f);
 
@@ -471,7 +471,7 @@ public class Unit : IComparable<Unit>
             command = 0f;
         }
 
-        float[] values = new float[] { frightenFoot, frightenMounted, command };
+        float[] values = [frightenFoot, frightenMounted, command];
 
         AdjustFinalMod(ref finalmod, values, 0.2f);
 
@@ -532,7 +532,7 @@ public class Unit : IComparable<Unit>
         float armourD = Convert.ToInt16(this.PriArm[1]) * weights["armourDefence"];
         float armourS = Convert.ToInt16(this.PriArm[2]) * weights["armourShield"];
 
-        float[] values = new float[] { armourF, armourD, armourS };
+        float[] values = [armourF, armourD, armourS];
 
         AdjustFinalMod(ref finalmod, values, 0.05f);
 

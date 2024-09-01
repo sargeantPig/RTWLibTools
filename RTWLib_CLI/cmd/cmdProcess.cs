@@ -93,7 +93,7 @@ public static class CMDProcess
         { return TemplatesManager.Action(cmd); }
         if (cmd == KW.help)
         {
-            var obj = (Help)modules.GetModule(nameof(Help));
+            Help obj = (Help)modules.GetModule(nameof(Help));
             return obj.help();
         }
 

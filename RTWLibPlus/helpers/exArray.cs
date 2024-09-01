@@ -21,7 +21,7 @@ public static class ExArray
     {
         for (int i = 0; i < amount; i++)
         {
-            list.Add(Array.Empty<T>());
+            list.Add([]);
         }
     }
 
@@ -50,7 +50,7 @@ public static class ExArray
 
         if (newLength < 0)
         {
-            return Array.Empty<T>();
+            return [];
         }
 
         T[] array = new T[newLength];
@@ -65,7 +65,7 @@ public static class ExArray
 
     public static T[] GetItemsFromFirstOf<T>(this T[] values, int occurHash)
     {
-        T[] array = Array.Empty<T>();
+        T[] array = [];
         bool copy = false;
         for (int i = 0; i < values.Length; i++)
         {

@@ -15,7 +15,7 @@ public class RandWrap
         if (this.seed == "-")
         {
 
-            byte[] randomNumber = new byte[4]; // 4 bytes for a 32-bit integer
+            byte[] randomNumber = new byte[4];
             using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(randomNumber);
