@@ -20,7 +20,7 @@ public class TWConfig
     public static TWConfig LoadConfig(string path)
     {
         DepthParse dp = new();
-        string json = dp.ReadFileAsString(path);
+        string json = DepthParse.ReadFileAsString(path);
         return JsonSerializer.Deserialize<TWConfig>(json);
     }
 

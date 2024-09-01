@@ -81,6 +81,12 @@ dotnet_diagnostic.CA1310.severity = suggestion
 # IDE0220: Add explicit cast in foreach
 dotnet_diagnostic.IDE0220.severity = suggestion
 
+# Allow underscores in namespace
+dotnet_diagnostic.CA1707.severity = none
+
+# Allow constant array arguments
+dotnet_diagnostic.CA1861.severity = none
+
 csharp_style_prefer_top_level_statements = false
 
 ##########################################

@@ -9,6 +9,7 @@ using RTWLibPlus.helpers;
 using System;
 using System.IO;
 
+
 internal class Program
 {
     private static readonly string Title = "Welcome to the RTWLib CLI\n     By Sargeant Pig\n---\ntype 'help' for commands and usage";
@@ -20,7 +21,6 @@ internal class Program
         string wdir = AppDomain.CurrentDomain.BaseDirectory;
         Directory.SetCurrentDirectory(wdir);
 
-        Console.WriteLine(CMDProcess.LoadTemplates());
         Console.WriteLine(CMDProcess.LoadConfigs());
 
         if (CMDProcess.configs.Count == 0)
@@ -32,12 +32,16 @@ internal class Program
         int input = Input.GetIntInput(ConfigTitle, x => x >= 0 && x < CMDProcess.configs.Count);
         TWConfig config = TWConfig.LoadConfig(CMDProcess.configs[input]);
         RandCMD rand = new(config);
+        Help help = new();
         Console.WriteLine("Config Loaded".ApplyBorder('#', 1, 1));
         CMDProcess.modules.RegisterModule(rand);
+        CMDProcess.modules.RegisterModule(help);
+
+        Console.WriteLine(CMDProcess.CMDScreener("templates"));
         //Rand.InitialSetup();
         while (true)
         {
-            string ret = CMDProcess.ReadCMD(Console.ReadLine());
+            string ret = CMDProcess.CMDScreener(Console.ReadLine());
 
             if (ret != KW.back)
             { Console.WriteLine(ret.ApplyBorder('=', 1, 1)); continue; }

@@ -3,9 +3,9 @@ using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.configs.whiteSpace;
 
-public class DRObj : BaseObj, IBaseObj
+public class DMBObj : BaseObj, IBaseObj
 {
-    public DRObj(string tag, string value, int depth) :
+    public DMBObj(string tag, string value, int depth) :
         base(tag, value, depth)
     {
         WSConfigFactory factory = new();
@@ -13,11 +13,11 @@ public class DRObj : BaseObj, IBaseObj
         this.Ident = this.Tag.Split(this.WhiteSpaceChar)[0];
     }
 
-    public DRObj() { }
+    public DMBObj() { }
 
     public override IBaseObj Copy()
     {
-        DRObj copy = new()
+        DMBObj copy = new()
         {
             WhiteSpaceChar = this.WhiteSpaceChar,
             Depth = this.Depth,
@@ -31,6 +31,18 @@ public class DRObj : BaseObj, IBaseObj
         return copy;
     }
 
-    public override string Output() => "Not Implemented";
+    public override string Output()
+    {
+        string output = "";
+
+        if (this.Tag == this.Value)
+        {
+            this.Value = "";
+        }
+
+        output = string.Format("{0} {1}", this.Tag, this.Value);
+
+        return output + Format.UniversalNewLine();
+    }
 
 }

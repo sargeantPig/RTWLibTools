@@ -34,8 +34,8 @@ public static class TestHelper
         {
             foreach (PropertyInfo property in t.GetProperties())
             {
-                var expVal = property.GetValue(expected[i]);
-                var resVal = property.GetValue(result[i]);
+                object expVal = property.GetValue(expected[i]);
+                object resVal = property.GetValue(result[i]);
                 Assert.AreEqual(property.GetValue(expected[i]), property.GetValue(result[i]));
             }
         }

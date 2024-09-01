@@ -8,16 +8,16 @@ using System.Linq;
 public class EDBObj : ArrayObj, IBaseObj
 {
 
-    private static readonly string[] AlwaysArrays = new string[] { "plugins", "upgrades" };
-    private static readonly string[] DoubleSpace = new string[] { "construction", "cost" };
-    private static readonly string[] DoubleSpaceEnding = new string[] { "levels" };
-    private static readonly string[] WhiteSpaceSwap = new string[] { "requires", "temple" };
+    private static readonly string[] AlwaysArrays = ["plugins", "upgrades"];
+    private static readonly string[] DoubleSpace = ["construction", "cost"];
+    private static readonly string[] DoubleSpaceEnding = ["levels"];
+    private static readonly string[] WhiteSpaceSwap = ["requires", "temple"];
 
     public EDBObj(string tag, string value, int depth) :
         base(tag, value, depth)
     {
         WSConfigFactory factory = new();
-        this.WhiteSpaceConfig = factory.CreateEDBWhiteSpace();
+        this.WhiteSpaceConfig = WSConfigFactory.CreateEDBWhiteSpace();
         this.Ident = this.Tag.Split(this.WhiteSpaceChar)[0];
     }
 

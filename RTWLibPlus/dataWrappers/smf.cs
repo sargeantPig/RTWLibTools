@@ -23,7 +23,7 @@ public class SMF : BaseWrapper, IWrapper
     public SMF(List<IBaseObj> data, TWConfig config)
     {
         this.Data = data;
-        this.Sanitise(data);
+        Sanitise(data);
         this.LoadPath = config.GetPath(Operation.Load, "smf");
         this.OutputPath = config.GetPath(Operation.Save, "smf");
         this.ExtractFactions();
@@ -31,10 +31,11 @@ public class SMF : BaseWrapper, IWrapper
     public void Parse()
     {
         this.Data = RFH.ParseFile(Creator.SMFcreator, ':', false, this.LoadPath);
-        this.Sanitise(this.Data);
+        Sanitise(this.Data);
         this.ExtractFactions();
 
     }
+
     public string Output()
     {
         string output = string.Empty;
@@ -42,7 +43,7 @@ public class SMF : BaseWrapper, IWrapper
         {
             //output += obj.Output();
         }
-        RFH.Write(this.OutputPath, output);
+        //RFH.Write(this.OutputPath, output);
         return output;
     }
 
@@ -60,7 +61,7 @@ public class SMF : BaseWrapper, IWrapper
 
     private void ExtractFactions()
     {
-        List<string> fs = new();
+        List<string> fs = [];
         foreach (BaseObj obj in this.Data)
         {
             if (obj != null && obj.Ident != "]" && obj.Ident != "[" && obj.Ident != "factions")
@@ -72,7 +73,7 @@ public class SMF : BaseWrapper, IWrapper
 
     }
 
-    private void Sanitise(List<IBaseObj> toSanitise) => Parallel.ForEach(toSanitise, obj =>
+    private static void Sanitise(List<IBaseObj> toSanitise) => Parallel.ForEach(toSanitise, obj =>
                                                              {
                                                                  obj.Value = obj.Value.Trim();
                                                                  obj.Tag = obj.Tag.Trim();
@@ -86,6 +87,6 @@ public class SMF : BaseWrapper, IWrapper
                                                                  obj.Ident = obj.Ident.Trim(',');
                                                                  obj.Ident = obj.Ident.Trim(':');
                                                                  obj.Ident = obj.Ident.Trim('"');
-                                                                 this.Sanitise(obj.GetItems());
+                                                                 Sanitise(obj.GetItems());
                                                              });
 }

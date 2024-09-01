@@ -9,7 +9,7 @@ public static class ExArray
 {
     public static Dictionary<TK, T> InitDictFromList<TK, T>(this TK[] arr, T def)
     {
-        Dictionary<TK, T> keyValuePairs = new();
+        Dictionary<TK, T> keyValuePairs = [];
         foreach (TK o in arr)
         {
             keyValuePairs.Add(o, def);
@@ -21,7 +21,7 @@ public static class ExArray
     {
         for (int i = 0; i < amount; i++)
         {
-            list.Add(Array.Empty<T>());
+            list.Add([]);
         }
     }
 
@@ -35,7 +35,7 @@ public static class ExArray
 
     public static List<IBaseObj> DeepCopy(this List<IBaseObj> list)
     {
-        List<IBaseObj> objs = new();
+        List<IBaseObj> objs = [];
 
         foreach (IBaseObj i in list)
         {
@@ -50,7 +50,7 @@ public static class ExArray
 
         if (newLength < 0)
         {
-            return Array.Empty<T>();
+            return [];
         }
 
         T[] array = new T[newLength];
@@ -65,7 +65,7 @@ public static class ExArray
 
     public static T[] GetItemsFromFirstOf<T>(this T[] values, int occurHash)
     {
-        T[] array = Array.Empty<T>();
+        T[] array = [];
         bool copy = false;
         for (int i = 0; i < values.Length; i++)
         {
@@ -278,5 +278,119 @@ public static class ExArray
             newString += string.Format("{0}: {1}{2}", kv.Key.ToString(), kv.Value.ToString(), "\n");
         }
         return newString;
+    }
+
+    public static string ArrayToString(this float[] array, bool idx = false, bool insertNewlines = false, bool removeTrailingComma = false, int newLineCount = 1, string extension = "")
+    {
+        string value = "";
+        int i = 0;
+        foreach (float str in array)
+        {
+            if (idx)
+            {
+                value += i.ToString() + ": ";
+            }
+
+            value += str.ToString() + extension;
+
+            if (insertNewlines)
+            {
+                for (int nl = 0; nl < newLineCount; nl++)
+                {
+                    value += "\r\n";
+                }
+            }
+            else
+            {
+                value += ", ";
+            }
+
+            i++;
+        }
+
+        if (removeTrailingComma)
+        {
+            value = value.Trim().TrimEnd(',');
+        }
+
+        return value;
+    }
+    public static string ArrayToString(this int[] array, bool idx = false, bool insertNewlines = false, bool removeTrailingComma = false, int newLineCount = 1)
+    {
+        string value = "";
+        int i = 0;
+        foreach (int str in array)
+        {
+            if (idx)
+            {
+                value += i.ToString() + ": ";
+            }
+
+            value += str.ToString();
+
+            if (insertNewlines)
+            {
+                for (int nl = 0; nl < newLineCount; nl++)
+                {
+                    value += "\r\n";
+                }
+            }
+            else
+            {
+                value += ", ";
+            }
+
+            i++;
+        }
+
+        if (removeTrailingComma)
+        {
+            value = value.Trim().TrimEnd(',');
+        }
+
+        return value;
+    }
+
+    public static string ArrayToString(this string[] array, bool idx = false, bool insertNewlines = false, bool removeTrailingComma = false, int newLineCount = 1, bool insertSeperator = true, bool quote = false)
+    {
+        string value = "";
+        int i = 0;
+        foreach (string str in array)
+        {
+            if (idx)
+            {
+                value += i.ToString() + ": ";
+            }
+
+            if (quote)
+            {
+                value += string.Format("\"{0}\"", str);
+            }
+            else
+            {
+                value += str;
+            }
+
+            if (insertNewlines)
+            {
+                for (int nl = 0; nl < newLineCount; nl++)
+                {
+                    value += "\n";
+                }
+            }
+            else if (insertSeperator)
+            {
+                value += ", ";
+            }
+
+            i++;
+        }
+
+        if (removeTrailingComma)
+        {
+            value = value.Trim().TrimEnd(',');
+        }
+
+        return value;
     }
 }

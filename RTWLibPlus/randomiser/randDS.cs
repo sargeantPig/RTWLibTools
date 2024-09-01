@@ -1,4 +1,5 @@
 ﻿namespace RTWLibPlus.randomiser;
+
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
@@ -7,6 +8,7 @@ using RTWLibPlus.Modifiers;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 public static class RandDS
@@ -16,11 +18,11 @@ public static class RandDS
         rnd.RefreshRndSeed();
 
         List<IBaseObj> settlements = ds.GetItemsByIdent("settlement").DeepCopy();
-        ds.DeleteValue(ds.Data, "settlement");
+        BaseWrapper.DeleteValue(ds.Data, "settlement");
         List<string> factionList = smf.GetFactions();
         List<string> missingRegions = DRModifier.GetMissingRegionNames(settlements, dr);
         settlements.AddRange(StratModifier.CreateSettlements(settlements[1], missingRegions));
-        factionList.Shuffle(rnd.RND);
+        factionList.Shuffle(RandWrap.RND);
         string[] factions = factionList.ToArray();
         int settlementsPerFaction = settlements.Count / factions.Length;
 
@@ -33,7 +35,7 @@ public static class RandDS
                     break;
                 }
 
-                ds.InsertNewObjectByCriteria(ds.Data, settlements.GetRandom(out int index, rnd.RND), string.Format("faction\t{0},", faction), "denari");
+                BaseWrapper.InsertNewObjectByCriteria(ds.Data, settlements.GetRandom(out int index, RandWrap.RND), string.Format("faction\t{0},", faction), "denari");
                 settlements.RemoveAt(index);
             }
         }
@@ -49,7 +51,7 @@ public static class RandDS
         List<IBaseObj> settlements = ds.GetItemsByIdent("settlement").DeepCopy();
         List<string> missingRegions = DRModifier.GetMissingRegionNames(settlements, dr);
         settlements.AddRange(StratModifier.CreateSettlements(settlements[1], missingRegions));
-        ds.DeleteValue(ds.Data, "settlement");
+        BaseWrapper.DeleteValue(ds.Data, "settlement");
         List<string> factions = smf.GetFactions();
         Vector2[] vp = Voronoi.GetVoronoiPoints(factions.Count, cm.Width, cm.Height, rnd);
         List<string[]> gh = Voronoi.GetVoronoiGroups(cm.CityCoordinates, vp);
@@ -67,7 +69,7 @@ public static class RandDS
 
                 if (city != null)
                 {
-                    ds.InsertNewObjectByCriteria(ds.Data, city, string.Format("faction\t{0},", factions[i]), "denari");
+                    BaseWrapper.InsertNewObjectByCriteria(ds.Data, city, string.Format("faction\t{0},", factions[i]), "denari");
                 }
             }
         }
@@ -75,6 +77,37 @@ public static class RandDS
         MatchCharacterCoordsToCities(factions.ToArray(), rnd, ds, cm);
 
         return "Rand cities voronoi complete";
+    }
+
+    public static string SwitchUnitsToRecruitable(EDU edu, DS ds, RandWrap rnd)
+    {
+        rnd.RefreshRndSeed();
+        List<IBaseObj> factions = ds.GetItemsByIdent("faction");
+        foreach (IBaseObj faction in factions)
+        {
+            string name = faction.Tag.RemoveFirstWord('\t').Trim(',');
+            List<string> units = edu.GetUnitsFromFaction(name, ["civ", "female", "naval"]);
+            List<IBaseObj> dsunits = ds.GetItemsByCriteria("character_record", "unit", faction.Tag, "character", "army");
+            string[] generalFilter = ["general", "generals", "general's", "chieftain", "bodyguard"];
+            for (int i = 0; i < dsunits.Count; i++)
+            {
+                bool skip = generalFilter.Any(sub => dsunits[i].Tag.Contains(sub) || dsunits[i].Value.Contains(sub));
+
+                if (i == 0 || dsunits[i].Tag.Contains("naval") || skip)
+                {
+                    continue;
+                }
+                IBaseObj dsunit = dsunits[i];
+
+                string randUnit = units.GetRandom(out int index, RandWrap.RND);
+                IBaseObj newunit = StratModifier.CreateUnit(dsunit, randUnit);
+                dsunit.Value = newunit.Value;
+                dsunit.Tag = newunit.Tag;
+                dsunits[i] = dsunit;
+            }
+        }
+
+        return "Units switched to units in a given factions recruitment pool";
     }
 
     private static void MatchCharacterCoordsToCities(string[] factionList, RandWrap rnd, DS ds, CityMap cm)
@@ -95,7 +128,6 @@ public static class RandDS
             List<IBaseObj> characters = ds.GetItemsByCriteria("character_record", "character", string.Format("faction\t{0},", f));
             ChangeCharacterCoords(regions, characters, cm);
         }
-
     }
 
     private static void ChangeCharacterCoords(List<IBaseObj> regions, List<IBaseObj> characters, CityMap cm)
@@ -116,10 +148,8 @@ public static class RandDS
                 coord = waterCoord;
             }
 
-            c.Value = DS.ChangeCharacterCoordinates(c.Value, coord);
+            c.Value = StratModifier.ChangeCharacterCoordinates(c.Value, coord);
             ri++;
         }
-
-
     }
 }

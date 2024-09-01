@@ -1,6 +1,4 @@
 ﻿namespace RTWLib_CLI.cmd.modules;
-
-using RTWLib_CLI.draw;
 using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.dataWrappers.TGA;
@@ -11,31 +9,19 @@ using RTWLibPlus.randomiser;
 using System;
 using System.Collections.Generic;
 
-public class RandCMD
+public class RandCMD(TWConfig config)
 {
-    TWConfig config;
-    RandWrap rnd;
-    EDB edb;
-    EDU edu;
-    DS ds;
-    DR dr;
-    SMF smf;
-    TGA mr;
-    TGA bm;
-    CityMap cm = new();
-
-    public RandCMD(TWConfig config)
-    {
-        this.config = config;
-        this.edb = new EDB(config.GetPath(Operation.Save, "edb"), config.GetPath(Operation.Load, "edb"));
-        this.edu = new EDU(config.GetPath(Operation.Save, "edu"), config.GetPath(Operation.Load, "edu"));
-        this.ds = new DS(config.GetPath(Operation.Save, "ds"), config.GetPath(Operation.Load, "ds"));
-        this.dr = new DR(config.GetPath(Operation.Save, "dr"), config.GetPath(Operation.Load, "dr"));
-        this.smf = new SMF(config.GetPath(Operation.Save, "smf"), config.GetPath(Operation.Load, "smf"));
-        this.mr = new TGA(config.GetPath(Operation.Load, "mr"), "");
-        this.bm = new TGA(config.GetPath(Operation.Load, "bm"), "");
-        this.rnd = new RandWrap("0");
-    }
+    private readonly TWConfig config = config;
+    private readonly RandWrap rnd = new("0");
+    private readonly DMB dmb = new(config.GetPath(Operation.Save, "dmb"), config.GetPath(Operation.Load, "dmb"));
+    private readonly EDB edb = new(config.GetPath(Operation.Save, "edb"), config.GetPath(Operation.Load, "edb"));
+    private readonly EDU edu = new(config.GetPath(Operation.Save, "edu"), config.GetPath(Operation.Load, "edu"));
+    private readonly DS ds = new(config.GetPath(Operation.Save, "ds"), config.GetPath(Operation.Load, "ds"));
+    private readonly DR dr = new(config.GetPath(Operation.Save, "dr"), config.GetPath(Operation.Load, "dr"));
+    private readonly SMF smf = new(config.GetPath(Operation.Save, "smf"), config.GetPath(Operation.Load, "smf"));
+    private readonly TGA mr = new(config.GetPath(Operation.Load, "mr"), "");
+    private readonly TGA bm = new(config.GetPath(Operation.Load, "bm"), "");
+    private CityMap cm = new();
 
     public string Ownership(int maxPerUnit = 3, int minimumPerUnit = 1)
     {
@@ -67,6 +53,20 @@ public class RandCMD
         return RandDS.RandCitiesVoronoi(this.smf, this.rnd, this.ds, this.dr, this.cm);
     }
 
+    public string StratArmiesUseOwnedUnits()
+    {
+        if (this.ds == null)
+        {
+            return "DS not loaded - run 'rand initialsetup'";
+        }
+        else if (this.edu == null)
+        {
+            return "EDU not loaded - run 'rand initialsetup'";
+        }
+
+        return RandDS.SwitchUnitsToRecruitable(this.edu, this.ds, this.rnd);
+    }
+
     public string PaintFactionMap()
     {
         FactionMap factionMap = new();
@@ -76,15 +76,19 @@ public class RandCMD
 
     public string SetSeed(string seed)
     {
-        this.rnd.RefreshRndSeed(seed);
-        return "Seed set to: " + seed;
+        this.rnd.SetRndSeed(seed);
+        if (seed == "-")
+        {
+            this.rnd.RefreshRndSeed();
+        }
+        return "Seed set to: " + this.rnd.GetSeed;
     }
 
 
     public string InitialSetup()
     {
 
-        List<IWrapper> list = new() { this.edu, this.edb, this.ds, this.dr, this.smf, this.mr, this.bm };
+        List<IWrapper> list = [this.edu, this.edb, this.ds, this.dr, this.smf, this.mr, this.bm, this.dmb];
         Console.WriteLine("Setting up");
         //Progress p = new(1f / (list.Count + 1), "Setting up");
         for (int i = 0; i < list.Count; i++)
@@ -97,6 +101,7 @@ public class RandCMD
             //p.Update("Complete");
         }
         this.edu.PrepareEDU();
+        this.dmb.AddFallBacksForAllTypes();
         this.cm = new CityMap(this.mr, this.dr);
         Console.WriteLine("Forming: City Map");
         //p.Message("Forming: City Map");
@@ -109,24 +114,16 @@ public class RandCMD
     {
         string path = string.Empty;
 
-        List<IWrapper> list = new() { this.edu, this.ds };
+        List<IWrapper> list = [this.edu, this.ds, this.dmb];
         Console.WriteLine("Writing Files...");
-        //Progress p = new(0.50f, "Writing Files");
+
         for (int i = 0; i < list.Count; i++)
         {
-            list[i].Output();
-            //p.Update();
-        }
-
-        if (this.edu != null)
-        {
-            path = this.config.GetPath(Operation.Save, "edu");
-            RFH.Write(path, this.edu.Output());
-        }
-        if (this.ds != null)
-        {
-            path = this.config.GetPath(Operation.Save, "ds");
-            RFH.Write(path, this.ds.Output());
+            if (list[i] != null)
+            {
+                Console.WriteLine("Writing... " + RFH.GetPartOfPath(list[i].OutputPath, "randomiser"));
+                RFH.Write(list[i].OutputPath, list[i].Output());
+            }
         }
         return "output complete";
     }

@@ -25,7 +25,7 @@ public class Tests_edb
         EDB parsedEdb = new(edbParse, this.config);
 
         string result = parsedEdb.Output();
-        string expected = this.dp.ReadFileAsString(RFH.CurrDirPath("resources", "edbExample.txt"));
+        string expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "edbExample.txt"));
 
         int rl = result.Length;
         int el = expected.Length;
@@ -43,7 +43,7 @@ public class Tests_edb
         EDB parsedEdb = new(edbParse, this.config);
 
         string result = parsedEdb.Output();
-        string expected = this.dp.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
+        string expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_buildings.txt"));
 
         int rl = result.Length;
         int el = expected.Length;
@@ -59,7 +59,7 @@ public class Tests_edb
         List<IBaseObj> smfParse = this.dp.Parse(smf, Creator.EDBcreator);
         EDB parsedsmf = new(smfParse, this.config);
 
-        KeyValuePair<string, string> result = parsedsmf.GetKeyValueAtLocation(parsedsmf.Data, 0, "core_building", "levels");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedsmf.Data, 0, "core_building", "levels");
         KeyValuePair<string, string> expected = new("levels", "governors_house governors_villa governors_palace proconsuls_palace imperial_palace");
 
         Assert.AreEqual(expected, result);
@@ -72,7 +72,7 @@ public class Tests_edb
         List<IBaseObj> smfParse = this.dp.Parse(smf, Creator.EDBcreator);
         EDB parsedsmf = new(smfParse, this.config);
 
-        KeyValuePair<string, string> result = parsedsmf.GetKeyValueAtLocation(parsedsmf.Data, 0, "core_building", "levels", "governors_house");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedsmf.Data, 0, "core_building", "levels", "governors_house");
         KeyValuePair<string, string> expected = new("governors_house", "requires factions { barbarian, carthaginian, eastern, parthia, egyptian, greek, roman, }");
 
         Assert.AreEqual(expected, result);
@@ -85,8 +85,8 @@ public class Tests_edb
         List<IBaseObj> smfParse = this.dp.Parse(smf, Creator.EDBcreator);
         EDB parsedsmf = new(smfParse, this.config);
 
-        bool change = parsedsmf.ModifyValue(parsedsmf.Data, "requires factions { barbarian, }", 0, false, "core_building", "levels", "governors_house");
-        KeyValuePair<string, string> result = parsedsmf.GetKeyValueAtLocation(parsedsmf.Data, 0, "core_building", "levels", "governors_house");
+        bool change = BaseWrapper.ModifyValue(parsedsmf.Data, "requires factions { barbarian, }", 0, false, "core_building", "levels", "governors_house");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedsmf.Data, 0, "core_building", "levels", "governors_house");
         KeyValuePair<string, string> expected = new("governors_house", "requires factions { barbarian, }");
 
         Assert.AreEqual(expected, result);
@@ -99,8 +99,8 @@ public class Tests_edb
         List<IBaseObj> smfParse = this.dp.Parse(smf, Creator.EDBcreator);
         EDB parsedsmf = new(smfParse, this.config);
 
-        List<IBaseObj> result = parsedsmf.GetItemList(parsedsmf.Data, 0, "core_building", "levels", "governors_house", "capability");
-        List<IBaseObj> expected = new() {
+        List<IBaseObj> result = BaseWrapper.GetItemList(parsedsmf.Data, 0, "core_building", "levels", "governors_house", "capability");
+        List<IBaseObj> expected = [
 
              new EDBObj("recruit", "\"carthaginian peasant\"  0", 4),
              new EDBObj("recruit", "\"barb peasant briton\"  0", 4),
@@ -112,7 +112,7 @@ public class Tests_edb
              new EDBObj("recruit", "\"egyptian peasant\"  0", 4),
              new EDBObj("recruit", "\"greek peasant\"  0", 4),
              new EDBObj("recruit", "\"roman peasant\"  0", 4),
-        };
+        ];
         Assert.AreEqual(expected.Count, result.Count);
         //TestHelper.LoopListAssert(expected, result); //broken
     }
@@ -123,7 +123,7 @@ public class Tests_edb
         List<IBaseObj> smfParse = this.dp.Parse(smf, Creator.EDBcreator);
         EDB parsedsmf = new(smfParse, this.config);
 
-        KeyValuePair<string, string> result = parsedsmf.GetKeyValueAtLocation(parsedsmf.Data, 0, "health", "levels", "sewers", "capability", "population_health_bonus");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedsmf.Data, 0, "health", "levels", "sewers", "capability", "population_health_bonus");
         KeyValuePair<string, string> expected = new("population_health_bonus", "bonus 1");
 
         Assert.AreEqual(expected, result);
@@ -135,9 +135,9 @@ public class Tests_edb
         string[] smf = this.dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_buildings.txt"), false);
         List<IBaseObj> smfParse = this.dp.Parse(smf, Creator.EDBcreator);
         EDB parsedsmf = new(smfParse, this.config);
-        bool rb = parsedsmf.ModifyValue(parsedsmf.Data, "bonus 3", 0, false, "health", "levels", "sewers", "capability", "population_health_bonus");
+        bool rb = BaseWrapper.ModifyValue(parsedsmf.Data, "bonus 3", 0, false, "health", "levels", "sewers", "capability", "population_health_bonus");
 
-        KeyValuePair<string, string> result = parsedsmf.GetKeyValueAtLocation(parsedsmf.Data, 0, "health", "levels", "sewers", "capability", "population_health_bonus");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedsmf.Data, 0, "health", "levels", "sewers", "capability", "population_health_bonus");
         KeyValuePair<string, string> expected = new("population_health_bonus", "bonus 3");
 
         Assert.AreEqual(expected, result);

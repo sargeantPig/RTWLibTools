@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public class Search
 {
-    TWConfig config;
+    private readonly TWConfig config;
 
     public Search(TWConfig twConfig) => this.config = twConfig;
     /// <summary>
@@ -38,7 +38,7 @@ public class Search
 
         wrapper.Parse();
 
-        List<List<BaseObj>> results = new();
+        List<List<BaseObj>> results = [];
 
         for (int i = 3; i < args.Length; i++)
         {

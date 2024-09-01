@@ -22,6 +22,7 @@ public class EDU : BaseWrapper, IWrapper
     {
         this.Data = data;
         this.SetEndOfUnits();
+        //this.PrepareEDU();
         this.LoadPath = config.GetPath(Operation.Load, "edu");
         this.OutputPath = config.GetPath(Operation.Save, "edu");
     }
@@ -41,9 +42,10 @@ public class EDU : BaseWrapper, IWrapper
             output += obj.Output();
         }
 
-        RFH.Write(this.OutputPath, output + Format.UniversalNewLine());
+        //RFH.Write(this.OutputPath, output + Format.UniversalNewLine());
         return output + Format.UniversalNewLine();
     }
+
 
     public void PrepareEDU() => this.DeleteChunks("type", "rebalance_statblock");
 
@@ -68,6 +70,33 @@ public class EDU : BaseWrapper, IWrapper
         }
     }
 
+    public List<string> GetUnitsFromFaction(string faction, string[] filterOut, string entryKey = "type")
+    {
+        List<IBaseObj> ownerships = this.GetItemsByIdent("ownership");
+        List<IBaseObj> type = this.GetItemsByIdent(entryKey);
+
+        List<string> units = [];
+
+        for (int i = 0; i < ownerships.Count; i++)
+        {
+            IBaseObj obj = ownerships[i];
+            IBaseObj unit = type[i];
+
+            bool isFiltered = filterOut.Any(sub => unit.Tag.Contains(sub) || unit.Value.Contains(sub));
+
+            if (isFiltered)
+            {
+                continue;
+            }
+
+            if (obj.Value.Contains(faction))
+            {
+                units.Add(unit.Value);
+            }
+        }
+        return units;
+    }
+
     public void RemoveAttributesAll(params string[] attriToRemove)
     {
         List<IBaseObj> attri = this.GetItemsByIdent("attributes");
@@ -75,7 +104,7 @@ public class EDU : BaseWrapper, IWrapper
         foreach (EDUObj a in attri)
         {
             string[] values = a.Value.Split(',').TrimAll();
-            string[] newVals = Array.Empty<string>();
+            string[] newVals = [];
             foreach (string val in values)
             {
                 if (!attriToRemove.Contains(val))

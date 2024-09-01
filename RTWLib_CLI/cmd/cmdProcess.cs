@@ -6,27 +6,18 @@ using System.Reflection;
 using RTWLibPlus.helpers;
 using System.IO;
 using RTWLibPlus.parsers;
-using RTWLib_CLI.draw;
-
+using RTWLib_CLI.cmd.screens;
+using RTWLib_CLI.cmd.modules;
 
 public static class CMDProcess
 {
-    public static Dictionary<string, string[]> templates = new();
-    public static Dictionary<int, string> configs = new();
+    private static readonly Templates TemplatesManager = new();
+    public static Dictionary<int, string> configs = [];
 
     public static ModuleRegister modules = new();
 
-    public static string ReadCMD(string cmd, Type type = null)
+    private static string ReadCMD(string cmd, Type type = null)
     {
-        if (cmd == KW.back)
-        { return KW.back; }
-        if (cmd == KW.help)
-        { return Help.help(); }
-        if (cmd == string.Empty)
-        { return "no command"; }
-        if (templates.ContainsKey(cmd))
-        { return ProcessTemplate(cmd); }
-
         int invokeInd = 0;
 
         string[] cmdSplit = cmd.Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -43,6 +34,10 @@ public static class CMDProcess
 
         object invokableObject = modules.GetModule(type.Name);
 
+        if (cmdSplit.Length < 2)
+        {
+            return KW.error + ": No command specified";
+        }
 
         foreach (MethodInfo t in type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly))
         {
@@ -50,6 +45,7 @@ public static class CMDProcess
             {
                 continue;
             }
+
 
             string[] args = cmdSplit.GetItemsFrom(invokeInd + 1);
             ParameterInfo[] par = t.GetParameters();
@@ -85,39 +81,24 @@ public static class CMDProcess
         return KW.error + ": Command not found, are the arguments correct?";
     }
 
-    public static string ProcessTemplate(string template)
+    public static string CMDScreener(string cmd, Type type = null)
     {
-        string[] cmds = templates[template];
-        Console.WriteLine("Running: " + template);
-        //Progress p = new(1f / cmds.Length, "Running: " + template);
-        foreach (string cmd in cmds)
+        if (cmd == KW.back)
+        { return KW.back; }
+        if (cmd == string.Empty)
+        { return "no command"; }
+        if (cmd == KW.templates)
+        { return TemplatesManager.View_Templates(); }
+        if (cmd.Split(" ")[0] == "run")
+        { return TemplatesManager.Action(cmd); }
+        if (cmd == KW.help)
         {
-            Console.WriteLine("Doing: " + cmd);
-            //p.Message("Doing: " + cmd);
-            ReadCMD(cmd);
-            //p.Update("Complete");
-        }
-        return "template finished processing";
-    }
-
-    public static string LoadTemplates()
-    {
-        if (!Directory.Exists("randomiser_templates"))
-        {
-            return "Template folder does not exist. Skipping template loading";
+            Help obj = (Help)modules.GetModule(nameof(Help));
+            return obj.help();
         }
 
-        string[] files = Directory.GetFiles("randomiser_templates");
+        return ReadCMD(cmd, type);
 
-        DepthParse dp = new();
-
-        foreach (string file in files)
-        {
-            string name = Path.GetFileName(file);
-            string[] parse = dp.ReadFile(file);
-            templates.Add(name, parse);
-        }
-        return "Templates Loaded";
     }
 
     public static string LoadConfigs()
@@ -135,8 +116,8 @@ public static class CMDProcess
         {
             string file = files[i];
             string name = Path.GetFileName(file);
-            string parse = file;
-            configs.Add(i, parse);
+            string parse = name;
+            configs.Add(i, file);
         }
         return "Configs Loaded";
     }

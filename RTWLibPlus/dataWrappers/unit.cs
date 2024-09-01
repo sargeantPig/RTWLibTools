@@ -37,7 +37,7 @@ public class Unit
         }
         else
         {
-            s += this.FormatKeyValue(kv);
+            s += FormatKeyValue(kv);
         }
 
         return s;
@@ -47,13 +47,13 @@ public class Unit
     {
         for (int i = 1; i < kv.Value.Length; i += 2)
         {
-            s += this.FormatKeyValueEthnicity(kv.Key, kv.Value[i - 1], kv.Value[i]);
+            s += FormatKeyValueEthnicity(kv.Key, kv.Value[i - 1], kv.Value[i]);
         }
         return s;
     }
 
-    public string FormatKeyValueEthnicity(string key, string a, string b) => string.Format("{0}{1}{2}, {3}{4}", key, Format.GetWhiteSpace(key, 20, ' '), a, b, Format.UniversalNewLine());
+    public static string FormatKeyValueEthnicity(string key, string a, string b) => string.Format("{0}{1}{2}, {3}{4}", key, Format.GetWhiteSpace(key, 20, ' '), a, b, Format.UniversalNewLine());
 
-    public string FormatKeyValue(KeyValuePair<string, string[]> kv) => string.Format("{0}{1}{2}{3}", kv.Key, Format.GetWhiteSpace(kv.Key, 20, ' '), kv.Value.ToString(',', ' '), Format.UniversalNewLine());
+    public static string FormatKeyValue(KeyValuePair<string, string[]> kv) => string.Format("{0}{1}{2}{3}", kv.Key, Format.GetWhiteSpace(kv.Key, 20, ' '), kv.Value.ToString(',', ' '), Format.UniversalNewLine());
 
 }

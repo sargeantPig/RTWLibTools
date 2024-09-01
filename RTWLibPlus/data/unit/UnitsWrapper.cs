@@ -6,7 +6,7 @@ using System.Numerics;
 
 public class UnitsWrapper
 {
-    private readonly List<Unit> units = new();
+    private readonly List<Unit> units = [];
 
     public UnitsWrapper(EDU edu)
     {

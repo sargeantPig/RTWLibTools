@@ -6,7 +6,6 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 
 public class DS : BaseWrapper, IWrapper
 {
@@ -42,7 +41,7 @@ public class DS : BaseWrapper, IWrapper
         {
             output += obj.Output();
         }
-        RFH.Write(this.OutputPath, output);
+        //RFH.Write(this.OutputPath, output);
         return output;
     }
 
@@ -64,19 +63,9 @@ public class DS : BaseWrapper, IWrapper
         }
     }
 
-    public static string ChangeCharacterCoordinates(string character, Vector2 coords)
-    {
-        string[] split = character.Split(',').TrimAll();
-        string x = string.Format("x {0}", (int)coords.X);
-        string y = string.Format("y {0}", (int)coords.Y);
-        split[^1] = y;
-        split[^2] = x;
-        return split.ToString(',', ' ');
-    }
-
     public Dictionary<string, List<IBaseObj>> GetSettlementsByFaction(SMF smf)
     {
-        Dictionary<string, List<IBaseObj>> settlementsByFaction = new();
+        Dictionary<string, List<IBaseObj>> settlementsByFaction = [];
         foreach (string f in smf.GetFactions())
         {
             List<IBaseObj> settlements = this.GetItemsByCriteria("character", "settlement", string.Format("faction\t{0},", f));
@@ -85,6 +74,13 @@ public class DS : BaseWrapper, IWrapper
 
         return settlementsByFaction;
     }
+
+    public void AddUnitToArmy(IBaseObj faction, IBaseObj character, IBaseObj unit)
+    {
+        bool add = InsertNewObjectByCriteria(this.Data, unit, faction.Tag, character.Tag, "unit");
+    }
+
+
 
     public string GetFactionByRegion(string region)
     {
@@ -98,5 +94,9 @@ public class DS : BaseWrapper, IWrapper
         return s.Split('\t')[1].Trim(',');
     }
 
-
+    public static string GetUnitName(IBaseObj unit)
+    {
+        string name = string.Format("{0} {1}", unit.Tag.Split('\t', StringSplitOptions.RemoveEmptyEntries)[1], unit.Value.GetFirstWord('\t'));
+        return name;
+    }
 }

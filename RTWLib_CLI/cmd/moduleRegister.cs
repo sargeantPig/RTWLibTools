@@ -1,23 +1,18 @@
-﻿using System;
+﻿namespace RTWLib_CLI.cmd;
+
+using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace RTWLib_CLI.cmd
+public class ModuleRegister
 {
-    public class ModuleRegister
+    private readonly List<object> modules = [];
+    public ModuleRegister() { }
+
+    public void RegisterModule(object module)
     {
-        List<Object> modules = new List<Object>();
-        public ModuleRegister() { }
-
-        public void RegisterModule(Object module)
-        {
-            modules.Add(module);
-            Console.WriteLine("Registered Module: " + module.GetType().Name);
-        }
-
-        public Object GetModule(string name)
-        {
-            return modules.Find(x => x.GetType().Name == name);
-        }
+        this.modules.Add(module);
+        Console.WriteLine("Registered Module: " + module.GetType().Name);
     }
+
+    public object GetModule(string name) => this.modules.Find(x => x.GetType().Name == name);
 }

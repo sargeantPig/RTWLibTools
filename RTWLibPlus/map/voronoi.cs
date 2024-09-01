@@ -1,7 +1,6 @@
 ﻿namespace RTWLibPlus.map;
 using RTWLibPlus.helpers;
 using RTWLibPlus.randomiser;
-using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -13,7 +12,7 @@ public static class Voronoi
         Vector2[] points = new Vector2[amount];
         for (int i = 0; i < amount; i++)
         {
-            points[i] = new Vector2(rnd.Rint(0, width), rnd.Rint(0, height));
+            points[i] = new Vector2(RandWrap.Rint(0, width), RandWrap.Rint(0, height));
         }
 
         return points;
@@ -21,7 +20,7 @@ public static class Voronoi
 
     public static List<string[]> GetVoronoiGroups(Dictionary<string, Vector2> coords, Vector2[] points)
     {
-        List<string[]> groups = new();
+        List<string[]> groups = [];
 
         groups.Init(points.Length);
 
