@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/sargeantPig/RTWLibTools/compare/v1.1.0...v1.2.0) (2024-09-01)
+
+
+### Features
+
+* Starting armies use recruitable units ([#62](https://github.com/sargeantPig/RTWLibTools/issues/62)) ([73dca29](https://github.com/sargeantPig/RTWLibTools/commit/73dca29436ec51d67bd35ba0348df4f9b48bb9f5))
+
+
+### Bug Fixes
+
+* basic.txt template bug ([#60](https://github.com/sargeantPig/RTWLibTools/issues/60)) ([79fae5d](https://github.com/sargeantPig/RTWLibTools/commit/79fae5dcb3a61bbd635d9b4fc3b71864d89ef7e5))
+
 ## [1.1.0](https://github.com/sargeantPig/RTWLibTools/compare/v1.0.0...v1.1.0) (2024-01-06)
 
 
