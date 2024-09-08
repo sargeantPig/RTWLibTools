@@ -67,6 +67,26 @@ public class RandCMD(TWConfig config)
         return RandDS.SwitchUnitsToRecruitable(this.edu, this.ds, this.rnd);
     }
 
+    public string StratRandomRelations(int range)
+    {
+        if (this.ds == null)
+        {
+            return "DS not loaded - run 'rand initialsetup'";
+        }
+
+        if (this.smf == null)
+        {
+            return "SMF not loaded - run 'rand initialsetup'";
+        }
+
+        if (this.cm == null)
+        {
+            return "CM not loaded - run 'rand initialsetup'";
+        }
+
+        return RandDS.RandRelations(this.ds, this.smf, this.cm, range);
+    }
+
     public string PaintFactionMap()
     {
         FactionMap factionMap = new();

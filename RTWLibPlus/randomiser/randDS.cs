@@ -110,6 +110,53 @@ public static class RandDS
         return "Units switched to units in a given factions recruitment pool";
     }
 
+    public static string RandRelations(DS ds, SMF smf, CityMap cm, int range)
+    {
+        ds.DeleteChunks("script", "core_attitudes");
+
+        List<string> factions = smf.GetFactions();
+        List<string> factionsCopy = smf.GetFactions();
+        Dictionary<string, string[]> factionRegions = ds.GetFactionRegionDict();
+        Dictionary<string, string[]> closeFactions = cm.GetClosestRegions(factionRegions, range);
+        Dictionary<string, string[]> closeFactionsCopy = closeFactions;
+        RandRelationshipHandle(ds, factions, closeFactions, true);
+        RandRelationshipHandle(ds, factionsCopy, closeFactionsCopy, false);
+        return "Relationships randomise";
+    }
+
+    private static void RandRelationshipHandle(DS ds, List<string> factions, Dictionary<string, string[]> closeFactions, bool core)
+    {
+        int[] relation_values = [0, 100, 200, 400, 600];
+        for (int i = 0; i < factions.Count; i++)
+        {
+            List<IBaseObj> faction_cities = ds.GetItemsByCriteriaSimpleDepth(ds.Data, "character", "region", [], string.Format("faction\t{0},", factions[i]));
+            foreach (string closeFaction in closeFactions[factions[i]])
+            {
+                DSObj newRelation;
+                if (core)
+                {
+                    newRelation = new(
+                        StratModifier.CreateFactionCoreAttitude(factions[i], closeFaction, relation_values.GetRandom(out int tag, RandWrap.RND)),
+                        StratModifier.CreateFactionCoreAttitude(factions[i], closeFaction, relation_values[tag]),
+                        0);
+                }
+                else
+                {
+                    newRelation = new(
+                        StratModifier.CreateFactionRelation(factions[i], closeFaction, relation_values.GetRandom(out int tag, RandWrap.RND)),
+                        StratModifier.CreateFactionRelation(factions[i], closeFaction, relation_values[tag]),
+                        0);
+                }
+
+                ds.InsertAt(ds.Data.Count - 2, newRelation);
+                closeFactions[closeFaction] = closeFactions[closeFaction].FindAndRemove(factions[i]);
+            }
+
+            factions.RemoveAt(0);
+            i = 0;
+        }
+    }
+
     private static void MatchCharacterCoordsToCities(string[] factionList, RandWrap rnd, DS ds, CityMap cm)
     {
         rnd.RefreshRndSeed();

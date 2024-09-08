@@ -70,6 +70,8 @@ public class StratModifier
         return split.ToString(',', ' ');
     }
 
+    public static string CreateFactionCoreAttitude(string factionA, string factionB, int relation) => string.Format("core_attitudes\t{0},\t{1}\t\t{2}", factionA, relation, factionB);
 
+    public static string CreateFactionRelation(string factionA, string factionB, int relation) => string.Format("faction_relationships\t{0},\t{1}\t\t{2}", factionA, relation, factionB);
 }
 
