@@ -96,8 +96,6 @@ public class DS : BaseWrapper, IWrapper
         bool add = InsertNewObjectByCriteria(this.Data, unit, faction.Tag, character.Tag, "unit");
     }
 
-
-
     public string GetFactionByRegion(string region)
     {
         string s = this.GetTagByContentsValue(this.Data, "faction", region);
@@ -109,6 +107,8 @@ public class DS : BaseWrapper, IWrapper
 
         return s.Split('\t')[1].Trim(',');
     }
+
+    public void RemoveSuperFaction() => this.DeleteChunks("denari", "superfaction");
 
     public static string GetUnitName(IBaseObj unit)
     {

@@ -87,6 +87,18 @@ public class RandCMD(TWConfig config)
         return RandDS.RandRelations(this.ds, this.smf, this.cm, range);
     }
 
+    public string RemoveSuperfaction()
+    {
+        if (this.ds == null)
+        {
+            return "DS not loaded - run 'rand initialsetup'";
+        }
+
+        this.ds.RemoveSuperFaction();
+
+        return "Superfaction removed";
+    }
+
     public string PaintFactionMap()
     {
         FactionMap factionMap = new();
