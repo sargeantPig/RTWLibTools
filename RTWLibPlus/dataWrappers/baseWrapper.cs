@@ -81,7 +81,7 @@ public abstract class BaseWrapper
         {
             IBaseObj item = this.Data[i];
 
-            if (ident == item.Ident)
+            if (ident == item.Ident && !identFound)
             {
                 identFound = true;
                 startI = i;
@@ -311,6 +311,71 @@ public abstract class BaseWrapper
         }
         return found;
     }
+
+    public List<IBaseObj> GetItemsByCriteriaSimpleDepth(List<IBaseObj> list, string stopAt, string lookFor, Dictionary<string, bool> criteria, params string[] criteriaTags)
+    {
+        if (criteria.Count == 0)
+        {
+            criteria = criteriaTags.ToDictionary(item => item, item => false);
+        }
+
+        List<IBaseObj> found = [];
+        foreach (BaseObj item in list)
+        {
+            if (criteriaTags.Any(tag => tag == item.Tag))
+            {
+                criteria[item.Tag] = true;
+            }
+
+            bool criteriaMet = criteria.Values.All((value) => value);
+            if (item.Ident == lookFor && criteriaMet)
+            {
+                found.Add(item);
+            }
+
+            if (item.Items.Count > 0)
+            {
+                List<IBaseObj> nest = this.GetItemsByCriteriaSimpleDepth(item.Items, stopAt, lookFor, criteria, criteriaTags);
+                found.AddRange(nest);
+            }
+
+            if (item.Ident == stopAt && criteriaMet)
+            {
+                return found;
+            }
+        }
+        return found;
+    }
+
+    public List<IBaseObj> GetItemsByKeyDict(List<IBaseObj> data, string stopAt, string lookFor, KeyValuePair<string, string> criteria)
+    {
+        List<IBaseObj> result = [];
+        bool found = false;
+        foreach (BaseObj item in data)
+        {
+            if (item.Ident == criteria.Key && item.Value == criteria.Value)
+            {
+                found = true;
+            }
+
+            if (found && item.Ident == lookFor)
+            {
+                result.Add(item);
+            }
+
+            if (item.Items.Count > 0)
+            {
+                result.AddRange(this.GetItemsByKeyDict(item.Items, stopAt, lookFor, criteria));
+            }
+
+            if (item.Ident == stopAt)
+            {
+                return result;
+            }
+        }
+        return result;
+    }
+
     public List<IBaseObj> GetAllItemsButStopAt(Func<string, bool> stopAt, params string[] criteriaTags)
     {
         bool[] criteria = new bool[criteriaTags.Length];

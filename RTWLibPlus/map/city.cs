@@ -1,8 +1,10 @@
 ﻿namespace RTWLibPlus.map;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.dataWrappers.TGA;
+using RTWLibPlus.helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 public class CityMap
@@ -52,6 +54,41 @@ public class CityMap
         this.WaterMap[(int)water.X, (int)water.Y] = false;
         //water.Y = this.Height - water.Y;
         return water;
+    }
+
+    public Dictionary<string, string[]> GetClosestRegions(Dictionary<string, string[]> factionRegions, int maxDistance)
+    {
+        Dictionary<string, string[]> closeFactions = [];
+
+        foreach (KeyValuePair<string, string[]> a in factionRegions)
+        {
+            List<string> closeFactionList = [];
+            closeFactions.Add(a.Key, []);
+            foreach (string areg in a.Value)
+            {
+                Vector2 acoords = this.CityCoordinates[areg];
+                foreach (KeyValuePair<string, string[]> b in factionRegions)
+                {
+                    if (a.Key == b.Key)
+                    {
+                        continue;
+                    }
+                    foreach (string breg in b.Value)
+                    {
+                        Vector2 bcoords = this.CityCoordinates[breg];
+
+                        double distance = acoords.DistanceTo(bcoords);
+
+                        if (distance < maxDistance)
+                        {
+                            closeFactionList.Add(b.Key);
+                        }
+                    }
+                }
+            }
+            closeFactions[a.Key] = new HashSet<string>([.. closeFactionList]).ToArray();
+        }
+        return closeFactions;
     }
 
     private void GetCityCoords(TGA image, DR dr)

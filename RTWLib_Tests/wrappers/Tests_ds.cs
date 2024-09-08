@@ -3,12 +3,15 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
+using RTWLibPlus.dataWrappers.TGA;
 using RTWLibPlus.helpers;
 using RTWLibPlus.interfaces;
+using RTWLibPlus.map;
 using RTWLibPlus.Modifiers;
 using RTWLibPlus.parsers;
 using RTWLibPlus.parsers.objects;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 [TestClass]
@@ -204,5 +207,41 @@ public class Tests_ds
 
         Assert.AreEqual(expected, result); //check number of returned ca
     }
+    [TestMethod]
+    public void GetSettlementsForFaction()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+        List<IBaseObj> faction_cities = parsedds.GetItemsByCriteriaSimpleDepth(parsedds.Data, "character", "region", [], "faction\tromans_julii,");
+        int expected = 2;
+        int result = faction_cities.Count;
+        Assert.AreEqual(expected, result); //check number of returned ca
+    }
+    [TestMethod]
+    public void GetFactionRegionsDict()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+        TGA image = new("tgafile", RFH.CurrDirPath("resources", "map_regions.tga"), "");
+        List<IBaseObj> drparse = RFH.ParseFile(Creator.DRcreator, '\t', false, "resources", "descr_regions.txt");
+        DR dr = new(drparse, this.config);
 
+        CityMap cm = new(image, dr);
+        Dictionary<string, string[]> fr = parsedds.GetFactionRegionDict();
+
+        string[] expectedFirst = ["Etruria", "Umbria"];
+        string[] expectedSecond = ["Gallaecia", "Lusitania", "Hispania", "Taraconenis"];
+        Assert.IsTrue(expectedFirst.SequenceEqual(fr["romans_julii"]));
+        Assert.IsTrue(expectedSecond.SequenceEqual(fr["spain"]));
+
+        Dictionary<string, string[]> closeFactions = cm.GetClosestRegions(fr, 30);
+
+        string[] closestMockOne = ["romans_julii", "romans_brutii", "romans_scipii", "carthage", "gauls", "greek_cities", "slave"];
+        string[] closestMockTwo = ["gauls", "germans", "slave"];
+
+        Assert.IsTrue(closestMockOne.SequenceEqual(closeFactions["romans_senate"]));
+        Assert.IsTrue(closestMockTwo.SequenceEqual(closeFactions["britons"]));
+    }
 }

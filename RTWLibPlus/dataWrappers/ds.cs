@@ -6,6 +6,7 @@ using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class DS : BaseWrapper, IWrapper
 {
@@ -61,6 +62,21 @@ public class DS : BaseWrapper, IWrapper
 
             previous = ident;
         }
+    }
+
+    public Dictionary<string, string[]> GetFactionRegionDict()
+    {
+        Dictionary<string, string[]> factionRegions = [];
+        List<IBaseObj> factions = this.GetItemsByIdent("faction");
+        foreach (IBaseObj faction in factions)
+        {
+            string name = faction.Tag.Split('\t')[1].Trim(',');
+            string tag = faction.Tag;
+            List<IBaseObj> faction_cities = this.GetItemsByCriteriaSimpleDepth(this.Data, "character", "region", [], tag);
+            factionRegions.Add(name, faction_cities.ToArray(x => x.Value));
+        }
+
+        return factionRegions;
     }
 
     public Dictionary<string, List<IBaseObj>> GetSettlementsByFaction(SMF smf)
