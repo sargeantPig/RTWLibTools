@@ -244,4 +244,14 @@ public class Tests_ds
         Assert.IsTrue(closestMockOne.SequenceEqual(closeFactions["romans_senate"]));
         Assert.IsTrue(closestMockTwo.SequenceEqual(closeFactions["britons"]));
     }
+    [TestMethod]
+    public void RemoveSuperFaction()
+    {
+        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
+        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
+        DS parsedds = new(dsParse, this.config);
+        parsedds.RemoveSuperFaction();
+        List<IBaseObj> results = parsedds.GetItemsByIdent("superfaction");
+        Assert.AreEqual(0, results.Count);
+    }
 }
