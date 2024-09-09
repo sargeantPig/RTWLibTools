@@ -19,13 +19,11 @@ public class Tests_RandDS
     [TestMethod]
     public void UnitsAreRecruitable()
     {
-        List<IBaseObj> dsParse = RFH.ParseFile(Creator.DScreator, ' ', false, "resources", "descr_strat.txt");
-        DS ds = new(dsParse, this.config);
-        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
-        EDU edu = new(parse, this.config);
+        DS ds = (DS)RFH.CreateWrapper(Creator.DScreator, Creator.DSWrapper, this.config, ' ', false, "resources", "descr_strat.txt");
+        EDU edu = (EDU)RFH.CreateWrapper(Creator.EDUcreator, Creator.EDUWrapper, this.config, ' ', false, "resources", "export_descr_unit.txt");
+        SMF smf = (SMF)RFH.CreateWrapper(Creator.SMFcreator, Creator.SMFWrapper, this.config, ':', false, "resources", "descr_sm_factions.txt");
         edu.PrepareEDU();
-        List<IBaseObj> smfParse = RFH.ParseFile(Creator.SMFcreator, ':', false, "resources", "descr_sm_factions.txt");
-        SMF smf = new(smfParse, this.config);
+
         List<string> beforeUnits = edu.GetUnitsFromFaction("romans_julii", []);
         RandEDU.RandomiseOwnership(edu, this.rand, smf);
         RandDS.SwitchUnitsToRecruitable(edu, ds, this.rand);
@@ -44,13 +42,10 @@ public class Tests_RandDS
     [TestMethod]
     public void RelationsAreRandom()
     {
-        List<IBaseObj> dsParse = RFH.ParseFile(Creator.DScreator, ' ', false, "resources", "descr_strat.txt");
-        DS ds = new(dsParse, this.config);
-        List<IBaseObj> smfParse = RFH.ParseFile(Creator.SMFcreator, ':', false, "resources", "descr_sm_factions.txt");
-        SMF smf = new(smfParse, this.config);
+        DS ds = (DS)RFH.CreateWrapper(Creator.DScreator, Creator.DSWrapper, this.config, ' ', false, "resources", "descr_strat.txt");
+        SMF smf = (SMF)RFH.CreateWrapper(Creator.SMFcreator, Creator.SMFWrapper, this.config, ':', false, "resources", "descr_sm_factions.txt");
         TGA image = new("tgafile", RFH.CurrDirPath("resources", "map_regions.tga"), "");
-        List<IBaseObj> drparse = RFH.ParseFile(Creator.DRcreator, '\t', false, "resources", "descr_regions.txt");
-        DR dr = new(drparse, this.config);
+        DR dr = (DR)RFH.CreateWrapper(Creator.DRcreator, Creator.DRWrapper, this.config, '\t', false, "resources", "descr_regions.txt");
 
         CityMap cm = new(image, dr);
         List<IBaseObj> before = ds.GetItemsByIdent("core_attitudes").DeepCopy();

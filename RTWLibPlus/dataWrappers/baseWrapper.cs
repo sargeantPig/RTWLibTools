@@ -1,4 +1,6 @@
 ﻿namespace RTWLibPlus.dataWrappers;
+
+using RTWLibPlus.data;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers.objects;
 using System;
@@ -7,23 +9,9 @@ using System.Linq;
 
 public abstract class BaseWrapper
 {
-
+    public delegate BaseWrapper WrapperCreator(List<IBaseObj> data, TWConfig config);
     public string OutputPath { get; set; }
-    // {
-    //     get
-    //     {
-    //         string path = ExString.CrossPlatPath(this.outputPath);
-    //         string dir = Path.GetDirectoryName(path);
-    //         if (Directory.Exists(dir))
-    //         { return path; }
-
-    //         return path.Split('/').Last();
-    //     }
-
-    //     set => this.outputPath = value;
-    // }
     public string LoadPath { get; set; }
-
     public List<IBaseObj> Data { get; set; } = [];
     /// <summary>
     /// Location is a collection of strings that represent the tags. Once the final string is found it will return the corresponding kv

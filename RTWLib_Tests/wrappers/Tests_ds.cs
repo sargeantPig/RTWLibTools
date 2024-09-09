@@ -1,7 +1,6 @@
 ﻿namespace RTWLib_Tests.wrappers;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.dataWrappers.TGA;
 using RTWLibPlus.helpers;
@@ -14,23 +13,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
+
 [TestClass]
 public class Tests_ds
 {
-    private readonly DepthParse dp = new();
-    private readonly TWConfig config = TWConfig.LoadConfig(@"resources/remaster.json");
     [TestMethod]
     public void DsWholeFile()
     {
-
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-
-        string result = parsedds.Output();
-
-        string expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "descr_strat.txt"));
-
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        string result = descr_strat.Output();
+        string expected = DepthParse.ReadFileAsString(RFH.CurrDirPath(TestHelper.DS));
         int rl = result.Length;  //123502
         int el = expected.Length; //127957
 
@@ -41,23 +33,17 @@ public class Tests_ds
     [TestMethod]
     public void DsGetItemsByIdentSettlements()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-
-        List<IBaseObj> result = parsedds.GetItemsByIdent("settlement");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> result = descr_strat.GetItemsByIdent("settlement");
         int expected = 96; //number of settlements
-
         Assert.AreEqual(expected, result.Count); //check number of returned settlements
     }
 
     [TestMethod]
     public void DsGetCharacterChangeCoords()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> characters = parsedds.GetItemsByIdent("character");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> characters = descr_strat.GetItemsByIdent("character");
         string result = StratModifier.ChangeCharacterCoordinates(((BaseObj)characters[0]).Value, new Vector2(1, 1));
         string expected = "Julius, named character, leader, age 47, , x 1, y 1"; //number of settlements
 
@@ -67,11 +53,8 @@ public class Tests_ds
     [TestMethod]
     public void DsGetItemsByIdentResource()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-
-        List<IBaseObj> result = parsedds.GetItemsByIdent("resource");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> result = descr_strat.GetItemsByIdent("resource");
         int expected = 300; //number of resources
 
         Assert.AreEqual(expected, result.Count); //check number of returned resources
@@ -79,11 +62,8 @@ public class Tests_ds
     [TestMethod]
     public void DsGetItemsByIdentFaction()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-
-        List<IBaseObj> result = parsedds.GetItemsByIdent("faction");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> result = descr_strat.GetItemsByIdent("faction");
         int expected = 21; //number of factions
 
         Assert.AreEqual(expected, result.Count); //check number of returned factions
@@ -91,11 +71,8 @@ public class Tests_ds
     [TestMethod]
     public void DsGetItemsByIdentCoreAttitudes()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-
-        List<IBaseObj> result = parsedds.GetItemsByIdent("core_attitudes");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> result = descr_strat.GetItemsByIdent("core_attitudes");
         int expected = 47; //number of ca
 
         Assert.AreEqual(expected, result.Count); //check number of returned ca
@@ -103,13 +80,10 @@ public class Tests_ds
     [TestMethod]
     public void DsDeleteByIdent()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-
-        List<IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
-        BaseWrapper.DeleteValue(parsedds.Data, "settlement");
-        List<IBaseObj> result = parsedds.GetItemsByIdent("settlement");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> settlements = descr_strat.GetItemsByIdent("settlement");
+        BaseWrapper.DeleteValue(descr_strat.Data, "settlement");
+        List<IBaseObj> result = descr_strat.GetItemsByIdent("settlement");
         int expected = 0; //number of ca
 
         Assert.AreEqual(expected, result.Count); //check number of returned ca
@@ -117,13 +91,10 @@ public class Tests_ds
     [TestMethod]
     public void DsAddSettlementToRomansBrutii()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-
-        List<IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
-        bool add = BaseWrapper.InsertNewObjectByCriteria(parsedds.Data, settlements[30], "faction\tromans_brutii,", "denari");
-        List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tromans_brutii,");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> settlements = descr_strat.GetItemsByIdent("settlement");
+        bool add = BaseWrapper.InsertNewObjectByCriteria(descr_strat.Data, settlements[30], "faction\tromans_brutii,", "denari");
+        List<IBaseObj> result = descr_strat.GetItemsByCriteria("character", "settlement", "faction\tromans_brutii,");
         int expected = 3; //number of ca
 
         Assert.AreEqual(expected, result.Count); //check number of returned ca
@@ -131,27 +102,23 @@ public class Tests_ds
     [TestMethod]
     public void DsAddSettlementToScythia()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
 
-        List<IBaseObj> settlements = parsedds.GetItemsByIdent("settlement");
-        bool add = BaseWrapper.InsertNewObjectByCriteria(parsedds.Data, settlements[30], "faction\tscythia,", "denari");
-        List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tscythia,");
+        List<IBaseObj> settlements = descr_strat.GetItemsByIdent("settlement");
+        bool add = BaseWrapper.InsertNewObjectByCriteria(descr_strat.Data, settlements[30], "faction\tscythia,", "denari");
+        List<IBaseObj> result = descr_strat.GetItemsByCriteria("character", "settlement", "faction\tscythia,");
         int expected = 5; //number of ca
         Assert.AreEqual(expected, result.Count); //check number of returned ca
     }
     [TestMethod]
     public void DsAddUnitToFlaviusAbstracted()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> units = parsedds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
-        List<IBaseObj> character = parsedds.GetItemsByCriteria("army", "character", "faction\tromans_julii,");
-        List<IBaseObj> faction = parsedds.GetItemsByIdent("faction");
-        parsedds.AddUnitToArmy(faction[0], character[0], units[0]);
-        List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> units = descr_strat.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
+        List<IBaseObj> character = descr_strat.GetItemsByCriteria("army", "character", "faction\tromans_julii,");
+        List<IBaseObj> faction = descr_strat.GetItemsByIdent("faction");
+        descr_strat.AddUnitToArmy(faction[0], character[0], units[0]);
+        List<IBaseObj> result = descr_strat.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
         int expected = 6; //number of ca
         Assert.AreEqual(expected, result.Count); //check number of returned ca
     }
@@ -159,10 +126,8 @@ public class Tests_ds
     [TestMethod]
     public void GetCharactersOfFaction()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> characters = parsedds.GetItemsByCriteria("character_record", "character", "faction\tromans_julii,");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> characters = descr_strat.GetItemsByCriteria("character_record", "character", "faction\tromans_julii,");
         int expected = 7; //number of ca
         Assert.AreEqual(expected, characters.Count); //check number of returned ca
     }
@@ -170,12 +135,10 @@ public class Tests_ds
     [TestMethod]
     public void DsAddUnitToFlavius()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> units = parsedds.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
-        bool add = BaseWrapper.InsertNewObjectByCriteria(parsedds.Data, units[1], "faction\tromans_julii,", "character\tFlavius", "unit");
-        List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> units = descr_strat.GetItemsByCriteria("character", "unit", "faction\tromans_julii,", "character", "army");
+        bool add = BaseWrapper.InsertNewObjectByCriteria(descr_strat.Data, units[1], "faction\tromans_julii,", "character\tFlavius", "unit");
+        List<IBaseObj> result = descr_strat.GetItemsByCriteria("character", "unit", "character\tFlavius", "army");
         int expected = 6; //number of ca
         Assert.AreEqual(expected, result.Count); //check number of returned ca
     }
@@ -183,10 +146,8 @@ public class Tests_ds
     [TestMethod]
     public void GetRegions()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> regions = parsedds.GetItemsByCriteriaDepth(parsedds.Data, "core_attitudes", "region", "settlement");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> regions = descr_strat.GetItemsByCriteriaDepth(descr_strat.Data, "core_attitudes", "region", "settlement");
 
         int result = regions.Count;
         int expected = 96; //number of ca
@@ -196,11 +157,9 @@ public class Tests_ds
     [TestMethod]
     public void GetFactionByRegion()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
         string region = "Paionia";
-        string faction = parsedds.GetFactionByRegion(region);
+        string faction = descr_strat.GetFactionByRegion(region);
 
         string result = faction;
         string expected = "macedon"; //number of ca
@@ -210,10 +169,8 @@ public class Tests_ds
     [TestMethod]
     public void GetSettlementsForFaction()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> faction_cities = parsedds.GetItemsByCriteriaSimpleDepth(parsedds.Data, "character", "region", [], "faction\tromans_julii,");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> faction_cities = descr_strat.GetItemsByCriteriaSimpleDepth(descr_strat.Data, "character", "region", [], "faction\tromans_julii,");
         int expected = 2;
         int result = faction_cities.Count;
         Assert.AreEqual(expected, result); //check number of returned ca
@@ -221,15 +178,12 @@ public class Tests_ds
     [TestMethod]
     public void GetFactionRegionsDict()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
         TGA image = new("tgafile", RFH.CurrDirPath("resources", "map_regions.tga"), "");
-        List<IBaseObj> drparse = RFH.ParseFile(Creator.DRcreator, '\t', false, "resources", "descr_regions.txt");
-        DR dr = new(drparse, this.config);
+        DR dr = (DR)RFH.CreateWrapper(Creator.DRcreator, Creator.DRWrapper, TestHelper.Config, '\t', false, "resources", "descr_regions.txt");
 
         CityMap cm = new(image, dr);
-        Dictionary<string, string[]> fr = parsedds.GetFactionRegionDict();
+        Dictionary<string, string[]> fr = descr_strat.GetFactionRegionDict();
 
         string[] expectedFirst = ["Etruria", "Umbria"];
         string[] expectedSecond = ["Gallaecia", "Lusitania", "Hispania", "Taraconenis"];
@@ -247,11 +201,9 @@ public class Tests_ds
     [TestMethod]
     public void RemoveSuperFaction()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        parsedds.RemoveSuperFaction();
-        List<IBaseObj> results = parsedds.GetItemsByIdent("superfaction");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        descr_strat.RemoveSuperFaction();
+        List<IBaseObj> results = descr_strat.GetItemsByIdent("superfaction");
         Assert.AreEqual(0, results.Count);
     }
 }

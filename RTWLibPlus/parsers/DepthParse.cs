@@ -10,8 +10,8 @@ using System.Text;
 public class DepthParse
 {
     private readonly List<IBaseObj> list = [];
-
     public delegate IBaseObj ObjectCreator(string value, string tag, int depth);
+
     public List<IBaseObj> Parse(string[] lines, ObjectCreator creator, char splitter = ' ')
     {
         this.list.Clear();
