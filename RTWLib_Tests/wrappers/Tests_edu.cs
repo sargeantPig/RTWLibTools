@@ -1,7 +1,6 @@
 ﻿namespace RTWLib_Tests.wrappers;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RTWLibPlus.data;
 using RTWLibPlus.dataWrappers;
 using RTWLibPlus.helpers;
 using RTWLibPlus.parsers;
@@ -13,17 +12,13 @@ using System.Linq;
 [TestClass]
 public class Tests_edu
 {
-    private readonly DepthParse dp = new();
-    private readonly TWConfig config = TWConfig.LoadConfig(@"resources/remaster.json");
     [TestMethod]
     public void EduWithDepthParser()
     {
-        string[] edu = this.dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
-        List<IBaseObj> eduParse = this.dp.Parse(edu, Creator.EDUcreator);
-        EDU parsedds = new(eduParse, this.config);
+        EDU edu = Instance.InstanceEDU(TestHelper.Config, TestHelper.EDU);
 
-        string result = parsedds.Output();
-        string expected = DepthParse.ReadFileAsString(RFH.CurrDirPath("resources", "export_descr_unit.txt"));
+        string result = edu.Output();
+        string expected = DepthParse.ReadFileAsString(RFH.CurrDirPath(TestHelper.EDU));
 
         int rl = result.Length;
         int el = expected.Length;
@@ -35,10 +30,8 @@ public class Tests_edu
     [TestMethod]
     public void EduGetValueByCriteria()
     {
-        string[] edu = this.dp.ReadFile(RFH.CurrDirPath("resources", "export_descr_unit.txt"), false);
-        List<IBaseObj> eduParse = this.dp.Parse(edu, Creator.EDUcreator);
-        EDU parsedds = new(eduParse, this.config);
-        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedds.Data, 0, "roman_hastati", "ownership");
+        EDU edu = Instance.InstanceEDU(TestHelper.Config, TestHelper.EDU);
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(edu.Data, 0, "roman_hastati", "ownership");
         KeyValuePair<string, string> expected = new("ownership", "roman"); //number of ca
 
         Assert.AreEqual(expected, result); //check number of returned ca
@@ -47,11 +40,9 @@ public class Tests_edu
     [TestMethod]
     public void EduModifyOwnership()
     {
-        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
-        EDU parsedds = new(parse, this.config);
-
-        bool change = BaseWrapper.ModifyValue(parsedds.Data, "roman", 0, false, "carthaginian_generals_cavalry_early", "ownership");
-        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedds.Data, 0, "carthaginian_generals_cavalry_early", "ownership");
+        EDU edu = Instance.InstanceEDU(TestHelper.Config, TestHelper.EDU);
+        bool change = BaseWrapper.ModifyValue(edu.Data, "roman", 0, false, "carthaginian_generals_cavalry_early", "ownership");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(edu.Data, 0, "carthaginian_generals_cavalry_early", "ownership");
         KeyValuePair<string, string> expected = new("ownership", "roman");
 
         Assert.AreEqual(expected, result);
@@ -61,8 +52,7 @@ public class Tests_edu
     [TestMethod]
     public void EduModifyBulkModifyOwnership()
     {
-        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
-        EDU edu = new(parse, this.config);
+        EDU edu = Instance.InstanceEDU(TestHelper.Config, TestHelper.EDU);
         List<IBaseObj> ownerships = edu.GetItemsByIdent("ownership");
 
         foreach (EDUObj o in ownerships.Cast<EDUObj>())
@@ -83,12 +73,11 @@ public class Tests_edu
     [TestMethod]
     public void EduRemoveAttributeGeneral()
     {
-        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
-        EDU parsedds = new(parse, this.config);
-        parsedds.RemoveAttributesAll("general_unit", "general_unit_upgrade \"marian_reforms\"");
-        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(parsedds.Data, 0, "barb_chieftain_cavalry_german", "attributes");
+        EDU edu = Instance.InstanceEDU(TestHelper.Config, TestHelper.EDU);
+        edu.RemoveAttributesAll("general_unit", "general_unit_upgrade \"marian_reforms\"");
+        KeyValuePair<string, string> result = BaseWrapper.GetKeyValueAtLocation(edu.Data, 0, "barb_chieftain_cavalry_german", "attributes");
         KeyValuePair<string, string> expected = new("attributes", "sea_faring, hide_forest, hardy");
-        List<IBaseObj> attr = parsedds.GetItemsByIdent("attributes");
+        List<IBaseObj> attr = edu.GetItemsByIdent("attributes");
 
         Assert.AreEqual(expected, result);
     }
@@ -96,22 +85,20 @@ public class Tests_edu
     [TestMethod]
     public void EduRemoveRemasterStatBlocks()
     {
-        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
-        EDU parsedds = new(parse, this.config);
-        parsedds.PrepareEDU();
-        List<IBaseObj> result = parsedds.GetItemsByIdent("rebalance_statblock");
+        EDU edu = Instance.InstanceEDU(TestHelper.Config, TestHelper.EDU);
+        edu.PrepareEDU();
+        List<IBaseObj> result = edu.GetItemsByIdent("rebalance_statblock");
         int expected = 0;
 
-        string file = parsedds.Output();
+        string file = edu.Output();
 
         Assert.AreEqual(expected, result.Count);
     }
     [TestMethod]
     public void EduGetUnitsFromFaction()
     {
-        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
-        EDU parsedds = new(parse, this.config);
-        List<string> units = parsedds.GetUnitsFromFaction("romans_julii", []);
+        EDU edu = Instance.InstanceEDU(TestHelper.Config, TestHelper.EDU);
+        List<string> units = edu.GetUnitsFromFaction("romans_julii", []);
         Assert.AreEqual(27, units.Count);
 
     }
@@ -119,8 +106,7 @@ public class Tests_edu
     [TestMethod]
     public void EduValuesInCorrectOrder()
     {
-        List<IBaseObj> parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
-        EDU edu = new(parse, this.config);
+        EDU edu = Instance.InstanceEDU(TestHelper.Config, TestHelper.EDU);
         List<IBaseObj> names = edu.GetItemsByIdent("type");
         List<IBaseObj> attributes = edu.GetItemsByIdent("attributes");
         List<IBaseObj> ownerships = edu.GetItemsByIdent("ownership");
@@ -140,7 +126,7 @@ public class Tests_edu
     // [TestMethod]
     // public void eduUnitWrapper()
     // {
-    //     var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, "resources", "export_descr_unit.txt");
+    //     var parse = RFH.ParseFile(Creator.EDUcreator, ' ', false, TestHelper.EDU);
     //     var parsedds = new EDU(parse, config);
     //     parsedds.PrepareEDU();
 

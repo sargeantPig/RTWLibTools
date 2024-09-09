@@ -1,8 +1,12 @@
 ﻿namespace RTWLibPlus.helpers;
+
+using RTWLibPlus.data;
+using RTWLibPlus.dataWrappers;
 using RTWLibPlus.interfaces;
 using RTWLibPlus.parsers;
 using System.Collections.Generic;
 using System.IO;
+using static RTWLibPlus.dataWrappers.BaseWrapper;
 using static RTWLibPlus.parsers.DepthParse;
 
 public static class RFH
@@ -42,6 +46,15 @@ public static class RFH
         List<IBaseObj> parsed = dp.Parse(fileLines, creator, splitter);
 
         return parsed;
+    }
+
+    public static BaseWrapper CreateWrapper(
+        ObjectCreator creator, WrapperCreator wrapper, TWConfig config,
+        char splitter = ' ', bool removeEmptyLines = false, params string[] path)
+    {
+        List<IBaseObj> parsed = ParseFile(creator, splitter, removeEmptyLines, path);
+        return wrapper(parsed, config);
+
     }
 
     public static string GetPartOfPath(string path, string from)
