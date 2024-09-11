@@ -19,10 +19,8 @@ public class TestsStrat
     [TestMethod]
     public void CreateSettlement()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> settlements = parsedds.GetItemsByIdent("settlement").DeepCopy();
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> settlements = descr_strat.GetItemsByIdent("settlement").DeepCopy();
         IBaseObj modifiedSettlement = StratModifier.CreateSettlement(settlements[0], "test_name");
         string result = modifiedSettlement.Find("region");
         Assert.AreEqual("test_name", result);
@@ -31,10 +29,8 @@ public class TestsStrat
     [TestMethod]
     public void CreateBuilding()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> settlements = parsedds.GetItemsByIdent("settlement").DeepCopy();
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> settlements = descr_strat.GetItemsByIdent("settlement").DeepCopy();
         IBaseObj modifiedBuilding = StratModifier.CreateBuilding(settlements[0].GetObject("building"), "test_name");
         string result = modifiedBuilding.Find("type");
         Assert.AreEqual("test_name", result);
@@ -43,14 +39,12 @@ public class TestsStrat
     [TestMethod]
     public void AddSettlementToFaction()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> settlements = parsedds.GetItemsByCriteria("character", "settlement", "faction\tromans_julii,");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> settlements = descr_strat.GetItemsByCriteria("character", "settlement", "faction\tromans_julii,");
         IBaseObj modifiedSettlement = StratModifier.CreateSettlement(settlements[0], "test_name");
-        int placeAt = BaseWrapper.GetIndexByCriteria(parsedds.Data, "faction\tromans_julii,", "settlement");
-        parsedds.InsertAt(placeAt + 1, modifiedSettlement);
-        List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tromans_julii,");
+        int placeAt = BaseWrapper.GetIndexByCriteria(descr_strat.Data, "faction\tromans_julii,", "settlement");
+        descr_strat.InsertAt(placeAt + 1, modifiedSettlement);
+        List<IBaseObj> result = descr_strat.GetItemsByCriteria("character", "settlement", "faction\tromans_julii,");
         Assert.AreEqual(3, result.Count);
         Assert.AreEqual("test_name", result[1].Find("region"));
     }
@@ -58,14 +52,12 @@ public class TestsStrat
     [TestMethod]
     public void AddSettlementToFaction2()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> settlements = parsedds.GetItemsByCriteria("character", "settlement", "faction\tmacedon,");
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> settlements = descr_strat.GetItemsByCriteria("character", "settlement", "faction\tmacedon,");
         IBaseObj modifiedSettlement = StratModifier.CreateSettlement(settlements[0], "test_name");
-        int placeAt = BaseWrapper.GetIndexByCriteria(parsedds.Data, "faction\tmacedon,", "settlement");
-        parsedds.InsertAt(placeAt + 1, modifiedSettlement);
-        List<IBaseObj> result = parsedds.GetItemsByCriteria("character", "settlement", "faction\tmacedon,");
+        int placeAt = BaseWrapper.GetIndexByCriteria(descr_strat.Data, "faction\tmacedon,", "settlement");
+        descr_strat.InsertAt(placeAt + 1, modifiedSettlement);
+        List<IBaseObj> result = descr_strat.GetItemsByCriteria("character", "settlement", "faction\tmacedon,");
         Assert.AreEqual(5, result.Count);
         Assert.AreEqual("test_name", result[1].Find("region"));
     }
@@ -73,10 +65,8 @@ public class TestsStrat
     [TestMethod]
     public void CreateUnit()
     {
-        string[] ds = this.dp.ReadFile(RFH.CurrDirPath("resources", "descr_strat.txt"), false);
-        List<IBaseObj> dsParse = this.dp.Parse(ds, Creator.DScreator);
-        DS parsedds = new(dsParse, this.config);
-        List<IBaseObj> units = parsedds.GetItemsByIdent("unit").DeepCopy();
+        DS descr_strat = Instance.InstanceDS(TestHelper.Config, TestHelper.DS);
+        List<IBaseObj> units = descr_strat.GetItemsByIdent("unit").DeepCopy();
         IBaseObj result = StratModifier.CreateUnit(units[0], "town watch");
         Assert.AreEqual("unit", result.Ident);
         Assert.AreEqual("unit\t\t\ttown", result.Tag);
