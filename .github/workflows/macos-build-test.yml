@@ -27,13 +27,13 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Create Output Directory
-        run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp8.0/resources'
+        run: mkdir -p '${{github.workspace}}/RTWLib_Tests/bin/Debug/net8.0/resources'
 
       - name: Copy Resources
-        run: cp -r ./RTWLib_Tests/resources/. ${{ github.workspace }}/RTWLib_Tests/bin/Debug/netcoreapp8.0/resources/
+        run: cp -r ./RTWLib_Tests/resources/. ${{ github.workspace }}/RTWLib_Tests/bin/Debug/net8.0/resources/
 
       - name: List build output
-        run: ls -R '${{github.workspace}}/RTWLib_Tests/bin/Debug/netcoreapp8.0'
+        run: ls -R '${{github.workspace}}/RTWLib_Tests/bin/Debug/net8.0'
 
       - name: Log files
         run: ls
