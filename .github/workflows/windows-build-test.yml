@@ -38,10 +38,10 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Copy Resources
-      run: cp -r ./RTWLib_Tests/resources ./RTWLib_Tests/bin/Debug/netcoreapp8.0/resources
+      run: cp -r ./RTWLib_Tests/resources ./RTWLib_Tests/bin/Debug/net8.0/resources
 
     - name: Log files
-      run: ls ./RTWLib_Tests/bin/Debug/netcoreapp8.0/
+      run: ls ./RTWLib_Tests/bin/Debug/net8.0/
 
     - name: Restore packages
       run: dotnet restore ./RTWLib_CLI/RTWLib_CLI.csproj
