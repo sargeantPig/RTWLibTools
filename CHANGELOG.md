@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/sargeantPig/RTWLibTools/compare/v1.2.0...v1.3.0) (2024-09-29)
+
+
+### Features
+
+* faction relationship randomisation option ([#63](https://github.com/sargeantPig/RTWLibTools/issues/63)) ([7d9e909](https://github.com/sargeantPig/RTWLibTools/commit/7d9e90905e4abedf55f765d0a3f4da43c62fe515))
+* remove superfaction option ([#65](https://github.com/sargeantPig/RTWLibTools/issues/65)) ([bc151b3](https://github.com/sargeantPig/RTWLibTools/commit/bc151b3d8928a2569a91a58c0b7021b1910e975f))
+
 ## [1.2.0](https://github.com/sargeantPig/RTWLibTools/compare/v1.1.0...v1.2.0) (2024-09-01)
 
 
