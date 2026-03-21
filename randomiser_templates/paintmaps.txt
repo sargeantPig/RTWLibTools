@@ -1,0 +1,4 @@
+randcmd setseed testseed
+randcmd initialsetup
+randcmd PaintFactionMap
+randcmd output

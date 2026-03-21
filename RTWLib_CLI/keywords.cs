@@ -2,9 +2,9 @@
 
 public static class KW
 {
-    public static string back = "back";
-    public static string help = "help";
-    public static string error = "error";
-    public static string templates = "templates";
+    public const string back = "back";
+    public const string help = "help";
+    public const string error = "error";
+    public const string templates = "templates";
 
 }
